@@ -66,7 +66,7 @@ re:		fclean all
 push:
 	git add .
 	git commit -m "push"
-	git push origin
+	git push origin master
 
 daniel:
 	git add .
