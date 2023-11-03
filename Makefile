@@ -68,6 +68,11 @@ push:
 	git commit -m "push"
 	git push origin master
 
+daniel:
+	git add .
+	git commit -m "push"
+	git push origin daniel
+
 test: $(OBJECTS) 
 	@$(CC) -g $(CFLAGS) $(OBJECTS) $(LIBS) $(HEADERS) test.c -o test
 	./test
