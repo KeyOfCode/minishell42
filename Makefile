@@ -8,6 +8,7 @@ CFLAGS=		-Wall -Wextra -Werror
 
 HEADER=		include/minishell.h
 
+
 ############################
 
 SOURCES_LIST =	main.c parser.c
@@ -64,9 +65,9 @@ re:		fclean all
 .PHONY:	all clean fclean re
 
 push:
-	git add .
-	git commit -m "push"
-	git push origin master
+	git add . 
+	read -p "commit: " COMMIT; git commit -m "$(COMMIT)"
+	read -p "branch: " BRANCH; git push origin $(BRANCH)
 
 daniel:
 	git add .
