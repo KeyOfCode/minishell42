@@ -5,13 +5,18 @@ NAME = minishell
 CC=			gcc
 RM=			rm -f
 CFLAGS=		-Wall -Wextra -Werror
-
+LIBFT =		libft/libft.a
+INCLUDES=	$(LIBFT)
 HEADER=		include/minishell.h
+LIB=		-lreadline
+#  -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline/include
+COMMIT:=	""
+BRANCH:=	""
 
 
 ############################
 
-SOURCES_LIST =	main.c parser.c
+SOURCES_LIST =	main.c
 
 SOURCES_DIR = src/
 SOURCES = $(addprefix $(SOURCES_DIR), $(SOURCES_LIST))
@@ -21,19 +26,26 @@ SOURCES = $(addprefix $(SOURCES_DIR), $(SOURCES_LIST))
 # BONUS_DIR = philo_bonus/src/
 # BONUS = $(addprefix $(BONUS_DIR), $(BONUS_LIST))
 
-OBJECTS_DIR = ./obj/
-OBJECTS		= $(SOURCES:.c=.o)
+OBJS_DIR = obj/
+OBJECTS = $(SOURCES:.c=.o)
+# OBJECTS = $(addprefix $(OBJECTS_DIR), $(SOURCES_LIST:.c=.o))
 # OBJECTS_B	= $(BONUS:.c=.o)
 
 ############################
 
-all: $(NAME)
+all: $(LIBFT) $(NAME)
 
+$(LIBFT):
+	@make -C libft/ all
 # $(LEAK)
 
-$(NAME): $(SOURCES) $(OBJECTS) $(HEADER) $(LEAK)
-	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME)
+$(NAME): $(OBJECTS) 
+	@$(CC) $(CFLAGS) $(OBJECTS) $(INCLUDES) $(LIB) -o $(NAME)
 	@echo "$(NAME): $(GREEN)$(NAME) was created$(RESET)"
+
+# $(NAME): $(INCLUDES)
+# 	$(CC) src/main.c libft/libft.a include/minishell.h -o $(NAME)
+# 	@echo "$(NAME): $(GREEN)$(NAME) was created$(RESET)"
 
 # bonus: $(NAME_B)
 
@@ -41,15 +53,19 @@ $(NAME): $(SOURCES) $(OBJECTS) $(HEADER) $(LEAK)
 # 	$(CC) $(CFLAGS) $(OBJECTS_B) -o $(NAME_B)
 # 	@echo "$(NAME): $(GREEN)$(NAME_B) was created$(RESET)"
 
-exe:
-	@make
+# exe:
+# 	@make
 
 %.o: %.c
-	$(CC) $(FLAGS)  -o $@ -c $<
+#	mkdir -pv $(@)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 # $(OBJ_DIR)%.o: $(SRC_DIR)%.c 
 # 	mkdir -p $(@D)
 # 	$(CC) $(CFLAGS) -c $< -o $@
+
+# $(OBJECTS):
+# 	@mkdir $(OBJ_DIR)
 
 clean:
 	@rm -f $(NAME)
@@ -57,22 +73,20 @@ clean:
 	@echo "$(RED)$(NAME) deleted$(RESET)"
 	
 fclean:		clean
-	@find philo/src -name "*.o" -delete
+	@find src -name "*.o" -delete
 	@echo "$(RED)Deleting all .o Files$(RESET)"
 	
 re:		fclean all
 
-.PHONY:	all clean fclean re
+.PHONY:	all clean fclean re push
 
 push:
 	git add . 
-	read -p "commit: " COMMIT; git commit -m "$(COMMIT)"
+	read -p "commit: " COMMIT && git commit -m "${COMMIT}"
 	read -p "branch: " BRANCH; git push origin $(BRANCH)
 
-daniel:
-	git add .
-	git commit -m "push"
-	git push origin daniel
+git:
+	./push.sh
 
 test: $(OBJECTS) 
 	@$(CC) -g $(CFLAGS) $(OBJECTS) $(LIBS) $(HEADERS) test.c -o test

@@ -6,8 +6,8 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2023/11/03 17:58:19 by darismen         ###   ########.fr       */
+/*   Updated: 2023/11/10 20:48:31 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+#include "../include/minishell.h"

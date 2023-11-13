@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2023/11/03 18:56:59 by darismen         ###   ########.fr       */
+/*   Updated: 2023/11/13 18:42:02 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,46 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <signal.h>
+# include "../libft/includes/libft.h"
+# include "../libft/includes/ft_printf.h"
+# include <readline/readline.h>
 
 //int	g_status;
+# pragma region CONSTANTS
 
-typedef struct s_list
+# define ILLEGAL "ILLEGAL"
+# define E_O_F "EOF"
+// Identifiers + literals
+# define IDENT "IDENT"// add, foobar, x, y, ...
+# define INT "INT" // 1343456
+
+// Operators
+# define ASSIGN "="
+# define PLUS "+"
+// Delimiters
+# define COMMA ","
+# define SEMICOLON ""
+# define LPAREN "("
+# define RPAREN ")"
+# define LBRACE  "{"
+# define RBRACE "}"
+// Keywords
+# define FUNCTION "FUNCTION"
+# define LET "LET"
+
+# pragma endregion
+
+/* typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
-}	t_list;
+}	t_list; */
+
+typedef struct s_token
+{
+	void	*attr;
+	char	*value;
+}	t_token;
 
 typedef struct s_prompt
 {
