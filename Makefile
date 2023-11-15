@@ -8,7 +8,7 @@ CFLAGS=		-Wall -Wextra -Werror
 LIBFT =		libft/libft.a
 INCLUDES=	$(LIBFT)
 HEADER=		include/minishell.h
-LIB=		-lreadline
+LIB=		-lreadline  -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline/include
 #  -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline/include
 COMMIT:=	""
 BRANCH:=	""
@@ -40,7 +40,7 @@ $(LIBFT):
 # $(LEAK)
 
 $(NAME): $(OBJECTS) 
-	@$(CC) $(CFLAGS) $(OBJECTS) $(INCLUDES) $(LIB) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJECTS) $(INCLUDES) $(LIB) -o $(NAME)
 	@echo "$(NAME): $(GREEN)$(NAME) was created$(RESET)"
 
 # $(NAME): $(INCLUDES)
@@ -53,8 +53,9 @@ $(NAME): $(OBJECTS)
 # 	$(CC) $(CFLAGS) $(OBJECTS_B) -o $(NAME_B)
 # 	@echo "$(NAME): $(GREEN)$(NAME_B) was created$(RESET)"
 
-# exe:
-# 	@make
+exe:
+	@make
+	./$(NAME)
 
 %.o: %.c
 #	mkdir -pv $(@)
