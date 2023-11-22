@@ -8,6 +8,7 @@ CFLAGS=		-Wall -Wextra -Werror
 LIBFT =		libft/libft.a
 INCLUDES=	$(LIBFT)
 HEADER=		include/minishell.h
+VALGRIND=	valgrind --leak-check=yes 
 LIB=		-lreadline  -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline/include
 #  -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline/include
 COMMIT:=	""
@@ -16,7 +17,7 @@ BRANCH:=	""
 
 ############################
 
-SOURCES_LIST =	main.c
+SOURCES_LIST =	main.c lexer.c
 
 SOURCES_DIR = src/
 SOURCES = $(addprefix $(SOURCES_DIR), $(SOURCES_LIST))
@@ -94,8 +95,8 @@ test: $(OBJECTS)
 	./test
 
 debug: clean
-	@$(CC) -g $(CFLAGS) $(SOURCES) -o debug
-	lldb ./debug 2 410 200 200
+	@$(CC) -g $(CFLAGS) $(OBJECTS) $(INCLUDES) $(LIB) -o debug
+	lldb ./debug
 
 ############################
 

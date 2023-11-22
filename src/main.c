@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2023/11/15 20:47:06 by darismen         ###   ########.fr       */
+/*   Updated: 2023/11/22 22:35:59 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,42 +15,66 @@
 void	ft_error(char *err_msg)
 {
 	ft_putendl_fd(err_msg, 2);
-	free_mini();
+	exit(EXIT_FAILURE);
 }
 
-/* void	parser(char *argv)
+void	ft_print_splits(char **splits)
 {
+	int	i;
+
+	i = 0;
+	while (splits[i])
+	{
+		printf("$%s\n", splits[i]);
+		i++;
+	}
 }
 
-void	lexer(char	*argv)
+void	ft_lexer(char *line)
 {
-} */
+	char	**trim;
+
+	trim = ft_cmdtrim(line);
+	ft_print_splits(trim);
+}
+
+// void	ft_dup_envp(t_mini *data, char **envp)
+// {
+// }
 
 void	ft_prompt(t_mini *data)
 {
 	char	*line;
 
 	line = "";
+	(void)data;
 	line = readline("minishell $ ");
 	if (line[0] != '\0')
 	{
-		printf("%s\n", line);
+		//printf("%s\n", line);
 		add_history(line);
-		ft_lexer(data);
-		ft_parser(data);
+		ft_lexer(line);
 	}
 	free(line);
 }
 
-// int	main(int argc, char **argv, char **envp)
-int	main(void)
+/**
+ * @brief main
+ * 
+ * @param argc 
+ * @param argv 
+ * @param envp 
+ * @return int 
+ */
+int	main(int argc, char **argv, char **envp)
 {
 	t_mini	data;
 
-	// (void)argv;
-	// if (argc > 1)
-	// 	ft_error("Arg Error.");
-	// ft_duplicate_envp(&data, envp);
+	(void)argv;
+	if (argc > 1)
+		ft_error("Arg Error.");
+	(void)envp;
+	// ft_dup_envp(&data, envp);
 	while (1)
 	{
 		ft_prompt(&data);

@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2023/11/15 20:41:19 by darismen         ###   ########.fr       */
+/*   Updated: 2023/11/22 22:19:09 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,13 @@
 
 # pragma endregion
 
+/**
+ * @brief t_env: linked list with all enviroment variables
+ * @param nm variable's name
+ * @param val variable's value
+ * @param equal int = 1 has an equal sign, int = 0 does not.
+ * @param next pointer to the next env
+ */
 typedef struct s_env
 {
 	char			*nm;
@@ -57,6 +64,12 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+/**
+ * @brief t_prompt: data structure for the prompt.
+ * @param cmds: Una lista enlazada que almacenará comandos (estructuras t_mini).
+ * @param envp: Un array que contiene las variables de entorno del shell.
+ * @param pid: El identificador de proceso de la instancia actual del shell.
+ */
 typedef struct s_prompt
 {
 	t_list	*cmds;
@@ -64,6 +77,14 @@ typedef struct s_prompt
 	pid_t	pid;
 }		t_prompt;
 
+/**
+ * @brief t_mini: data structure for each command?
+ * @param full_cmd: Un arreglo que contiene el comando y sus argumentos.
+ * @param full_path: La ruta completa del ejecutable si no es un comando 
+ * interno (NULL si es un comando interno).
+ * @param infile: Descriptor de archivo para la entrada del comando.
+ * @param outfile: Descriptor de archivo para la salida del comando.
+ */
 typedef struct s_mini
 {
 	char	**full_cmd;
@@ -72,5 +93,13 @@ typedef struct s_mini
 	int		infile;
 	int		outfile;
 }		t_mini;
+
+/* Functions */
+
+void	ft_error(char *err_msg);
+
+/* Lexer */
+
+char	**ft_cmdtrim(char *s);
 
 #endif

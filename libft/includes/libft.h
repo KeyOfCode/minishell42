@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:41:05 by darismen          #+#    #+#             */
-/*   Updated: 2023/04/19 11:16:48 by darismen         ###   ########.fr       */
+/*   Updated: 2023/11/22 22:13:34 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,9 @@ void			*ft_calloc(unsigned int count, unsigned int size);
 /* Allocates sufficient memory for a copy of the string s1, does the copy, and
      returns a pointer to it. */
 char			*ft_strdup(const char *s1);
+/* Allocates sufficient memory for a copy of the string s1, does the copy, and
+     returns a pointer to it. */
+char			*ft_strndup(const char *s1, size_t n);
 /* ************************************************************************** */
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_strjoin(char const *s1, char const *s2);

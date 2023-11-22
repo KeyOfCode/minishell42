@@ -6,12 +6,27 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 10:50:54 by darismen          #+#    #+#             */
-/*   Updated: 2022/10/20 12:58:20 by darismen         ###   ########.fr       */
+/*   Updated: 2023/11/22 20:19:07 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/**
+ * @brief DESCRIPTION
+	 The strchr() function locates the first occurrence of c (converted to a
+	 char) in the string pointed to by s.  The terminating null character is
+	 considered to be part of the string; therefore if c is `\0', the func-
+	 tions locate the terminating `\0'.
+
+	 The strrchr() function is identical to strchr(), except it locates the
+	 last occurrence of c.
+ * 
+ * @param str 
+ * @param c 
+ * @return The functions strchr() and strrchr() return a pointer to the located
+	 character, or NULL if the character does not appear in the string.
+ */
 char	*ft_strrchr(const char *str, int c)
 {
 	int			i;
@@ -69,15 +84,15 @@ char	*ft_strrchr(const char *str, int c)
 /*     char *strrchr(const char *s, int c);
 
 DESCRIPTION
-     The strchr() function locates the first occurrence of c (converted to a
-     char) in the string pointed to by s.  The terminating null character is
-     considered to be part of the string; therefore if c is `\0', the func-
-     tions locate the terminating `\0'.
+	 The strchr() function locates the first occurrence of c (converted to a
+	 char) in the string pointed to by s.  The terminating null character is
+	 considered to be part of the string; therefore if c is `\0', the func-
+	 tions locate the terminating `\0'.
 
-     The strrchr() function is identical to strchr(), except it locates the
-     last occurrence of c.
+	 The strrchr() function is identical to strchr(), except it locates the
+	 last occurrence of c.
 	 
 RETURN VALUES
-     The functions strchr() and strrchr() return a pointer to the located
-     character, or NULL if the character does not appear in the string.
+	 The functions strchr() and strrchr() return a pointer to the located
+	 character, or NULL if the character does not appear in the string.
 	 */
