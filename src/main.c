@@ -6,29 +6,12 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2023/11/22 22:35:59 by darismen         ###   ########.fr       */
+/*   Updated: 2023/11/24 18:59:02 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_error(char *err_msg)
-{
-	ft_putendl_fd(err_msg, 2);
-	exit(EXIT_FAILURE);
-}
-
-void	ft_print_splits(char **splits)
-{
-	int	i;
-
-	i = 0;
-	while (splits[i])
-	{
-		printf("$%s\n", splits[i]);
-		i++;
-	}
-}
 
 void	ft_lexer(char *line)
 {

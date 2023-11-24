@@ -5,6 +5,7 @@ NAME = minishell
 CC=			gcc
 RM=			rm -f
 CFLAGS=		-Wall -Wextra -Werror
+SANITZ=		-fsanitize=address
 LIBFT =		libft/libft.a
 INCLUDES=	$(LIBFT)
 HEADER=		include/minishell.h
@@ -17,7 +18,8 @@ BRANCH:=	""
 
 ############################
 
-SOURCES_LIST =	main.c lexer.c
+#SOURCES_LIST =	main.c lexer.c
+SOURCES_LIST =	test.c lexer.c utils.c
 
 SOURCES_DIR = src/
 SOURCES = $(addprefix $(SOURCES_DIR), $(SOURCES_LIST))
@@ -91,12 +93,12 @@ git:
 	./push.sh
 
 test: $(OBJECTS) 
-	@$(CC) -g $(CFLAGS) $(OBJECTS) $(LIBS) $(HEADERS) test.c -o test
+	@$(CC) -g $(CFLAGS) $(OBJECTS) $(INCLUDES) $(LIB) test.c -o test
 	./test
 
-debug: clean
-	@$(CC) -g $(CFLAGS) $(OBJECTS) $(INCLUDES) $(LIB) -o debug
-	lldb ./debug
+debug: clean $(OBJECTS) 
+	@$(CC) -g $(CFLAGS) $(SANITZ) $(OBJECTS) $(INCLUDES) $(LIB) -o debug
+	lldb ./debug "Hola como estas"
 
 ############################
 

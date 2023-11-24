@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2023/11/22 22:35:13 by darismen         ###   ########.fr       */
+/*   Updated: 2023/11/24 20:10:58 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	is_q_pair(char *str, size_t first, char q)
 	int	i;
 
 	i = first + 1;
-	while (str[i] != '\0' || str[i] != q)
+	while (str[i] != '\0' && str[i] != q)
 		i++;
 	if (str[i] == q)
 		return (1);
@@ -30,7 +30,7 @@ int	ft_quotes(char *s, size_t i, char q)
 	if (is_q_pair(s, i, q))
 	{
 		i++;
-		while (s[i] != q)
+		while (s[i] != q && s[i] != '\0')
 			i++;
 		return (i);
 	}
@@ -52,7 +52,8 @@ static size_t	ft_count_splits(char *s, size_t size, char c)
 			i++;
 		if (s[i])
 			size++;
-		while (s[i] != c)
+		ft_putendl_fd(&s[i], 1);
+		while (s[i] != c && s[i] != '\0')
 		{
 			if (s[i] == '\"')
 				i = ft_quotes(s, i, '\"');
@@ -60,17 +61,17 @@ static size_t	ft_count_splits(char *s, size_t size, char c)
 				i = ft_quotes(s, i, '\'');
 			i++;
 		}
+		ft_putendl_fd(&s[i], 1);
 	}
 	return (size);
 }
 
 char	*ft_store_string(char *s, char c)
 {
-	size_t	i;
-	size_t	j;
-	char	*str;
+	static size_t	i = 0;
+	size_t			j;
+	char			*str;
 
-	i = 0;
 	while (s[i] == c && s[i])
 		i++;
 	j = i;
@@ -84,8 +85,8 @@ char	*ft_store_string(char *s, char c)
 	}
 	if (i > j)
 	{
-		str = (char *)malloc(sizeof(char) * ((i - j) + 1));
-		return (ft_strndup(&s[j], i - j));
+		str = ft_strndup(&s[j], i - j);
+		return (str);
 	}
 	return (0);
 }
@@ -100,7 +101,7 @@ char	**ft_cmdtrim(char *s)
 	size = ft_count_splits(s, size, ' ');
 	out = (char **)malloc(sizeof(char *) * (size + 1));
 	if (!s || !out)
-		return (0);
+		return (NULL);
 	i = 0;
 	while (i < size)
 	{

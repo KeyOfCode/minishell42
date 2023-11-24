@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2023/11/22 21:14:23 by darismen         ###   ########.fr       */
+/*   Updated: 2023/11/24 18:59:07 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,22 @@ int	is_whitespace(char c)
 		return (1);
 	else
 		return (0);
+}
+
+void	ft_error(char *err_msg)
+{
+	ft_putendl_fd(err_msg, 2);
+	exit(EXIT_FAILURE);
+}
+
+void	ft_print_splits(char **splits)
+{
+	int	i;
+
+	i = 0;
+	while (splits[i])
+	{
+		printf("$%s\n", splits[i]);
+		i++;
+	}
 }

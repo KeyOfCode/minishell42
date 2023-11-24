@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2023/11/22 22:19:09 by darismen         ###   ########.fr       */
+/*   Updated: 2023/11/24 18:54:45 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_mini
 /* Functions */
 
 void	ft_error(char *err_msg);
+void	ft_print_splits(char **splits);
 
 /* Lexer */
 
