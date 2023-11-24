@@ -18,8 +18,8 @@ BRANCH:=	""
 
 ############################
 
-#SOURCES_LIST =	main.c lexer.c
-SOURCES_LIST =	test.c lexer.c utils.c
+SOURCES_LIST =	main.c lexer.c utils.c
+# SOURCES_LIST =	test.c lexer.c utils.c
 
 SOURCES_DIR = src/
 SOURCES = $(addprefix $(SOURCES_DIR), $(SOURCES_LIST))
@@ -93,11 +93,11 @@ git:
 	./push.sh
 
 test: $(OBJECTS) 
-	@$(CC) -g $(CFLAGS) $(OBJECTS) $(INCLUDES) $(LIB) test.c -o test
+	@$(CC) -g $(CFLAGS) $(SANITZ) $(OBJECTS) $(INCLUDES) $(LIB) -o test
 	./test
 
 debug: clean $(OBJECTS) 
-	@$(CC) -g $(CFLAGS) $(SANITZ) $(OBJECTS) $(INCLUDES) $(LIB) -o debug
+	@$(CC) -g $(CFLAGS) $(OBJECTS) $(INCLUDES) $(LIB) -o debug
 	lldb ./debug "Hola como estas"
 
 ############################

@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2023/11/24 20:10:58 by darismen         ###   ########.fr       */
+/*   Updated: 2023/11/24 20:38:55 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static size_t	ft_count_splits(char *s, size_t size, char c)
 			i++;
 		if (s[i])
 			size++;
-		ft_putendl_fd(&s[i], 1);
 		while (s[i] != c && s[i] != '\0')
 		{
 			if (s[i] == '\"')
@@ -61,21 +60,21 @@ static size_t	ft_count_splits(char *s, size_t size, char c)
 				i = ft_quotes(s, i, '\'');
 			i++;
 		}
-		ft_putendl_fd(&s[i], 1);
 	}
 	return (size);
 }
 
-char	*ft_store_string(char *s, char c)
+char	*ft_store_string(char *s, char c, size_t *pos)
 {
-	static size_t	i = 0;
+	size_t			i;
 	size_t			j;
 	char			*str;
 
+	i = *pos;
 	while (s[i] == c && s[i])
 		i++;
 	j = i;
-	while (s[i] != c)
+	while (s[i] != c && s[i] != '\0')
 	{
 		if (s[i] == '\"')
 			i = ft_quotes(s, i, '\"');
@@ -86,6 +85,7 @@ char	*ft_store_string(char *s, char c)
 	if (i > j)
 	{
 		str = ft_strndup(&s[j], i - j);
+		*pos = i;
 		return (str);
 	}
 	return (0);
@@ -95,6 +95,7 @@ char	**ft_cmdtrim(char *s)
 {
 	size_t	size;
 	size_t	i;
+	size_t	pos;
 	char	**out;
 
 	size = 0;
@@ -103,9 +104,10 @@ char	**ft_cmdtrim(char *s)
 	if (!s || !out)
 		return (NULL);
 	i = 0;
+	pos = 0;
 	while (i < size)
 	{
-		out[i] = ft_store_string(s, ' ');
+		out[i] = ft_store_string(s, ' ', &pos);
 		i++;
 	}
 	out[i] = NULL;
