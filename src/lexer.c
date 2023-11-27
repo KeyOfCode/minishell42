@@ -6,28 +6,35 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2023/11/27 18:49:36 by darismen         ###   ########.fr       */
+/*   Updated: 2023/11/27 21:01:40 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int	is_q_pair(char *str, size_t first, char q)
+/**
+ * @note First IF checks: ???
+ * @note Second IF checks if it's << or <
+ * 
+ */
+void	ft_spchar(char *str, size_t *i, size_t *size, char *spc)
 {
-	int	i;
-
-	i = first + 1;
-	while (str[i] != '\0' && str[i] != q)
-		i++;
-	if (str[i] == q)
-		return (1);
+	if (str[*i] && !ft_strchr(spc, str[*i - 1]))
+		(*size)++;
+	if ((str[*i] == '<' && str[*i + 1] == '<')
+		|| (str[*i] == '>' && str[*i + 1] == '>'))
+		(*i) += 2;
 	else
-		return (0);
+		(*i)++;
 }
 
 int	ft_quotes(char *s, size_t i, char q)
 {
-	if (is_q_pair(s, i, q))
+	int	j;
+
+	j = i + 1;
+	while (s[j] != '\0' && s[j] != q)
+		j++;
+	if (s[j] == q)
 	{
 		i++;
 		while (s[i] != q && s[i] != '\0')
@@ -41,45 +48,52 @@ int	ft_quotes(char *s, size_t i, char q)
 	}
 }
 
-size_t	ft_count_splits(char *s, size_t size, char c)
+size_t	ft_count_splits(char *str, size_t size, char *spc)
 {
 	size_t	i;
 
 	i = 0;
-	while (s[i] != '\0')
+	while (str[i] != '\0')
 	{
-		while (s[i] == c)
+		while (ft_strchr(spc, str[i]))
 			i++;
-		if (s[i])
+		if (str[i])
 			size++;
-		while (s[i] != c && s[i] != '\0')
+		while (str[i] != ' ' && str[i] != '\0')
 		{
-			if (s[i] == '\"')
-				i = ft_quotes(s, i, '\"');
-			else if (s[i] == '\'')
-				i = ft_quotes(s, i, '\'');
+			if (str[i] == '\"')
+				i = ft_quotes(str, i, '\"');
+			else if (str[i] == '\'')
+				i = ft_quotes(str, i, '\'');
+			else if (ft_strchr("|<>", str[i]))
+				ft_spchar(str, &i, &size, "|<>");
 			i++;
 		}
 	}
 	return (size);
 }
 
-char	*ft_store_string(char *s, char c, size_t *pos)
+/**
+ * @note I still can't store only the spcharacters, fix later.
+ */
+char	*ft_store_string(char *s, char *spc, size_t *pos)
 {
 	size_t			i;
 	size_t			j;
 	char			*str;
 
 	i = *pos;
-	while (s[i] == c && s[i])
+	while (ft_strchr(spc, s[i]) && s[i])
 		i++;
 	j = i;
-	while (s[i] != c && s[i] != '\0')
+	while (s[i] != ' ' && s[i] != '\0')
 	{
 		if (s[i] == '\"')
 			i = ft_quotes(s, i, '\"');
 		else if (s[i] == '\'')
 			i = ft_quotes(s, i, '\'');
+		else if (ft_strchr("|<>", str[i]))
+			ft_spchar(str, &i, &pos, "|<>");
 		i++;
 	}
 	if (i > j)
@@ -99,7 +113,8 @@ char	**ft_cmdtrim(char *s)
 	char	**out;
 
 	size = 0;
-	size = ft_count_splits(s, size, ' ');
+	size = ft_count_splits(s, size, " |<>");
+	printf("nº tokens: %zu\n", size);
 	out = (char **)malloc(sizeof(char *) * (size + 1));
 	if (!s || !out)
 		return (NULL);
@@ -107,7 +122,7 @@ char	**ft_cmdtrim(char *s)
 	pos = 0;
 	while (i < size)
 	{
-		out[i] = ft_store_string(s, ' ', &pos);
+		out[i] = ft_store_string(s, " |<>", &pos);
 		i++;
 	}
 	out[i] = NULL;
