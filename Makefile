@@ -19,10 +19,11 @@ BRANCH:=	""
 ############################
 
 SOURCES_LIST =	main.c lexer.c utils.c
-# SOURCES_LIST =	test.c lexer.c utils.c
+TEST_LIST =	test.c lexer.c utils.c
 
 SOURCES_DIR = src/
 SOURCES = $(addprefix $(SOURCES_DIR), $(SOURCES_LIST))
+TESTS = $(addprefix $(SOURCES_DIR), $(TEST_LIST))
 
 # BONUS_LIST =	
 
@@ -31,6 +32,7 @@ SOURCES = $(addprefix $(SOURCES_DIR), $(SOURCES_LIST))
 
 OBJS_DIR = obj/
 OBJECTS = $(SOURCES:.c=.o)
+TEST_OBJ = $(TESTS:.c=.o)
 # OBJECTS = $(addprefix $(OBJECTS_DIR), $(SOURCES_LIST:.c=.o))
 # OBJECTS_B	= $(BONUS:.c=.o)
 
@@ -92,7 +94,7 @@ push:
 git:
 	./push.sh
 
-test: $(OBJECTS) 
+test: $(TEST_OBJ) 
 	@$(CC) -g $(CFLAGS) $(SANITZ) $(OBJECTS) $(INCLUDES) $(LIB) -o test
 	./test
 

@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2023/11/24 20:38:55 by darismen         ###   ########.fr       */
+/*   Updated: 2023/11/27 18:49:36 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_quotes(char *s, size_t i, char q)
 	}
 }
 
-static size_t	ft_count_splits(char *s, size_t size, char c)
+size_t	ft_count_splits(char *s, size_t size, char c)
 {
 	size_t	i;
 

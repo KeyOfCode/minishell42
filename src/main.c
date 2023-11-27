@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2023/11/24 20:27:46 by darismen         ###   ########.fr       */
+/*   Updated: 2023/11/27 19:45:31 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	ft_lexer(char *line)
 
 	trim = ft_cmdtrim(line);
 	ft_print_splits(trim);
+	// ft_expander(trim);
+	// trim = ft_cmdsubsplit(trim);
 	free(trim);
 }
 
