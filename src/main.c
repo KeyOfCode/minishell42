@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2023/12/01 19:42:07 by darismen         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:46:27 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int	main(int argc, char **argv, char **envp)
 	if (argc > 1)
 		ft_error("Arg Error.");
 	dup_matrix(&data, envp);
+	if (!data.envp)
+		ft_error("Env Error.");
 	while (1)
 	{
 		ft_prompt(&data);
