@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2023/12/01 17:52:18 by darismen         ###   ########.fr       */
+/*   Updated: 2023/12/01 18:06:40 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,8 @@ char	*ft_store_string(char *str, size_t *pos)
 		}
 	}
 	if (i > j)
-	{
 		*pos = i;
-		return (ft_strndup(&str[j], i - j));
-	}
-	return (0);
+	return (ft_strndup(&str[j], i - j));
 }
 	/* printf("i: %zu\t j: %zu\n", i, j);
 	printf("&str[j]: %s\n", &str[j]);

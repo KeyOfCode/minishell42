@@ -6,19 +6,20 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2023/11/29 18:48:23 by darismen         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:42:07 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_lexer(char *line)
+void	ft_lexer(t_mini *data)
 {
 	char	**trim;
 
-	trim = ft_cmdtrim(line);
+	data->full_cmd = ft_cmdtrim(data->cmdline);
+	trim = data->full_cmd;
 	ft_print_splits(trim);
-	// ft_expander(trim);
+	// ft_expander(data);
 	// trim = ft_cmdsubsplit(trim);
 	free(trim);
 }
@@ -29,18 +30,22 @@ void	ft_lexer(char *line)
 
 void	ft_prompt(t_mini *data)
 {
-	char	*line;
-
-	line = "";
-	(void)data;
-	line = readline("minishell $ ");
-	if (line[0] != '\0')
+	data->cmdline = readline("minishell $ ");
+	if (data->cmdline[0] != '\0')
 	{
-		//printf("%s\n", line);
-		add_history(line);
-		ft_lexer(line);
+		add_history(data->cmdline);
+		ft_lexer(data);
 	}
-	free(line);
+	free(data->cmdline);
+}
+
+void	ft_init_data(t_mini *data)
+{
+	data = (t_mini *)malloc(sizeof (t_mini));
+	data->full_cmd = NULL;
+	data->cmdline = NULL;
+	data->envp = NULL;
+	data->full_path = NULL;
 }
 
 /**
@@ -58,8 +63,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	if (argc > 1)
 		ft_error("Arg Error.");
-	(void)envp;
-	// ft_dup_envp(&data, envp);
+	dup_matrix(&data, envp);
 	while (1)
 	{
 		ft_prompt(&data);

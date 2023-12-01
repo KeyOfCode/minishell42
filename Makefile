@@ -18,8 +18,8 @@ BRANCH:=	""
 
 ############################
 
-SOURCES_LIST =	main.c lexer.c utils.c
-TEST_LIST =	test.c lexer.c utils.c
+SOURCES_LIST =	main.c lexer.c utils.c matrix_utils.c
+TEST_LIST =	test.c lexer.c utils.c matrix_utils.c
 
 SOURCES_DIR = src/
 SOURCES = $(addprefix $(SOURCES_DIR), $(SOURCES_LIST))
@@ -99,8 +99,9 @@ test: $(TEST_OBJ)
 	./test
 
 debug: clean $(OBJECTS) 
-	@$(CC) -g $(CFLAGS) $(OBJECTS) $(INCLUDES) $(LIB) -o debug
-	lldb ./debug "Hola como estas"
+	@$(CC) -g $(CFLAGS) $(SANITZ) $(OBJECTS) $(INCLUDES) $(LIB) -o debug
+#	lldb ./debug
+	./debug
 
 ############################
 

@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2023/11/27 20:07:13 by darismen         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:29:41 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,19 +88,25 @@ typedef struct s_prompt
 typedef struct s_mini
 {
 	char	**full_cmd;
-	t_env	**env_lst;
+	char	*cmdline;
+	// t_env	**env_lst;
+	char	**envp;
 	char	*full_path;
-	int		infile;
-	int		outfile;
+	// int		infile;
+	// int		outfile;
 }		t_mini;
 
 /* Functions */
 
 void	ft_error(char *err_msg);
 void	ft_print_splits(char **splits);
+void	dup_matrix(t_mini *data, char **matrix);
 
 /* Lexer */
 
 char	**ft_cmdtrim(char *s);
+
+/* Expander */
+void	ft_expander(t_mini *data);
 
 #endif
