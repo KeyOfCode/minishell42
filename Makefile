@@ -95,7 +95,7 @@ git:
 	./push.sh
 
 test: $(TEST_OBJ) 
-	@$(CC) -g $(CFLAGS) $(SANITZ) $(OBJECTS) $(INCLUDES) $(LIB) -o test
+	@$(CC) -g $(CFLAGS) $(SANITZ) $(TEST_OBJ)  $(INCLUDES) $(LIB) -o test
 	./test
 
 debug: clean $(OBJECTS) 

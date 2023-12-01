@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:41:05 by darismen          #+#    #+#             */
-/*   Updated: 2023/11/24 20:38:30 by darismen         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:40:32 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ void			*ft_memmove(void *dest, const void *src, unsigned int len);
 /* Copies up to dstsize - 1 characters from the string src to dst*/
 size_t			ft_strlcpy(char *dest, char *src, size_t size);
 /* Locates the first occurrence of c in string s. 
-	Returns a pointer to the byte located, or NULL if no such byte exists within n
-     bytes.*/
+	Returns a pointer to the byte located, 
+	or NULL if no such byte exists within n
+	bytes.*/
 void			*ft_memchr(const void *s, int c, size_t n);
 /* compares byte string s1 against byte string s2.  
 	Both strings are assumed to be n bytes long. */
