@@ -6,7 +6,7 @@
 /*   By: noelgarc <noelgarc@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:15:48 by noelgarc          #+#    #+#             */
-/*   Updated: 2023/11/20 21:17:02 by noelgarc         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:35:36 by noelgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,40 +33,38 @@ typedef struct s_prompt
 	t_list	*cmds;
 	char	**envp;
 	pid_t	pid;
-}			t_prompt;
+}		t_prompt;
 
-typedef struct s_node
+typedef struct s_mini
 {
 	char	**full_cmd;
 	char	*full_path;
 	int		infile;
 	int		outfile;
-}			t_node;
+}		t_mini;
 
-// get path
-
-char    *get_full_path(char *file);
-
-// absolute path
-
+/* list_utils */
+void	free_list(t_list *list);
 t_list	*create_node(char *str);
 void	print_list(t_list *list);
-void	free_list(t_list *list);
+t_list	*dup_list(t_list *list);
+t_list	*matrix_to_list(char **str);
+
+/* matrix_utils */
 char	**free_splitted(char **splitted);
 
-t_list	*matrix_to_list(char **str);
+/* get_path */
+char	*get_full_path(char *file);
+
+/* absolute_path */
 t_list	*remove_last_node(t_list **list);
 t_list	*add_or_delete(t_list *list);
 char	*strjoin_list(t_list *list);
-
 char	*get_absolute_path(char *str);
-t_list	*dup_list(t_list *list);
 
-
-
-
-
-
+/* new_pipe_node */
+void	init_node(t_mini *node);
+void	create_pipe_node(t_list **cmds);
 
 
 #endif

@@ -6,8 +6,16 @@ CFLAGS = -Wall -Werror -Wextra -fsanitize=address
 CLEAN = rm -f
 
 SRC := \
-	src/get_path.c \
-	src/absolute_path.c
+	src/parser/new_pipe_node.c \
+
+#	src/expander/expand_env.c \
+	src/expander/get_path.c \
+	src/expander/absolute_path.c \
+	src/parser/new_pipe_node.c \
+	src/parser/parser.c \
+	src/parser/redierctions.c \
+	src/utils/list_utils.c \
+	src/utils/matrix_utils.c \
 
 OBJS = $(SRC:.c=.o)
 

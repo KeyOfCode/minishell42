@@ -6,11 +6,11 @@
 /*   By: noelgarc <noelgarc@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:26:33 by noelgarc          #+#    #+#             */
-/*   Updated: 2023/11/20 21:33:42 by noelgarc         ###   ########.fr       */
+/*   Updated: 2023/11/30 18:43:06 by noelgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 char	*get_full_path(char *file)
 {
