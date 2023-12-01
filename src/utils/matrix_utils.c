@@ -6,25 +6,54 @@
 /*   By: noelgarc <noelgarc@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2023/11/30 18:43:32 by noelgarc         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:01:07 by noelgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-char	**free_splitted(char **splitted)
+char	**free_matrix(char **matrix)
 {
 	int	i;
 
 	i = 0;
-	if (splitted != NULL)
+	if (matrix != NULL)
 	{
-		while (splitted[i] != NULL)
+		while (matrix[i] != NULL)
 		{
-			free(splitted[i]);
+			free(matrix[i]);
 			i++;
 		}
-		free(splitted);
+		free(matrix);
 	}
 	return (NULL);
+}
+
+char	**dup_matrix(char **matrix)
+{
+	int		i;
+	int		rows;
+	char	**dup_matrix;
+
+	if (!matrix)
+		return (NULL);
+	rows = 0;
+	while (matrix != NULL)
+		rows++;
+	dup_matrix = (char **)malloc((rows + 1) * sizeof(char *));
+	if (!dup_matrix)
+		return (NULL);
+	i = 0;
+	while (i < rows)
+	{
+		dup_matrix[i] = ft_strdup(matrix[i]);
+		if (!dup_matrix[i])
+		{
+			free_matrix(dup_matrix);
+			return (NULL);
+		}
+		i++;
+	}
+	dup_matrix[rows] = NULL;
+	return (dup_matrix);
 }

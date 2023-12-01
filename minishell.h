@@ -6,7 +6,7 @@
 /*   By: noelgarc <noelgarc@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:15:48 by noelgarc          #+#    #+#             */
-/*   Updated: 2023/12/01 16:35:36 by noelgarc         ###   ########.fr       */
+/*   Updated: 2023/12/01 18:59:22 by noelgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ t_list	*dup_list(t_list *list);
 t_list	*matrix_to_list(char **str);
 
 /* matrix_utils */
-char	**free_splitted(char **splitted);
+char	**free_matrix(char **splitted);
+char	**dup_matrix(char **matrix);
 
 /* get_path */
 char	*get_full_path(char *file);

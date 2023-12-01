@@ -6,7 +6,7 @@
 /*   By: noelgarc <noelgarc@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 20:13:56 by noelgarc          #+#    #+#             */
-/*   Updated: 2023/12/01 16:48:03 by noelgarc         ###   ########.fr       */
+/*   Updated: 2023/12/01 18:56:30 by noelgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char	*get_absolute_path(char *str)
 	path_list = matrix_to_list(path_splitted);
 	final_list = add_or_delete(path_list);
 	str = strjoin_list(final_list);
-	free_splitted(path_splitted);
+	free_matrix(path_splitted);
 	free_list(path_list);
 	free_list(final_list);
 	return (str);
