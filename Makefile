@@ -18,8 +18,8 @@ BRANCH:=	""
 
 ############################
 
-SOURCES_LIST =	main.c lexer.c utils.c matrix_utils.c
-TEST_LIST =	test.c lexer.c utils.c matrix_utils.c
+SOURCES_LIST =	main.c lexer.c expander.c utils.c matrix_utils.c
+TEST_LIST =	test.c lexer.c expander.c utils.c matrix_utils.c
 
 SOURCES_DIR = src/
 SOURCES = $(addprefix $(SOURCES_DIR), $(SOURCES_LIST))

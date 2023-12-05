@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2023/12/01 19:44:14 by darismen         ###   ########.fr       */
+/*   Updated: 2023/12/04 19:11:31 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ void	dup_matrix(t_mini *data, char **matrix)
 	if (!matrix)
 		return ;
 	rows = 0;
-	i = 0;
-	while (matrix[i++] != NULL)
+	while (matrix[rows])
 		rows++;
 	dup_matrix = (char **)malloc((rows + 1) * sizeof(char *));
 	if (!dup_matrix)

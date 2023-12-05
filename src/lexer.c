@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2023/12/01 18:06:40 by darismen         ###   ########.fr       */
+/*   Updated: 2023/12/04 18:11:34 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,7 @@ char	*ft_store_string(char *str, size_t *pos)
 	while (str[i] == ' ' && str[i])
 		i++;
 	j = i;
-	if (ft_strchr("|<>", str[i]) && str[i] != '\0')
-		ft_spchar(str, &i, pos, 1);
-	else
+	if (!ft_strchr(" |<>", str[i]) && str[i] != '\0')
 	{
 		while (!ft_strchr(" |<>", str[i]) && str[i] != '\0')
 		{
@@ -109,6 +107,8 @@ char	*ft_store_string(char *str, size_t *pos)
 			i++;
 		}
 	}
+	else
+		ft_spchar(str, &i, pos, 1);
 	if (i > j)
 		*pos = i;
 	return (ft_strndup(&str[j], i - j));

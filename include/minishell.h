@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2023/12/01 19:29:41 by darismen         ###   ########.fr       */
+/*   Updated: 2023/12/05 18:17:23 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,16 @@
 // Keywords
 # define FUNCTION "FUNCTION"
 # define LET "LET"
+# define PATH_MAX 255
 
 # pragma endregion
+
+typedef struct s_cmd_lst
+{
+	char			**c_args;
+	char			*c_abs_path;
+	char			*c_env_path;
+}	t_cmd_lst;
 
 /**
  * @brief t_env: linked list with all enviroment variables
