@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2023/12/05 18:17:23 by darismen         ###   ########.fr       */
+/*   Updated: 2023/12/05 18:30:19 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,20 @@
 
 # pragma endregion
 
+/**
+ * @brief   Each node can be a command or a redirection node,
+ * 	the difference between both types is the data contained within.
+ *  
+ *  BEWARE OF THIS !!! parser only fills 'type', 'c_args' & 'c_abs_path'
+ * 
+ * 	> c_args[0]		-> contains the cmd as the usu writes
+ *					(WITH or WITHOUT absolute path)
+ * 	> c_args[...]	-> contains the arguments and flags of the command
+ *  > c_abs_path	-> contains a copy of c_args[0] (WITH or WITHOUT abs_path)
+ *  > c_env_path	-> contains a copy of c_abs_path if it has an abs_path,
+ * 					OR a correct access path from $PATH
+ * 					when c_args[0] don't have abs_path
+ */
 typedef struct s_cmd_lst
 {
 	char			**c_args;

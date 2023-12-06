@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2023/12/04 19:19:22 by darismen         ###   ########.fr       */
+/*   Updated: 2023/12/06 18:07:31 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	ft_prompt(t_mini *data)
 
 void	ft_init_data(t_mini *data)
 {
-	data = (t_mini *)malloc(sizeof (t_mini));
 	data->full_cmd = NULL;
 	data->cmdline = NULL;
 	data->envp = NULL;
@@ -53,7 +52,6 @@ void	ft_init_data(t_mini *data)
  * @param argc 
  * @param argv 
  * @param envp 
- * @return int 
  */
 int	main(int argc, char **argv, char **envp)
 {
@@ -62,6 +60,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	if (argc > 1)
 		ft_error("Arg Error.");
+	ft_init_data(&data);
 	dup_matrix(&data, envp);
 	if (!data.envp)
 		ft_error("Env Error.");
