@@ -6,11 +6,11 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 11:34:13 by darismen          #+#    #+#             */
-/*   Updated: 2022/10/15 21:03:55 by darismen         ###   ########.fr       */
+/*   Updated: 2023/12/08 20:29:58 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/libft.h"
 #include <stdlib.h>
 
 size_t	priv_substr_strlen(const char *s)
@@ -23,6 +23,14 @@ size_t	priv_substr_strlen(const char *s)
 	return (l);
 }
 
+/**
+ * @brief Creates a substring from a string
+ * 
+ * @param s 	input string
+ * @param start	starting position
+ * @param len 	lenght of substring
+ * @return char* 
+ */
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*subs;

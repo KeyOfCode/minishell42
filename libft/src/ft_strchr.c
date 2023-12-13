@@ -6,10 +6,19 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 10:50:05 by darismen          #+#    #+#             */
-/*   Updated: 2022/09/27 16:07:32 by darismen         ###   ########.fr       */
+/*   Updated: 2023/12/11 17:21:04 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/**
+ * @brief Locates the first occurrence of c
+ * 
+ * @param s 
+ * @param c 
+ * @return A pointer to 
+	 the located character, or NULL if the character does not 
+	 appear in the string.
+ */
 char	*ft_strchr(const char *s, int c)
 {
 	c = (unsigned char)c;

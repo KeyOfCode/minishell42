@@ -44,34 +44,21 @@ $(LIBFT):
 	@make -C libft/ all
 # $(LEAK)
 
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
 $(NAME): $(OBJECTS) 
-	$(CC) $(CFLAGS) $(OBJECTS) $(INCLUDES) $(LIB) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJECTS) $(INCLUDES) $(LIB) -o $(NAME)
 	@echo "$(NAME): $(GREEN)$(NAME) was created$(RESET)"
 
-# $(NAME): $(INCLUDES)
-# 	$(CC) src/main.c libft/libft.a include/minishell.h -o $(NAME)
-# 	@echo "$(NAME): $(GREEN)$(NAME) was created$(RESET)"
-
-# bonus: $(NAME_B)
-
-# $(NAME_B): $(OBJECTS_B)
-# 	$(CC) $(CFLAGS) $(OBJECTS_B) -o $(NAME_B)
-# 	@echo "$(NAME): $(GREEN)$(NAME_B) was created$(RESET)"
+# $(OBJECTS):
+# 	@rm -rf objs
+# 	@mkdir objs
+# 	@mv $(OBJECTS) objs
 
 exe:
 	@make
 	./$(NAME)
-
-%.o: %.c
-#	mkdir -pv $(@)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-# $(OBJ_DIR)%.o: $(SRC_DIR)%.c 
-# 	mkdir -p $(@D)
-# 	$(CC) $(CFLAGS) -c $< -o $@
-
-# $(OBJECTS):
-# 	@mkdir $(OBJ_DIR)
 
 clean:
 	@rm -f $(NAME)
@@ -80,6 +67,10 @@ clean:
 	
 fclean:		clean
 	@find src -name "*.o" -delete
+	@make -C libft/ clean
+	@rm -f $(LIBFT)
+	@rm -rf objs
+	@mkdir objs
 	@echo "$(RED)Deleting all .o Files$(RESET)"
 	
 re:		fclean all

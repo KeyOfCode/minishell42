@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:41:05 by darismen          #+#    #+#             */
-/*   Updated: 2023/12/01 17:40:32 by darismen         ###   ########.fr       */
+/*   Updated: 2023/12/08 18:26:17 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ typedef struct s_list
 int				ft_isalpha(int c);
 /* Check if digit */
 int				ft_isdigit(int c);
+/* Check if digit */
+int				ft_islower(int c);
+/* Check if digit */
+int				ft_isupper(int c);
 /* Check if alphanumeric */
 int				ft_isalnum(int c);
 /* Check if is ASCII */
@@ -83,6 +87,7 @@ char			*ft_strdup(const char *s1);
      returns a pointer to it. */
 char			*ft_strndup(const char *s1, size_t n);
 /* ************************************************************************** */
+
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strtrim(char const *s1, char const *set);
@@ -94,6 +99,7 @@ void			ft_putchar_fd(char c, int fd);
 void			ft_putstr_fd(char *s, int fd);
 void			ft_putendl_fd(char *s, int fd);
 void			ft_putnbr_fd(int n, int fd);
+
 /* ************************************************************************** */
 /* t_list			*ft_lstnew(void *content);
 void			ft_lstadd_front(t_list **lst, t_list *new);

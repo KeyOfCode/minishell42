@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 19:36:33 by darismen          #+#    #+#             */
-/*   Updated: 2022/11/05 13:31:32 by darismen         ###   ########.fr       */
+/*   Updated: 2023/12/08 18:35:38 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_putptr(void *ptr)
 	return (count);
 }
 
-size_t	ft_strlen(const char *s)
+/* size_t	ft_strlen(const char *s)
 {
 	size_t	l;
 
@@ -79,4 +79,4 @@ size_t	ft_strlen(const char *s)
 	while (s[l] != 0)
 		l++;
 	return (l);
-}
+} */

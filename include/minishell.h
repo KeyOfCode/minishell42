@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2023/12/05 18:30:19 by darismen         ###   ########.fr       */
+/*   Updated: 2023/12/11 18:33:04 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@
  * 					OR a correct access path from $PATH
  * 					when c_args[0] don't have abs_path
  */
-typedef struct s_cmd_lst
+typedef struct s_cmd
 {
 	char			**c_args;
 	char			*c_abs_path;
 	char			*c_env_path;
-}	t_cmd_lst;
+}	t_cmd;
 
 /**
  * @brief t_env: linked list with all enviroment variables
@@ -109,10 +109,11 @@ typedef struct s_prompt
  */
 typedef struct s_mini
 {
-	char	**full_cmd;
-	char	*cmdline;
-	// t_env	**env_lst;
+	char	*prompt;
+	t_cmd	*cmd_list;
+	t_env	*env_lst;
 	char	**envp;
+	char	**full_cmd;
 	char	*full_path;
 	// int		infile;
 	// int		outfile;
@@ -122,11 +123,14 @@ typedef struct s_mini
 
 void	ft_error(char *err_msg);
 void	ft_print_splits(char **splits);
-void	dup_matrix(t_mini *data, char **matrix);
+char	**dup_matrix(char **matrix);
+void	ft_dup_envp(t_mini *data, char **envp);
+int		ft_env_forbidden_chars(char *name, int len);
 
 /* Lexer */
 
 char	**ft_cmdtrim(char *s);
+int		ft_quotes(char *s, size_t i, char q);
 
 /* Expander */
 void	ft_expander(t_mini *data);

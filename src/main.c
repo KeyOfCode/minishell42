@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2023/12/06 18:07:31 by darismen         ###   ########.fr       */
+/*   Updated: 2023/12/11 17:11:44 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,34 +15,49 @@
 void	ft_lexer(t_mini *data)
 {
 	char	**trim;
+	char	**trim_pipe;
+	// int		cmd_len;
+	int		i;
 
-	data->full_cmd = ft_cmdtrim(data->cmdline);
+	i = -1;
+	if (!data->prompt)
+	{
+		free(data);
+		exit(EXIT_SUCCESS);
+	}
+	data->full_cmd = ft_cmdtrim(data->prompt);
 	ft_expander(data);
 	trim = data->full_cmd;
-	ft_print_splits(trim);
+	trim_pipe = ft_split (data->prompt, '|');
+	// ft_print_splits(trim);
 	free(trim);
+	free(trim_pipe);
 }
 
-// void	ft_dup_envp(t_mini *data, char **envp)
+// void	ft_free_data(t_mini *data)
 // {
 // }
 
 void	ft_prompt(t_mini *data)
 {
-	data->cmdline = readline("minishell $ ");
-	if (data->cmdline[0] != '\0')
+	data->prompt = readline("minishell $ ");
+	if (data->prompt[0] != '\0')
 	{
-		add_history(data->cmdline);
+		add_history(data->prompt);
 		ft_lexer(data);
+		// ft_parser(data);
 	}
-	free(data->cmdline);
+	free(data->prompt);
+	// ft_free_data(data);
 }
 
 void	ft_init_data(t_mini *data)
 {
-	data->full_cmd = NULL;
-	data->cmdline = NULL;
+	data->prompt = NULL;
+	data->cmd_list = NULL;
+	data->env_lst = NULL;
 	data->envp = NULL;
+	data->full_cmd = NULL;
 	data->full_path = NULL;
 }
 
@@ -61,7 +76,8 @@ int	main(int argc, char **argv, char **envp)
 	if (argc > 1)
 		ft_error("Arg Error.");
 	ft_init_data(&data);
-	dup_matrix(&data, envp);
+	data.envp = envp;
+	ft_dup_envp(&data, envp);
 	if (!data.envp)
 		ft_error("Env Error.");
 	while (1)
