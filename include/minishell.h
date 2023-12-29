@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2023/12/11 18:33:04 by darismen         ###   ########.fr       */
+/*   Updated: 2023/12/29 15:12:16 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,12 @@
  */
 typedef struct s_cmd
 {
-	char			**c_args;
-	char			*c_abs_path;
-	char			*c_env_path;
+	char	**c_args;
+	char	*c_abs_path;
+	char	*c_env_path;
+	pid_t	pid;
+	int		infile;
+	int		outfile;
 }	t_cmd;
 
 /**
@@ -134,5 +137,7 @@ int		ft_quotes(char *s, size_t i, char q);
 
 /* Expander */
 void	ft_expander(t_mini *data);
+
+void	ft_cmdlst(t_mini *data);
 
 #endif

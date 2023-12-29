@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2023/12/11 17:11:44 by darismen         ###   ########.fr       */
+/*   Updated: 2023/12/29 15:11:59 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 void	ft_lexer(t_mini *data)
 {
 	char	**trim;
-	char	**trim_pipe;
-	// int		cmd_len;
 	int		i;
 
 	i = -1;
@@ -26,12 +24,16 @@ void	ft_lexer(t_mini *data)
 		exit(EXIT_SUCCESS);
 	}
 	data->full_cmd = ft_cmdtrim(data->prompt);
+	if (!data->full_cmd)
+	{
+		free(data);
+		exit(EXIT_SUCCESS);
+	}
 	ft_expander(data);
+	ft_cmdlst(data);
 	trim = data->full_cmd;
-	trim_pipe = ft_split (data->prompt, '|');
-	// ft_print_splits(trim);
+	ft_print_splits(trim);
 	free(trim);
-	free(trim_pipe);
 }
 
 // void	ft_free_data(t_mini *data)
