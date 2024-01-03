@@ -6,7 +6,7 @@
 /*   By: noelgarc <noelgarc@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2023/12/01 19:01:07 by noelgarc         ###   ########.fr       */
+/*   Updated: 2023/12/20 17:01:54 by noelgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@ char	**dup_matrix(char **matrix)
 	if (!matrix)
 		return (NULL);
 	rows = 0;
-	while (matrix != NULL)
+	while (*matrix != NULL)
+	{
+		matrix++;
 		rows++;
+	}
 	dup_matrix = (char **)malloc((rows + 1) * sizeof(char *));
 	if (!dup_matrix)
 		return (NULL);
