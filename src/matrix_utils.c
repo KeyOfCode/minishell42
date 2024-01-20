@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2023/12/11 18:32:23 by darismen         ###   ########.fr       */
+/*   Updated: 2024/01/20 15:48:23 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ void	ft_dup_envp(t_mini *data, char **envp)
 	i = -1;
 	while (envp[++i])
 	{
+		printf("Check!\n");
 		node = ft_2rows_split(envp[i]);
 		node->next = NULL;
 		if (!node)

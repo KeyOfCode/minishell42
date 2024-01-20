@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2023/12/29 15:11:59 by darismen         ###   ########.fr       */
+/*   Updated: 2024/01/20 15:51:00 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	ft_lexer(t_mini *data)
 {
-	char	**trim;
 	int		i;
 
 	i = -1;
@@ -31,11 +30,11 @@ void	ft_lexer(t_mini *data)
 	}
 	ft_expander(data);
 	ft_cmdlst(data);
-	trim = data->full_cmd;
-	ft_print_splits(trim);
-	free(trim);
 }
-
+	// char	**trim;
+	// free(trim);
+	// trim = data->full_cmd;
+	// ft_print_splits(trim);
 // void	ft_free_data(t_mini *data)
 // {
 // }
@@ -56,7 +55,7 @@ void	ft_prompt(t_mini *data)
 void	ft_init_data(t_mini *data)
 {
 	data->prompt = NULL;
-	data->cmd_list = NULL;
+	data->cmd_lst = NULL;
 	data->env_lst = NULL;
 	data->envp = NULL;
 	data->full_cmd = NULL;
