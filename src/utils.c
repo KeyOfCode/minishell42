@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/01/10 19:28:05 by darismen         ###   ########.fr       */
+/*   Updated: 2024/01/24 19:17:46 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_print_splits(char **splits)
 	i = 0;
 	while (splits[i])
 	{
-		printf("&%s\n", splits[i]);
+		printf("&%s--\n", splits[i]);
 		i++;
 	}
 }

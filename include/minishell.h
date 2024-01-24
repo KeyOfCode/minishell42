@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/01/20 17:13:35 by darismen         ###   ########.fr       */
+/*   Updated: 2024/01/24 19:58:30 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,8 @@ typedef struct s_prompt
 
 /**
  * @brief t_mini: data structure for each command?
- * @param cmd_lst: list of t_cmd nodes.
- * @param env_lst: list of t_env variables.
+ * @param cmd_lst: *list of t_cmd nodes.
+ * @param env_lst: *list of t_env variables.
  * @param full_cmd: Un arreglo que contiene el comando y sus argumentos.
  * @param full_path: La ruta completa del ejecutable si no es un comando 
  * interno (NULL si es un comando interno).
@@ -147,7 +147,7 @@ typedef struct s_prompt
 typedef struct s_mini
 {
 	char	*prompt;
-	t_cmd	*cmd_lst;
+	t_cmd	**cmd_lst;
 	int		cmd_count;
 	t_env	*env_lst;
 	char	**envp;
@@ -181,7 +181,7 @@ void	ft_parser(t_mini *data);
 /* Builtins */
 void	pwd(void);
 void	empty_export(t_mini *data);
-void	export(t_mini *data, char *name, char *val);
+void	export(t_mini *data, t_cmd *cmd);
 void	env(t_mini *data);
 void	unset(t_mini *data, char *str);
 

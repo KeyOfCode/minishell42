@@ -6,49 +6,35 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/01/20 17:15:57 by darismen         ###   ########.fr       */
+/*   Updated: 2024/01/24 19:47:39 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-//Check segfaults
-/* t_cmd	*ft_fillcmd(char **args, int *i)
+t_cmd	*ft_init_cmd(void)
 {
-	t_cmd	*newcmd;
-	int		j;
-	int		size;
+	t_cmd	*cmd;
 
-	size = 0;
-	while (args[size] && ft_strncmp(args[size], "|", 1))
-		size++;
-	j = 0;
-	newcmd = ft_calloc(1, sizeof(t_cmd));
-	newcmd->c_args = ft_calloc(size, sizeof(char *));
-	if (!newcmd)
+	cmd = ft_calloc(1, sizeof(t_cmd));
+	if (!cmd)
 		return (NULL);
-	printf("num of args: %d\n", size);
-	while (args[*i] && ft_strncmp(args[*i], "|", 1))
-	{
-		newcmd->c_args[j] = args[*i];
-		printf("newcmd->c_args[%d]: %s\n", j, newcmd->c_args[j]);
-		*i += 1;
-		j++;
-	}
-	newcmd->c_abs_path = &newcmd->c_abs_path[0];
-	return (newcmd);
-} */
-
-void	ft_init_cmd(t_cmd *cmd)
-{
 	cmd->c_args = NULL;
 	cmd->c_abs_path = NULL;
 	cmd->c_env_path = NULL;
 	cmd->pipes = NULL;
 	cmd->flag = NULL;
 	cmd->next = NULL;
+	return (cmd);
 }
 
+/**
+ * @brief 
+ * 
+ * @param newcmd 
+ * @param args 
+ * @return int 
+ */
 int	ft_fillcmd(t_cmd *newcmd, char **args)
 {
 	int		count;
@@ -70,26 +56,42 @@ int	ft_fillcmd(t_cmd *newcmd, char **args)
 	return (j + 1);
 }
 
-void	ft_cmd_lstadd_back(t_mini *data, t_cmd *new)
+void	ft_cmd_lstadd_back(t_cmd **cmd_lst, t_cmd *new)
 {
 	t_cmd	*last_elem;
 	t_cmd	*current;
 
-	if (!data->cmd_lst)
+	if (!*cmd_lst)
 	{
-		data->cmd_lst = new;
+		*cmd_lst = new;
 		return ;
 	}
-	current = data->cmd_lst;
+	current = *cmd_lst;
 	while (current->next)
 		current = current->next;
 	last_elem = current;
 	last_elem->next = new;
 }
 
+/* {current = current->next; printf("current: %s\n", current->c_abs_path);} */
+
+void	ft_print_node(t_cmd **cmd_lst)
+{
+	t_cmd	*cmd;
+	int		j;
+
+	cmd = *cmd_lst;
+	printf("node \n");
+	printf("\tc_args: \n");
+	j = 0;
+	while (cmd->c_args[j])
+		printf("\t\t%s\n", cmd->c_args[j++]);
+	printf("\n\tc_abs_path: %s\n", cmd->c_args[0]);
+}
+
 void	ft_cmdlst(t_mini *data)
 {
-	t_cmd	newcmd;
+	t_cmd	*newcmd;
 	int		count;
 	int		head;
 	int		i;
@@ -101,7 +103,7 @@ void	ft_cmdlst(t_mini *data)
 			count++;
 	if (data->full_cmd[0][0] == '|' || data->full_cmd[i - 1][0] == '|')
 		ft_error ("bash: syntax error near unexpected token `|`");
-	data->cmd_lst = calloc(count, sizeof(t_cmd));
+	data->cmd_lst = calloc(count, sizeof(t_cmd *));
 	data->cmd_count = count;
 	if (!data->cmd_lst)
 		exit(EXIT_SUCCESS);
@@ -109,14 +111,15 @@ void	ft_cmdlst(t_mini *data)
 	head = 0;
 	while (head < count)
 	{
-		ft_init_cmd(&newcmd);
-		i += ft_fillcmd(&newcmd, &data->full_cmd[i]);
-		ft_cmd_lstadd_back(data, &newcmd);
+		newcmd = ft_init_cmd();
+		i += ft_fillcmd(newcmd, &data->full_cmd[i]);
+		ft_cmd_lstadd_back(data->cmd_lst, newcmd);
 		head++;
 	}
 }
 /* 	printf("\nNode number %d\n\n", head);
 	printf("\nft_fillcmd check! i = %d\n\n", i);
+	printf("c_abs_args: %s\n\n", data->cmd_lst->c_abs_path);
 	printf("Node added\n");
 	printf("EXIT!\n"); 
 */
@@ -198,14 +201,16 @@ void	ft_cmdlst(t_mini *data)
 	}
 } */
 
-/* void	ft_print_nodes(t_cmd *cmd)
+/* void	ft_print_node(t_mini *data)
 {
-	int	j;
+	t_cmd	*cmd;
+	int		j;
 
-	printf("node:\n");
+	cmd = *data->cmd_lst;
+	printf("node \n");
+	printf("\tc_args: \n");
 	j = 0;
-	printf("\tc_args: ");
 	while (cmd->c_args[j])
-		printf(" %s", cmd->c_args[j++]);
+		printf("\t\t%s\n", cmd->c_args[j++]);
 	printf("\n\tc_abs_path: %s\n", cmd->c_args[0]);
 } */

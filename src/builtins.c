@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/01/20 15:17:25 by darismen         ###   ########.fr       */
+/*   Updated: 2024/01/24 20:06:47 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,12 @@ void	env(t_mini *data)
 	head = data->env_lst;
 	while (head)
 	{
-		printf("%s", head->nm);
 		if (head->equal)
+		{
+			printf("%s", head->nm);
 			printf("=%s", head->val);
-		printf("\n");
+			printf("\n");
+		}
 		head = head->next;
 	}
 }
@@ -57,18 +59,29 @@ void	empty_export(t_mini *data)
 }
 
 //Apparently, export puts new variables at the top??
-void	export(t_mini *data, char *name, char *val)
+void	export(t_mini *data, t_cmd *cmd)
 {
 	t_env	*new;
 
-	if (ft_env_forbidden_chars(name, ft_strlen(name)))
+	new = ft_calloc(1, sizeof(t_env));
+	if (!new)
+		return ;
+	if (ft_env_forbidden_chars(cmd->c_args[1], ft_strlen(cmd->c_args[1])))
 	{
-		printf("export: `%s': not a valid identifier\n", name);
+		printf("export: `%s': not a valid identifier\n", cmd->c_args[1]);
 		return ;
 	}
-	new->nm = name;
-	new->val = val;
-	new->equal = 1;
+	new->nm = cmd->c_args[1];
+	if (cmd->c_args[2] && !ft_strncmp(cmd->c_args[2], "=", 1))
+	{
+		new->val = cmd->c_args[3];
+		new->equal = 1;
+	}
+	else
+	{
+		new->val = NULL;
+		new->equal = 0;
+	}
 	ft_env_lstadd_back(data, new);
 }
 
@@ -90,6 +103,7 @@ void	unset(t_mini *data, char *str)
 			del = head->next;
 			head->next = del->next;
 			free(del);
+			printf("unset success!\n");
 			return ;
 		}
 		head = head->next;

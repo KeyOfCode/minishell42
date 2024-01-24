@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/01/20 15:49:39 by darismen         ###   ########.fr       */
+/*   Updated: 2024/01/20 17:18:37 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char	*ft_env_expand(char *ogstr, t_env *envp, int *i)
 
 	head = envp;
 	str = ogstr;
-	printf("env_expand Check!\n");
 	if (str[0] == '~')
 		str = "$HOME";
 	while (head)
