@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/01/20 17:16:53 by darismen         ###   ########.fr       */
+/*   Updated: 2024/01/28 14:19:42 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ size_t	ft_count_splits(char *str, size_t size)
 			i++;
 		if (str[i])
 			size++;
-		while (!ft_strchr(" |<>=", str[i]) && str[i] != '\0')
+		while (!ft_strchr(" |<>", str[i]) && str[i] != '\0')
 		{
 			if (str[i] == '\"')
 				i = ft_quotes(str, i, '\"');
@@ -78,7 +78,7 @@ size_t	ft_count_splits(char *str, size_t size)
 				i = ft_quotes(str, i, '\'');
 			i++;
 		}
-		if (ft_strchr("|<>=", str[i]) && str[i] != '\0')
+		if (ft_strchr("|<>", str[i]) && str[i] != '\0')
 			ft_spchar(str, &i, &size, 0);
 	}
 	return (size);
@@ -96,9 +96,9 @@ char	*ft_store_string(char *str, size_t *pos)
 	while (str[i] == ' ' && str[i])
 		i++;
 	j = i;
-	if (!ft_strchr(" |<>=", str[i]) && str[i] != '\0')
+	if (!ft_strchr(" |<>", str[i]) && str[i] != '\0')
 	{
-		while (!ft_strchr(" |<>=", str[i]) && str[i] != '\0')
+		while (!ft_strchr(" |<>", str[i]) && str[i] != '\0')
 		{
 			if (str[i] == '\"')
 				i = ft_quotes(str, i, '\"');

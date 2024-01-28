@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/01/24 19:58:30 by darismen         ###   ########.fr       */
+/*   Updated: 2024/01/28 18:18:23 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,9 +161,6 @@ typedef struct s_mini
 
 void	ft_error(char *err_msg);
 void	ft_print_splits(char **splits);
-void	ft_dup_envp(t_mini *data, char **envp);
-int		ft_env_forbidden_chars(char *name, int len);
-void	ft_env_lstadd_back(t_mini *data, t_env *new);
 
 /* Lexer */
 
@@ -178,11 +175,20 @@ void	ft_cmdlst(t_mini *data);
 /* Parser */
 void	ft_parser(t_mini *data);
 
+/* env */
+t_env	*ft_2rows_split(char *str);
+void	ft_dup_envp(t_mini *data, char **envp);
+// void	ft_add_envp(t_mini *data, char *envp);
+int		ft_env_forbidden_chars(char *name, int len);
+// void	ft_env_lstadd_back(t_mini *data, t_env *new);
+void	ft_env_add_or_replace(t_mini *data, t_env *new);
+void	ft_env_remove(t_mini *data, char *str);
+
 /* Builtins */
 void	pwd(void);
 void	empty_export(t_mini *data);
 void	export(t_mini *data, t_cmd *cmd);
 void	env(t_mini *data);
-void	unset(t_mini *data, char *str);
+void	unset(t_mini *data, t_cmd *cmd);
 
 #endif

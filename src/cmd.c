@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/01/24 19:47:39 by darismen         ###   ########.fr       */
+/*   Updated: 2024/01/28 17:18:42 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_fillcmd(t_cmd *newcmd, char **args)
 	count = 0;
 	while (args[count] && ft_strncmp(args[count], "|", 1))
 		count++;
-	newcmd->c_args = ft_calloc(count, sizeof(char *));
+	newcmd->c_args = ft_calloc(count + 1, sizeof(char *));
 	if (!newcmd)
 		return (0);
 	j = 0;
@@ -75,7 +75,7 @@ void	ft_cmd_lstadd_back(t_cmd **cmd_lst, t_cmd *new)
 
 /* {current = current->next; printf("current: %s\n", current->c_abs_path);} */
 
-void	ft_print_node(t_cmd **cmd_lst)
+/* void	ft_print_node(t_cmd **cmd_lst)
 {
 	t_cmd	*cmd;
 	int		j;
@@ -87,7 +87,7 @@ void	ft_print_node(t_cmd **cmd_lst)
 	while (cmd->c_args[j])
 		printf("\t\t%s\n", cmd->c_args[j++]);
 	printf("\n\tc_abs_path: %s\n", cmd->c_args[0]);
-}
+} */
 
 void	ft_cmdlst(t_mini *data)
 {

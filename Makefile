@@ -95,6 +95,11 @@ debug: clean $(OBJECTS)
 #	lldb ./debug
 	./debug
 
+val: clean $(OBJECTS) 
+	@$(CC) -g $(CFLAGS) $(OBJECTS) $(INCLUDES) $(LIB) -o val
+#	lldb ./debug
+	$(VALGRIND) ./val
+
 ############################
 
 # COLORS

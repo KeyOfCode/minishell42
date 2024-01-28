@@ -6,32 +6,32 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/01/24 19:44:27 by darismen         ###   ########.fr       */
+/*   Updated: 2024/01/28 20:08:31 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_print_nodes(t_cmd **cmd_lst)
-{
-	t_cmd	*cmd;
-	int		j;
-	int		i;
+// void	ft_print_nodes(t_cmd **cmd_lst)
+// {
+// 	t_cmd	*cmd;
+// 	int		j;
+// 	int		i;
 
-	cmd = *cmd_lst;
-	i = 1;
-	while (cmd)
-	{
-		printf("node %d:\n", i);
-		printf("\tc_args: \n");
-		j = -1;
-		while (cmd->c_args[++j])
-			printf("\t\t%s--\n", cmd->c_args[j]);
-		printf("\n\tc_abs_path: %s\n", cmd->c_args[0]);
-		i++;
-		cmd = cmd->next;
-	}
-}
+// 	cmd = *cmd_lst;
+// 	i = 1;
+// 	while (cmd)
+// 	{
+// 		printf("node %d:\n", i);
+// 		printf("\tc_args: \n");
+// 		j = -1;
+// 		while (cmd->c_args[++j])
+// 			printf("\t\t%s--\n", cmd->c_args[j]);
+// 		printf("\n\tc_abs_path: %s\n", cmd->c_args[0]);
+// 		i++;
+// 		cmd = cmd->next;
+// 	}
+// }
 
 void	ft_lexer(t_mini *data)
 {

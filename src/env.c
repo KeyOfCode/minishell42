@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix_utils.c                                     :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/01/24 20:28:48 by darismen         ###   ########.fr       */
+/*   Updated: 2024/01/28 20:19:23 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,85 @@ int	ft_env_forbidden_chars(char *name, int len)
 	return (0);
 }
 
-void	ft_env_lstadd_back(t_mini *data, t_env *new)
+void	ft_env_add_or_replace(t_mini *data, t_env *new)
 {
-	t_env	*last_elem;
 	t_env	*current;
+	t_env	*replace;
+	int		flag;
 
+	flag = 0;
 	if (!data->env_lst)
 	{
 		data->env_lst = new;
 		return ;
 	}
 	current = data->env_lst;
-	while (current->next)
-		current = current->next;
-	last_elem = current;
-	last_elem->next = new;
+	while (current->next && !flag)
+	{
+		if (!ft_strncmp(current->next->nm, new->nm,
+				ft_strlen(current->next->nm)))
+			flag = 1;
+		else
+			current = current->next;
+	}
+	replace = current;
+	if (flag)
+		new->next = replace->next->next;
+	replace->next = new;
+}
+
+void	ft_env_lstadd_back(t_mini *data, t_env *new);
+
+void	ft_add_envp(t_mini *data, char *envp)
+{
+	int		i;
+	t_env	*node;
+
+	i = -1;
+	while (envp[++i])
+	{
+		node = ft_2rows_split(envp[i]);
+		node->next = NULL;
+		if (!node)
+			return ;
+		if (ft_env_forbidden_chars(node->nm, ft_strlen(node->nm)))
+		{
+			printf("export: '%s': not a valid identifier\n", node->nm);
+			free (node);
+			return ;
+		}
+		printf("Name: %s\n", node->nm);
+		ft_env_add_or_replace(data, node);
+	}
+}
+
+void	ft_env_remove(t_mini *data, char *str)
+{
+	t_env	*head;
+	t_env	*del;
+
+	head = data->env_lst;
+	if (str[0] == '~')
+		str = "$HOME";
+	if (!ft_strncmp (head->nm, str, ft_strlen(head->nm)))
+	{
+		del = head->next;
+		head = del->next;
+		free(del);
+		return ;
+	}
+	while (head->next)
+	{
+		if (!ft_strncmp (head->next->nm, str,
+				ft_strlen(head->next->nm)))
+		{
+			del = head->next;
+			head->next = del->next;
+			free(del);
+			return ;
+		}
+		head = head->next;
+	}
 }
 
 void	ft_dup_envp(t_mini *data, char **envp)
@@ -86,13 +150,14 @@ void	ft_dup_envp(t_mini *data, char **envp)
 			return ;
 		if (ft_env_forbidden_chars(node->nm, ft_strlen(node->nm)))
 		{
-			printf("export: `%s': not a valid identifier\n", node->nm);
+			printf("export: '%s': not a valid identifier\n", node->nm);
 			free (node);
 			return ;
 		}
 		if (ft_strncmp(node->nm, "OLDPWD", ft_strlen(node->nm)) == 0)
 			node->val = NULL;
-		ft_env_lstadd_back(data, node);
+		printf("Name: %s\n", node->nm);
+		ft_env_add_or_replace(data, node);
 	}
 }
 
