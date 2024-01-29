@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/01/28 20:04:46 by darismen         ###   ########.fr       */
+/*   Updated: 2024/01/29 18:13:57 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,10 @@ void	builtin(t_mini	*data, t_cmd *head)
 		unset(data, head);
 	else if (!ft_strncmp(cmd, "cd", l))
 		cd(data, head);
-	// else if (!ft_strncmp(cmd, "exit", l))
-	// 	ft_mini_exit(data, head);
+	else if (!ft_strncmp(cmd, "echo", l))
+		echo(head);
+	else if (!ft_strncmp(cmd, "exit", l))
+		ft_mini_exit(data);
 }
 
 void	ft_parser(t_mini *data)

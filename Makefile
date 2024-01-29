@@ -10,6 +10,7 @@ LIBFT =		libft/libft.a
 INCLUDES=	$(LIBFT)
 HEADER=		include/minishell.h
 VALGRIND=	valgrind --leak-check=yes 
+# VALGRIND=	valgrind --leak-check=full --show-leak-kinds=all
 LIB=		-lreadline  -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline/include
 #  -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline/include
 COMMIT:=	""
@@ -18,8 +19,8 @@ BRANCH:=	""
 
 ############################
 
-SOURCES_LIST =	main.c lexer.c expander.c utils.c env.c \
-				cmd.c builtins.c parser.c
+SOURCES_LIST =	main.c lexer.c expander.c utils.c env.c env2.c \
+				cmd.c builtins.c builtins2.c parser.c
 TEST_LIST =	test.c lexer.c expander.c utils.c matrix_utils.c
 
 SOURCES_DIR = src/

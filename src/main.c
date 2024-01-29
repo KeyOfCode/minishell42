@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/01/28 20:08:31 by darismen         ###   ########.fr       */
+/*   Updated: 2024/01/29 18:02:04 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	ft_lexer(t_mini *data)
 void	ft_prompt(t_mini *data)
 {
 	data->prompt = readline("minishell $ ");
+	ft_ctrl_d(data);
 	if (data->prompt[0] != '\0')
 	{
 		add_history(data->prompt);
