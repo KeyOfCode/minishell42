@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/14 17:02:16 by darismen         ###   ########.fr       */
+/*   Updated: 2024/02/14 19:14:47 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	input_redir(t_cmd *cmd, char **token)
 	// 	return ;
 	// if (cmd->fd[READ_END] != STDIN_FILENO)
 	// 	close(cmd->fd[READ_END]);
+	(void)fd;
 	fd_path = ft_strdup(token[1]);
 	printf("file: %s\n\n", fd_path);
 	if (!fd_path)
@@ -128,7 +129,7 @@ void	input_heredoc(t_cmd *cmd, char **token)
 	} */
 }
 
-void	input_redir(t_cmd *cmd, char **infile);
-void	input_heredoc(t_cmd *cmd, char **end);
-void	output_redir(t_cmd *cmd, char **outfile);
-void	output_redir_append(t_cmd *cmd, char **outfile);
+void	input_redir(t_cmd *cmd, char **token);
+void	input_heredoc(t_cmd *cmd, char **token);
+void	output_redir(t_cmd *cmd, char **token);
+void	output_redir_append(t_cmd *cmd, char **token);

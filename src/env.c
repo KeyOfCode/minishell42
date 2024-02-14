@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/02/14 18:02:16 by darismen         ###   ########.fr       */
+/*   Updated: 2024/02/14 19:13:18 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	ft_env_lstclear(t_env *env)
 	t_env	*head;
 
 	head = env;
-	if (head == NULL)
+	if (!head)
 		return ;
 	while (head)
 	{
