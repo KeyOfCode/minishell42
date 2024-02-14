@@ -1,0 +1,14 @@
+.vscode
+.DS_Store
+*.o
+*.a
+*.sw*
+a.out
+*.dSYM
+/bonus
+so_long_bonus.h
+test.c
+03_minishell.code-workspace
+/ignore
+*.sh
+val
