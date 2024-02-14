@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/01/28 20:07:06 by darismen         ###   ########.fr       */
+/*   Updated: 2024/02/14 11:56:41 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ char	*ft_env_expand(char *ogstr, t_env *envp, int *i)
 	return ("");
 }
 
-	// printf("\nstr: %s\n", str);
-	// printf("before i: %d\n", *i);
-	// printf("after i: %d\n", *i);
+// printf("\nstr: %s\n", str);
+// printf("before i: %d\n", *i);
+// printf("after i: %d\n", *i);
 
 /**
  * @brief 
@@ -80,10 +80,10 @@ char	*ft_substr_expand(char	*str, t_mini *data)
 }
 
 // printf("\nstr: %s\n", str);
-	// printf("\naux: %s\n", aux);
-	// printf("str[i]: %c\n", str[i]);
-	// printf("after str[i]: %c\n", str[i]);
-	// printf("var: %s\n", var);
+// printf("\naux: %s\n", aux);
+// printf("str[i]: %c\n", str[i]);
+// printf("after str[i]: %c\n", str[i]);
+// printf("var: %s\n", var);
 /*
 	if (!var && str[i] == '$')
 		var = ft_itoa(prompt->pid);

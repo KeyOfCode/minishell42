@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/01/29 18:27:30 by darismen         ###   ########.fr       */
+/*   Updated: 2024/02/12 13:56:13 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_add_envp(t_mini *data, char **envp)
 		if (ft_env_forbidden_chars(node->nm, ft_strlen(node->nm)))
 		{
 			printf("export: '%s': not a valid identifier\n", node->nm);
-			free (node);
+			free(node);
 			return ;
 		}
 		ft_env_add_or_replace(data, node);

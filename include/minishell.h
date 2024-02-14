@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/01/29 18:14:22 by darismen         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:44:36 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <signal.h>
 # include <sys/wait.h>
+# include <sys/ioctl.h>
 # include <fcntl.h>
 # include "../libft/includes/libft.h"
 # include "../libft/includes/ft_printf.h"
@@ -158,13 +159,11 @@ typedef struct s_mini
 }		t_mini;
 
 /* Functions */
-
 void	ft_error(char *err_msg);
 void	ft_print_splits(char **splits);
-void	ft_ctrl_d(t_mini *data);
+// void	ft_ctrl_d(t_mini *data);
 
 /* Lexer */
-
 char	**ft_cmdtrim(char *s);
 int		ft_quotes(char *s, size_t i, char q);
 
@@ -187,12 +186,15 @@ void	ft_env_remove(t_mini *data, char *str);
 void	ft_env_lstclear(t_env *env);
 
 /* Builtins */
-void	pwd(void);
+int		pwd(void);
+int		env(t_mini *data);
+int		unset(t_mini *data, t_cmd *cmd);
+int		echo(t_cmd	*cmd);
+int		export(t_mini *data, t_cmd *cmd);
 void	empty_export(t_mini *data);
-void	export(t_mini *data, t_cmd *cmd);
-void	env(t_mini *data);
-void	unset(t_mini *data, t_cmd *cmd);
-void	echo(t_cmd	*cmd);
 void	ft_mini_exit(t_mini *data);
+
+/* signals */
+void	handle_sigint(int sig);
 
 #endif

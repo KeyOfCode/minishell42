@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/01/29 18:09:34 by darismen         ###   ########.fr       */
+/*   Updated: 2024/02/13 15:07:40 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_env_add_or_replace(t_mini *data, t_env *new)
 	if (flag)
 		new->next = replace->next->next;
 	replace->next = new;
-}
+} 
 
 void	ft_env_lstadd_back(t_mini *data, t_env *new)
 {
@@ -89,7 +89,7 @@ void	ft_env_remove(t_mini *data, char *str)
 	}
 	while (head->next)
 	{
-		if (!ft_strncmp (head->next->nm, str,
+		if (!ft_strncmp(head->next->nm, str,
 				ft_strlen(head->next->nm)))
 		{
 			del = head->next;

@@ -3,25 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/01/29 16:56:52 by darismen         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:48:15 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	pwd(void)
+int	pwd(void)
 {
 	char	*current;
 
 	current = getcwd(NULL, 0);
 	ft_putendl_fd(current, 1);
 	free(current);
+	return (0);
 }
 
-void	env(t_mini *data)
+int	env(t_mini *data)
 {
 	t_env	*head;
 
@@ -36,6 +37,7 @@ void	env(t_mini *data)
 		}
 		head = head->next;
 	}
+	return (0);
 }
 
 void	empty_export(t_mini *data)
@@ -53,7 +55,7 @@ void	empty_export(t_mini *data)
 	}
 }
 
-void	export(t_mini *data, t_cmd *cmd)
+int	export(t_mini *data, t_cmd *cmd)
 {
 	int		i;
 
@@ -62,15 +64,17 @@ void	export(t_mini *data, t_cmd *cmd)
 		empty_export(data);
 	else
 		ft_add_envp(data, &cmd->c_args[1]);
+	return (0);
 }
 
-void	unset(t_mini *data, t_cmd *cmd)
+int	unset(t_mini *data, t_cmd *cmd)
 {
 	int		i;
 
 	i = 0;
 	while (cmd->c_args[++i])
 		ft_env_remove(data, cmd->c_args[i]);
+	return (0);
 }
 
 /* void	empty_export(t_mini *data)

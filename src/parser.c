@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/01/29 18:13:57 by darismen         ###   ########.fr       */
+/*   Updated: 2024/02/14 17:17:04 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+extern int	g_status;
 
 /* int	is_builtin(char *cmd)
 {
@@ -68,7 +70,7 @@ char	*get_env(t_mini *data, char *name)
  * TODO Handle error: No directory exists. Print error correctly.
  * 
  */
-void	cd(t_mini *data, t_cmd *cmd)
+int	cd(t_mini *data, t_cmd *cmd)
 {
 	if (!cmd->c_args[1] || !ft_strncmp(cmd->c_args[1], "~", 1))
 		cmd->c_args[1] = get_env(data, "HOME");
@@ -77,7 +79,7 @@ void	cd(t_mini *data, t_cmd *cmd)
 		if (!get_env(data, "OLDPWD"))
 		{
 			printf("bash: cd: OLDPWD not set\n");
-			return ;
+			return (1);
 		}
 		else
 		{
@@ -88,6 +90,7 @@ void	cd(t_mini *data, t_cmd *cmd)
 	set_env(data, "OLDPWD", getcwd(NULL, 0));
 	chdir(cmd->c_args[1]);
 	set_env(data, "PWD", getcwd(NULL, 0));
+	return (0);
 }
 
 void	builtin(t_mini	*data, t_cmd *head)
@@ -96,19 +99,19 @@ void	builtin(t_mini	*data, t_cmd *head)
 	int		l;
 
 	cmd = head->c_abs_path;
-	l = ft_strlen (cmd);
+	l = ft_strlen(cmd);
 	if (!ft_strncmp(cmd, "pwd", l))
-		pwd();
+		g_status = pwd();
 	else if (!ft_strncmp(cmd, "env", l))
-		env(data);
+		g_status = env(data);
 	else if (!ft_strncmp(cmd, "export", l))
-		export(data, head);
+		g_status = export(data, head);
 	else if (!ft_strncmp(cmd, "unset", l))
-		unset(data, head);
+		g_status = unset(data, head);
 	else if (!ft_strncmp(cmd, "cd", l))
-		cd(data, head);
+		g_status = cd(data, head);
 	else if (!ft_strncmp(cmd, "echo", l))
-		echo(head);
+		g_status = echo(head);
 	else if (!ft_strncmp(cmd, "exit", l))
 		ft_mini_exit(data);
 }

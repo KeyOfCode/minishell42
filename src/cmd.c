@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/01/28 17:18:42 by darismen         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:38:47 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,11 @@ void	ft_cmdlst(t_mini *data)
 		if (!ft_strncmp(data->full_cmd[i++], "|", 1))
 			count++;
 	if (data->full_cmd[0][0] == '|' || data->full_cmd[i - 1][0] == '|')
-		ft_error ("bash: syntax error near unexpected token `|`");
+		return (ft_error("bash: syntax error near unexpected token `|`"));
 	data->cmd_lst = calloc(count, sizeof(t_cmd *));
 	data->cmd_count = count;
 	if (!data->cmd_lst)
-		exit(EXIT_SUCCESS);
+		exit(EXIT_FAILURE);
 	i = 0;
 	head = 0;
 	while (head < count)

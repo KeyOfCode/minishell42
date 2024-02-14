@@ -3,22 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/01/29 18:20:23 by darismen         ###   ########.fr       */
+/*   Updated: 2024/02/14 17:24:22 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+extern int	g_status;
+
 void	ft_mini_exit(t_mini *data)
 {
+	clear_history();
 	ft_env_lstclear(data->env_lst);
-	exit(EXIT_SUCCESS);
+	exit(g_status);
 }
 
-void	echo(t_cmd	*cmd)
+int	echo(t_cmd	*cmd)
 {
 	int		i;
 	int		flag;
@@ -38,4 +41,5 @@ void	echo(t_cmd	*cmd)
 	}
 	if (!flag)
 		ft_putendl_fd("", 0);
+	return (0);
 }

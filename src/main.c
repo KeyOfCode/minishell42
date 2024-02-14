@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/01/29 18:02:04 by darismen         ###   ########.fr       */
+/*   Updated: 2024/02/14 18:20:16 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+extern int	g_status;
 
 // void	ft_print_nodes(t_cmd **cmd_lst)
 // {
@@ -36,25 +38,23 @@
 void	ft_lexer(t_mini *data)
 {
 	int		i;
+	char	**trim;
 
 	i = -1;
-	if (!data->prompt)
-	{
-		free(data);
-		exit(EXIT_SUCCESS);
-	}
 	data->full_cmd = ft_cmdtrim(data->prompt);
 	if (!data->full_cmd)
 	{
-		free(data);
-		exit(EXIT_SUCCESS);
+		free(data->prompt);
+		ft_env_lstclear(data->env_lst);
+		exit(EXIT_FAILURE);
 	}
 	ft_expander(data);
 	ft_cmdlst(data);
-	char	**trim;
 	trim = data->full_cmd;
 	ft_print_splits(trim);
 	free(trim);
+	if (g_status == 1)
+		exit(EXIT_FAILURE);
 	// ft_print_nodes(data->cmd_lst);
 }
 	// char	**trim;
@@ -67,8 +67,17 @@ void	ft_lexer(t_mini *data)
 
 void	ft_prompt(t_mini *data)
 {
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
 	data->prompt = readline("minishell $ ");
-	ft_ctrl_d(data);
+	if (!data->prompt)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+		printf("exit\n");
+		ft_mini_exit(data);
+	}
+	// ft_ctrl_d(data);
 	if (data->prompt[0] != '\0')
 	{
 		add_history(data->prompt);
@@ -87,6 +96,7 @@ void	ft_init_data(t_mini *data)
 	data->envp = NULL;
 	data->full_cmd = NULL;
 	data->full_path = NULL;
+	g_status = 0;
 }
 
 /**
@@ -102,14 +112,15 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	if (argc > 1)
-		ft_error("Arg Error.");
+		return (ft_error("Arg Error."), 1);
 	ft_init_data(&data);
 	data.envp = envp;
 	if (!data.envp)
-		ft_error("Env Error.");
+		return (ft_error("Env Error."), 1);
 	ft_dup_envp(&data, envp);
 	while (1)
 	{
 		ft_prompt(&data);
 	}
+	return (0);
 }

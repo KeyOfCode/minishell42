@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/01/28 14:19:42 by darismen         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:16:28 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+extern int	g_status;
+
 /**
  * @note #First IF checks if the previous character is not a special character
  * @note #Second IF checks if it's << or <
@@ -22,7 +25,7 @@ void	ft_spchar(char *str, size_t *i, size_t *size, int mode)
 	{
 		if (str[*i] && !ft_strchr(" |<>", str[*i - 1]))
 			(*size)++;
-		if ((str[*i] == '<' && str[*i + 1] == '<')
+		if ((str[*i] == '<' && str[*i  + 1] == '<')
 			|| (str[*i] == '>' && str[*i + 1] == '>'))
 			(*i) += 2;
 		else
@@ -55,8 +58,10 @@ int	ft_quotes(char *s, size_t i, char q)
 	else
 	{
 		ft_error("Unclosed quote error");
-		return (0);
+		free(s);
+		exit(g_status);
 	}
+	return (0);
 }
 
 size_t	ft_count_splits(char *str, size_t size)

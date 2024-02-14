@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/01/29 18:08:03 by darismen         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:10:02 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	g_status;
 
 int	is_whitespace(char c)
 {
@@ -22,8 +24,8 @@ int	is_whitespace(char c)
 
 void	ft_error(char *err_msg)
 {
+	g_status = 1;
 	ft_putendl_fd(err_msg, 2);
-	exit(EXIT_FAILURE);
 }
 
 void	ft_print_splits(char **splits)
@@ -38,15 +40,28 @@ void	ft_print_splits(char **splits)
 	}
 }
 
-void	ft_ctrl_d(t_mini *data)
+void	handle_sigint(int sig)
 {
-	if (!data->prompt)
+	if (sig == SIGINT)
 	{
+		g_status = 130;
+		rl_redisplay();
+		ft_putstr_fd("  \n", STDOUT_FILENO);
+		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-		ft_putstr_fd("exit\n", 1);
-		clear_history();
-		ft_env_lstclear(data->env_lst);
-		exit(EXIT_SUCCESS);
 	}
 }
+
+// void	ft_ctrl_d(t_mini *data)
+// {
+// 	if (!data->prompt)
+// 	{
+// 		rl_on_new_line();
+// 		rl_redisplay();
+// 		ft_putstr_fd("exit\n", STDOUT_FILENO);
+// 		clear_history();
+// 		ft_env_lstclear(data->env_lst);
+// 		exit(g_status);
+// 	}
+// }
