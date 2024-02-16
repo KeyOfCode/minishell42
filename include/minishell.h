@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/14 15:44:36 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/16 17:43:36 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include "../libft/includes/get_next_line.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <dirent.h>
 
 # pragma region CONSTANTS
 
@@ -48,8 +49,12 @@
 # define FUNCTION "FUNCTION"
 # define LET "LET"
 # define PATH_MAX 255
+# define READ_END 0
+# define WRITE_END 1
 
 # pragma endregion
+
+extern int	g_status;
 
 /**
  * @brief Pipes
@@ -87,9 +92,7 @@ typedef enum s_flags
  * @param c_env_path	-> contains a copy of c_abs_path if it has an abs_path,
  * 					OR a correct access path from $PATH
  * 					when c_args[0] don't have abs_path
- * @param pipes			->Pointer to t_pipe
- * @param flag			->t_flags Enum (IN, READ, OUT, APPEND)
- *
+ * 
  */
 
 //? add pointer back to t_mini??
@@ -98,11 +101,7 @@ typedef struct s_cmd
 	char			**c_args;
 	char			*c_abs_path;
 	char			*c_env_path;
-	// pid_t			pid;
-	// int				infile;
-	// int				outfile;
-	// int				num_args;
-	t_pipe			*pipes;
+	int				fd[2];
 	t_flags			*flag;
 	struct s_cmd	*next;
 }	t_cmd;
@@ -154,8 +153,9 @@ typedef struct s_mini
 	char	**envp;
 	char	**full_cmd;
 	char	*full_path;
-	// int		infile;
-	// int		outfile;
+	int		saved_stdin;
+	int		saved_stdout;
+	int		fd[2];
 }		t_mini;
 
 /* Functions */
@@ -184,6 +184,8 @@ void	ft_env_lstadd_back(t_mini *data, t_env *new);
 void	ft_env_add_or_replace(t_mini *data, t_env *new);
 void	ft_env_remove(t_mini *data, char *str);
 void	ft_env_lstclear(t_env *env);
+void	set_env(t_mini *data, char *name, char *value);
+char	*get_env(t_mini *data, char *name);
 
 /* Builtins */
 int		pwd(void);
@@ -191,10 +193,21 @@ int		env(t_mini *data);
 int		unset(t_mini *data, t_cmd *cmd);
 int		echo(t_cmd	*cmd);
 int		export(t_mini *data, t_cmd *cmd);
+int		cd(t_mini *data, t_cmd *cmd);
 void	empty_export(t_mini *data);
 void	ft_mini_exit(t_mini *data);
 
 /* signals */
 void	handle_sigint(int sig);
+
+/* Executor */
+int		ft_executor(t_mini *data, t_cmd *cmd);
+char	*get_cmd_path(t_mini *data, t_cmd *cmd);
+
+/* Redirections */
+int		input_redir(t_cmd *cmd, char **token);
+int		input_heredoc(t_cmd *cmd, char **token);
+int		output_redir(t_cmd *cmd, char **token);
+int		output_redir_append(t_cmd *cmd, char **token);
 
 #endif

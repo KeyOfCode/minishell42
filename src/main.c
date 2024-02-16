@@ -6,13 +6,11 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/14 18:20:16 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:39:28 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-extern int	g_status;
 
 // void	ft_print_nodes(t_cmd **cmd_lst)
 // {

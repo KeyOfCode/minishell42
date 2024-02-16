@@ -6,13 +6,11 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/14 13:16:28 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:26:07 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-extern int	g_status;
 
 /**
  * @note #First IF checks if the previous character is not a special character

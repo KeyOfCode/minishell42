@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/14 13:38:47 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:53:13 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,43 @@ t_cmd	*ft_init_cmd(void)
 	cmd->c_args = NULL;
 	cmd->c_abs_path = NULL;
 	cmd->c_env_path = NULL;
-	cmd->pipes = NULL;
+	cmd->fd[WRITE_END] = dup(STDOUT_FILENO);
+	cmd->fd[READ_END] = dup(STDIN_FILENO);
 	cmd->flag = NULL;
 	cmd->next = NULL;
 	return (cmd);
+}
+
+/**
+ * ? Redirections. 
+ * 
+ *  - infile: Only accepts the last one as input, ignores all before.
+ *  - heredoc: Only accepts the last one as EOF
+ *  - outfile: Uses the last one as outputs, but creates all the posible 
+ * outputs if they don't exist 
+ *  - append: Same as output, appends the contents to the last file.
+ * 
+ */
+void	check_redirections(t_cmd *cmd, char	**arg, int *j)
+{
+	char	*token;
+
+	token = *arg;
+	(void)j;
+	printf("token: %s\n", token);
+	if (!ft_strncmp(token, "<", 1))
+		input_redir(cmd, arg);
+	else if (!ft_strncmp(token, ">", 1))
+		output_redir(cmd, arg);
+	else if (!ft_strncmp(token, "<<", 2))
+		input_heredoc(cmd, arg);
+	else if (!ft_strncmp(token, ">>", 2))
+		output_redir_append(cmd, arg);
+	// if (!ft_strncmp(token, "<", 1)
+	// 	|| !ft_strncmp(token, "<<", 2)
+	// 	|| !ft_strncmp(token, ">", 1)
+	// 	|| !ft_strncmp(token, ">>", 2))
+	// 	(*j) += 1;
 }
 
 /**
@@ -49,6 +82,7 @@ int	ft_fillcmd(t_cmd *newcmd, char **args)
 	j = 0;
 	while (j < count)
 	{
+		check_redirections(newcmd, &args[j], &j);
 		newcmd->c_args[j] = args[j];
 		j++;
 	}
