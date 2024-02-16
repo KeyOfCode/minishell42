@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/14 19:14:47 by darismen         ###   ########.fr       */
+/*   Updated: 2024/02/16 20:00:40 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	input_redir(t_cmd *cmd, char **token)
 	char	*fd_path;
 	int		fd;
 
-	// if (!cmd)
-	// 	return ;
-	// if (cmd->fd[READ_END] != STDIN_FILENO)
-	// 	close(cmd->fd[READ_END]);
+	if (!cmd)
+		return ;
+	if (cmd->fd[READ_END] != STDIN_FILENO)
+		close(cmd->fd[READ_END]);
 	(void)fd;
 	fd_path = ft_strdup(token[1]);
 	printf("file: %s\n\n", fd_path);
@@ -41,7 +41,7 @@ void	input_redir(t_cmd *cmd, char **token)
 	}
 	else
 	{
-		dup2(open(fd_path, O_RDONLY), STDIN_FILENO);
+		dup2(cmd->fd[READ_END], STDIN_FILENO);
 		close(cmd->fd[READ_END]);
 	}
 	free(fd_path);
@@ -54,8 +54,8 @@ void	output_redir(t_cmd *cmd, char **token)
 
 	if (!cmd)
 		return ;
-	// if (cmd->fd[WRITE_END] != STDOUT_FILENO)
-	// 	close(cmd->fd[WRITE_END]);
+	if (cmd->fd[WRITE_END] != STDOUT_FILENO)
+		close(cmd->fd[WRITE_END]);
 	fd_path = ft_strdup(token[1]);
 	printf("file: %s\n\n", fd_path);
 	if (!fd_path)

@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/14 19:16:39 by darismen         ###   ########.fr       */
+/*   Updated: 2024/02/14 20:06:49 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ void	check_redirections(t_cmd *cmd, char	**arg, int *j)
 		input_heredoc(cmd, arg);
 	else if (!ft_strncmp(token, ">>", 2))
 		output_redir_append(cmd, arg);
-	// if (!ft_strncmp(token, "<", 1)
-	// 	|| !ft_strncmp(token, "<<", 2)
-	// 	|| !ft_strncmp(token, ">", 1)
-	// 	|| !ft_strncmp(token, ">>", 2))
-	// 	(*j) += 1;
+	if (!ft_strncmp(token, "<", 1)
+		|| !ft_strncmp(token, "<<", 2)
+		|| !ft_strncmp(token, ">", 1)
+		|| !ft_strncmp(token, ">>", 2))
+		(*j) += 1;
 }
 
 /**

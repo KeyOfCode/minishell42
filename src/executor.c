@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/12 20:11:52 by darismen         ###   ########.fr       */
+/*   Updated: 2024/02/14 20:11:06 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	ft_executor(t_mini *data, t_cmd *cmd)
 	}
 	else
 		parent_process(data, cmd, pid, &exit_code);
+	data->fd[WRITE_END] = dup(data->saved_stdin);
 	return (WEXITSTATUS(exit_code));
 }
 

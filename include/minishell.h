@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/14 19:13:58 by darismen         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:59:24 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ void	ft_error(char *err_msg);
 void	ft_print_splits(char **splits);
 void	ft_ctrl_d(t_mini *data);
 void	ft_free_matrix(char **newarry);
+void	ft_lst_clear(t_cmd **cmd_lst, t_env *env_lst);
 
 /* Matrix Utils */
 
@@ -186,7 +187,6 @@ int		ft_env_forbidden_chars(char *name, int len);
 void	ft_env_lstadd_back(t_mini *data, t_env *new);
 void	ft_env_add_or_replace(t_mini *data, t_env *new);
 void	ft_env_remove(t_mini *data, char *str);
-void	ft_env_lstclear(t_env *env);
 void	set_env(t_mini *data, char *name, char *value);
 char	*get_env(t_mini *data, char *name);
 
