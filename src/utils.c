@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/14 13:10:02 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:53:36 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ void	ft_print_splits(char **splits)
 	i = 0;
 	while (splits[i])
 	{
-		printf("&%s--\n", splits[i]);
+		ft_putstr_fd("&", 2);
+		ft_putstr_fd(splits[i], 2);
+		ft_putstr_fd("\n", 2);
 		i++;
 	}
 }

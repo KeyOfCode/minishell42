@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/16 16:53:13 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:34:05 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ void	check_redirections(t_cmd *cmd, char	**arg, int *j)
 	(void)j;
 	printf("token: %s\n", token);
 	if (!ft_strncmp(token, "<", 1))
-		input_redir(cmd, arg);
+		g_status = input_redir(cmd, arg);
 	else if (!ft_strncmp(token, ">", 1))
-		output_redir(cmd, arg);
+		g_status = output_redir(cmd, arg);
 	else if (!ft_strncmp(token, "<<", 2))
-		input_heredoc(cmd, arg);
+		g_status = input_heredoc(cmd, arg);
 	else if (!ft_strncmp(token, ">>", 2))
-		output_redir_append(cmd, arg);
+		g_status = output_redir_append(cmd, arg);
 	// if (!ft_strncmp(token, "<", 1)
 	// 	|| !ft_strncmp(token, "<<", 2)
 	// 	|| !ft_strncmp(token, ">", 1)

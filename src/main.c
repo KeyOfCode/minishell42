@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/19 15:30:30 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:40:45 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	*ft_lexer(t_mini *data)
 	data->full_cmd = ft_cmdtrim(data->prompt);
 	if (!data->full_cmd)
 	{
-		free(data->prompt);
 		return (NULL);
 	}
 	ft_expander(data);
@@ -79,9 +78,8 @@ void	ft_prompt(t_mini *data)
 	if (data->prompt[0] != '\0')
 	{
 		add_history(data->prompt);
-		if (!ft_lexer(data))
-			return ;
-		ft_parser(data);
+		if (ft_lexer(data) != NULL)
+			ft_parser(data);
 	}
 	free(data->prompt);
 	// ft_free_data(data);

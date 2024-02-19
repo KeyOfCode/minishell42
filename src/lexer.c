@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/19 15:28:47 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/19 16:40:14 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,12 @@ void	ft_spchar(char *str, size_t *i, size_t *size, int mode)
 	{
 		if (str[*i] && !ft_strchr(" |<>", str[*i - 1]))
 			(*size)++;
-		if ((str[*i] == '<' && str[*i  + 1] == '<')
-			|| (str[*i] == '>' && str[*i + 1] == '>'))
-			(*i) += 2;
-		else
-			(*i)++;
 	}
+	if ((str[*i] == '<' && str[*i  + 1] == '<')
+		|| (str[*i] == '>' && str[*i + 1] == '>'))
+		(*i) += 2;
 	else
-	{
-		if ((str[*i] == '<' && str[*i + 1] == '<')
-			|| (str[*i] == '>' && str[*i + 1] == '>'))
-			(*i) += 2;
-		else
-			(*i)++;
-	}
+		(*i)++;
 }
 
 int	ft_quotes(char *s, size_t i, char q)
@@ -140,8 +132,7 @@ char	**ft_cmdtrim(char *s)
 	pos = 0;
 	while (i < size)
 	{
-		out[i] = ft_store_string(s, &pos);
-		i++;
+		out[i++] = ft_store_string(s, &pos);
 	}
 	out[i] = NULL;
 	return (out);

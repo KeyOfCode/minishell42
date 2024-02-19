@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/16 17:53:52 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:54:32 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	ft_parser(t_mini *data)
 		return ;
 	while (head)
 	{
-		printf("%s\n", head->c_abs_path);
+		ft_putstr_fd(head->c_abs_path, 2);
+		ft_putstr_fd("\n", 2);
 		builtin(data, head);
 		head = head->next;
 	}
