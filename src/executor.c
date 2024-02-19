@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/16 15:13:26 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:24:27 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	ft_executor(t_mini *data, t_cmd *cmd)
 	}
 	else
 		parent_process(data, cmd, pid, &exit_code);
+	data->fd[WRITE_END] = dup(data->saved_stdin);
 	return (WEXITSTATUS(exit_code));
 }
 

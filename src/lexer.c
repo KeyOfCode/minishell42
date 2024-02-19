@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/16 15:26:07 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:28:47 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,8 @@ char	**ft_cmdtrim(char *s)
 
 	size = 0;
 	size = ft_count_splits(s, size);
+	if (size == 0)
+		return (NULL);
 	out = (char **)malloc(sizeof(char *) * (size + 1));
 	if (!s || !out)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/16 17:43:36 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:22:42 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,9 @@ void	handle_sigint(int sig);
 
 /* Executor */
 int		ft_executor(t_mini *data, t_cmd *cmd);
+char	*get_cmd_path(t_mini *data, t_cmd *cmd);
+void	save_path(t_mini *data);
+void	update_envp(t_mini *data);
 char	*get_cmd_path(t_mini *data, t_cmd *cmd);
 
 /* Redirections */

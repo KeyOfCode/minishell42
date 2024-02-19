@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/16 15:39:28 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:30:30 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 // 	}
 // }
 
-void	ft_lexer(t_mini *data)
+void	*ft_lexer(t_mini *data)
 {
 	int		i;
 	char	**trim;
@@ -43,8 +43,7 @@ void	ft_lexer(t_mini *data)
 	if (!data->full_cmd)
 	{
 		free(data->prompt);
-		ft_env_lstclear(data->env_lst);
-		exit(EXIT_FAILURE);
+		return (NULL);
 	}
 	ft_expander(data);
 	ft_cmdlst(data);
@@ -53,6 +52,7 @@ void	ft_lexer(t_mini *data)
 	free(trim);
 	if (g_status == 1)
 		exit(EXIT_FAILURE);
+	return (data);
 	// ft_print_nodes(data->cmd_lst);
 }
 	// char	**trim;
@@ -79,7 +79,8 @@ void	ft_prompt(t_mini *data)
 	if (data->prompt[0] != '\0')
 	{
 		add_history(data->prompt);
-		ft_lexer(data);
+		if (!ft_lexer(data))
+			return ;
 		ft_parser(data);
 	}
 	free(data->prompt);
