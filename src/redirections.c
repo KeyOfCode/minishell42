@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/19 18:48:05 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:40:11 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 int	input_redir(t_cmd *cmd, char **token)
 {
 	char	*fd_path;
-	// int		fd;
+	int		fd;
 
 	// if (!cmd)
 	// 	return ;
@@ -31,20 +31,21 @@ int	input_redir(t_cmd *cmd, char **token)
 	if (token[1] != NULL)
 	{
 		fd_path = ft_strdup(token[1]);
-		ft_putstr_fd("file:", 2);
-		ft_putstr_fd(fd_path, 2);
-		ft_putstr_fd("\n", 2);
 	}
 	if (!fd_path)
 	{
 		return (ft_error("bash: syntax error near unexpected token `newline\'"), 1);
 	}
-	cmd->fd[READ_END] = dup(open(fd_path, O_RDONLY));
+	ft_putstr_fd("file:", 2);
+	ft_putstr_fd(fd_path, 2);
+	ft_putstr_fd("\n", 2);
+	fd = open(fd_path, O_RDONLY);
 	if (cmd->fd[READ_END] < 0)
 	{
 		return (ft_error("bash: test: No such file or directory"), 127);
 	}
-	dup2(open(fd_path, O_RDONLY), STDIN_FILENO);
+	cmd->fd[READ_END] = fd;
+	dup2(cmd->fd[READ_END], STDIN_FILENO);
 	close(cmd->fd[READ_END]);
 	free(fd_path);
 	return (0);

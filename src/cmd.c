@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/19 18:34:05 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:51:24 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,14 @@ t_cmd	*ft_init_cmd(void)
  *  - append: Same as output, appends the contents to the last file.
  * 
  */
-void	check_redirections(t_cmd *cmd, char	**arg, int *j)
+int	check_redirections(t_cmd *cmd, char	**arg)
 {
 	char	*token;
 
 	token = *arg;
-	(void)j;
-	printf("token: %s\n", token);
+	ft_putstr_fd("token: ", token);
+	ft_putstr_fd(token, 2);
+	ft_putstr_fd("\n", 2);
 	if (!ft_strncmp(token, "<", 1))
 		g_status = input_redir(cmd, arg);
 	else if (!ft_strncmp(token, ">", 1))
@@ -54,11 +55,7 @@ void	check_redirections(t_cmd *cmd, char	**arg, int *j)
 		g_status = input_heredoc(cmd, arg);
 	else if (!ft_strncmp(token, ">>", 2))
 		g_status = output_redir_append(cmd, arg);
-	// if (!ft_strncmp(token, "<", 1)
-	// 	|| !ft_strncmp(token, "<<", 2)
-	// 	|| !ft_strncmp(token, ">", 1)
-	// 	|| !ft_strncmp(token, ">>", 2))
-	// 	(*j) += 1;
+	return (0);
 }
 
 /**
@@ -82,7 +79,7 @@ int	ft_fillcmd(t_cmd *newcmd, char **args)
 	j = 0;
 	while (j < count)
 	{
-		check_redirections(newcmd, &args[j], &j);
+		check_redirections(newcmd, &args[j]);
 		newcmd->c_args[j] = args[j];
 		j++;
 	}

@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/19 15:40:45 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:35:47 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ void	ft_init_data(t_mini *data)
 	data->envp = NULL;
 	data->full_cmd = NULL;
 	data->full_path = NULL;
+	data->saved_stdin = dup(STDIN_FILENO);
+	data->saved_stdout = dup(STDOUT_FILENO);
 	g_status = 0;
 }
 
