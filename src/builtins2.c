@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/14 20:02:55 by darismen         ###   ########.fr       */
+/*   Updated: 2024/02/16 20:06:09 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	ft_mini_exit(t_mini *data)
 {
-	ft_env_lstclear(data->env_lst);
+	// ft_env_lstclear(data->env_lst);
+	ft_free_data(data);
 	exit(EXIT_SUCCESS);
 }
 

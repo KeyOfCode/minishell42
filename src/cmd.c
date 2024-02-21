@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/14 20:06:49 by darismen         ###   ########.fr       */
+/*   Updated: 2024/02/16 20:25:40 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	check_redirections(t_cmd *cmd, char	**arg, int *j)
 }
 
 /**
- * @brief 
+ * ! Change printf to putstr_fd to avoid leaks
  * 
  * @param newcmd 
  * @param args 

@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/02/16 20:00:26 by darismen         ###   ########.fr       */
+/*   Updated: 2024/02/16 20:09:34 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,22 +109,22 @@ void	ft_lst_clear(t_cmd **cmd_lst, t_env *env_lst)
 	while (cmd_lst)
 	{
 		head = *cmd_lst;
-		cmd_lst = head->next;
+		cmd_lst = &head->next;
 		ft_free_matrix(head->c_args);
-		free(head->c_env_path);
-		free (head->fd);
+		// free(head->c_env_path);
+		// free (head->fd);
 		free(head);
 	}
-	free(cmd_lst);
+	// free(cmd_lst);
 	while (env_lst)
 	{
 		tail = env_lst;
 		env_lst = tail->next;
-		free(tail->nm);
-		free (tail->val);
+		// free(tail->nm);
+		// free (tail->val);
 		free(tail);
 	}
-	free(env_lst);
+	// free(env_lst);
 }
 
 /* void	ft_env_lstclear(t_env *env)

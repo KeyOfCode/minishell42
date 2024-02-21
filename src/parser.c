@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/14 19:16:15 by darismen         ###   ########.fr       */
+/*   Updated: 2024/02/21 16:21:40 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,20 @@ void	builtin(t_mini	*data, t_cmd *head)
 	l = ft_strlen (cmd);
 	if (!ft_strncmp(cmd, "pwd", l))
 		pwd();
-	else if (!ft_strncmp(cmd, "env", l))
-		env(data);
-	else if (!ft_strncmp(cmd, "export", l))
-		export(data, head);
-	else if (!ft_strncmp(cmd, "unset", l))
-		unset(data, head);
 	else if (!ft_strncmp(cmd, "cd", l))
 		cd(data, head);
+	else if (!ft_strncmp(cmd, "env", l))
+		env(data);
 	else if (!ft_strncmp(cmd, "echo", l))
 		echo(head);
+	else if (!ft_strncmp(cmd, "unset", l))
+		unset(data, head);
+	else if (!ft_strncmp(cmd, "export", l))
+		export(data, head);
 	else if (!ft_strncmp(cmd, "exit", l))
 		ft_mini_exit(data);
+	else
+		ft_executor(data, head);
 }
 
 void	ft_parser(t_mini *data)

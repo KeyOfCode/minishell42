@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/16 20:01:48 by darismen         ###   ########.fr       */
+/*   Updated: 2024/02/16 20:11:28 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	ft_free_data(t_mini *data)
 {
 	free(data->prompt);
-	ft_free_matrix(data->full_cmd);
-	ft_free_matrix(data->full_path);
-	ft_free_matrix(data->envp);
-	ft_lst_clear(data->cmd_lst, data->env_lst);
+	// ft_free_matrix(data->full_cmd);
+	// ft_free_matrix(data->full_path);
+	// ft_free_matrix(data->envp);
+	// ft_lst_clear(data->cmd_lst, data->env_lst);
 	data->saved_stdin = dup(STDIN_FILENO);
 	data->saved_stdout = dup(STDOUT_FILENO);
 }
