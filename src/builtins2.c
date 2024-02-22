@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/19 15:37:04 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/22 15:40:29 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	echo(t_cmd	*cmd)
 
 	i = 0;
 	flag = 0;
+	if (cmd->c_args[1] == NULL)
+		ft_putendl_fd("", 0);
 	if (!ft_strncmp(cmd->c_args[1], "-n", 2))
 	{
 		flag = 1;

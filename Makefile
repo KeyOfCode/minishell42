@@ -20,7 +20,8 @@ BRANCH:=	""
 ############################
 
 SOURCES_LIST =	main.c lexer.c expander.c utils.c env.c env2.c \
-				cmd.c builtins.c builtins2.c parser.c redirections.c
+				cmd.c builtins.c builtins2.c parser.c redirections.c \
+				cmd_utils.c
 TEST_LIST =	test.c lexer.c expander.c utils.c matrix_utils.c
 
 SOURCES_DIR = src/

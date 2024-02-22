@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/02/07 20:30:45 by darismen         ###   ########.fr       */
+/*   Updated: 2024/02/21 18:39:56 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ void	update_envp(t_mini *data)
 
 	head = data->env_lst;
 	i = 0;
-	if (data->envp)
-		ft_free_matrix(data->envp);
+	// if (data->envp)
+	// 	ft_free_matrix(data->envp);
 	while (head)
 	{
 		head = head->next;

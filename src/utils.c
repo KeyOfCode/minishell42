@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/19 18:53:36 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:49:36 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,25 @@ void	ft_print_splits(char **splits)
 		ft_putstr_fd(splits[i], 2);
 		ft_putstr_fd("\n", 2);
 		i++;
+	}
+}
+
+void	ft_print_cmds(t_cmd **cmds)
+{
+	int		i;
+	t_cmd 	*cmd;
+
+	cmd = *cmds;
+	while (cmd != NULL)
+	{
+		i = 0;
+		while (cmd->c_args[i] != NULL)
+		{
+			ft_putstr_fd("=", 2);
+			ft_putstr_fd(cmd->c_args[i++], 2);
+			ft_putstr_fd("\n", 2);
+		}
+		cmd = cmd->next;
 	}
 }
 

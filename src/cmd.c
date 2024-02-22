@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/21 15:51:24 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:09:20 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,16 @@ int	check_redirections(t_cmd *cmd, char	**arg)
 	char	*token;
 
 	token = *arg;
-	ft_putstr_fd("token: ", token);
+	ft_putstr_fd("token: ", 2);
 	ft_putstr_fd(token, 2);
 	ft_putstr_fd("\n", 2);
 	if (!ft_strncmp(token, "<", 1))
 		g_status = input_redir(cmd, arg);
-	else if (!ft_strncmp(token, ">", 1))
+	if (!ft_strncmp(token, ">", 1))
 		g_status = output_redir(cmd, arg);
-	else if (!ft_strncmp(token, "<<", 2))
+	if (!ft_strncmp(token, "<<", 2))
 		g_status = input_heredoc(cmd, arg);
-	else if (!ft_strncmp(token, ">>", 2))
+	if (!ft_strncmp(token, ">>", 2))
 		g_status = output_redir_append(cmd, arg);
 	return (0);
 }
@@ -67,24 +67,30 @@ int	check_redirections(t_cmd *cmd, char	**arg)
  */
 int	ft_fillcmd(t_cmd *newcmd, char **args)
 {
-	int		count;
+	int		i;
 	int		j;
+	int		c;
 
-	count = 0;
-	while (args[count] && ft_strncmp(args[count], "|", 1))
-		count++;
-	newcmd->c_args = ft_calloc(count + 1, sizeof(char *));
+	c = count_cmdargs(args);
+	newcmd->c_args = ft_calloc(c + 1, sizeof(char *));
 	if (!newcmd)
 		return (0);
+	i = 0;
 	j = 0;
-	while (j < count)
+	while ((j < c) || (args[i] && ft_strncmp(args[i], "|", 1)))
 	{
-		check_redirections(newcmd, &args[j]);
-		newcmd->c_args[j] = args[j];
-		j++;
+		if (!isredir(args[i]))
+			newcmd->c_args[j++] = args[i];
+		else
+		{
+			check_redirections(newcmd, args + i);
+			if (args[i + 1] != NULL)
+				i++;
+		}
+		i++;
 	}
 	newcmd->c_abs_path = newcmd->c_args[0];
-	return (j + 1);
+	return (i + 1);
 }
 
 void	ft_cmd_lstadd_back(t_cmd **cmd_lst, t_cmd *new)
@@ -136,8 +142,6 @@ void	ft_cmdlst(t_mini *data)
 		return (ft_error("bash: syntax error near unexpected token `|`"));
 	data->cmd_lst = calloc(count, sizeof(t_cmd *));
 	data->cmd_count = count;
-	if (!data->cmd_lst)
-		exit(EXIT_FAILURE);
 	i = 0;
 	head = 0;
 	while (head < count)
@@ -147,6 +151,7 @@ void	ft_cmdlst(t_mini *data)
 		ft_cmd_lstadd_back(data->cmd_lst, newcmd);
 		head++;
 	}
+	ft_print_cmds(data->cmd_lst);
 }
 /* 	printf("\nNode number %d\n\n", head);
 	printf("\nft_fillcmd check! i = %d\n\n", i);

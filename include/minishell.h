@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/19 15:22:42 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:35:23 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ typedef struct s_mini
 /* Functions */
 void	ft_error(char *err_msg);
 void	ft_print_splits(char **splits);
-// void	ft_ctrl_d(t_mini *data);
+void	ft_print_cmds(t_cmd **cmds);
 
 /* Lexer */
 char	**ft_cmdtrim(char *s);
@@ -212,5 +212,11 @@ int		input_redir(t_cmd *cmd, char **token);
 int		input_heredoc(t_cmd *cmd, char **token);
 int		output_redir(t_cmd *cmd, char **token);
 int		output_redir_append(t_cmd *cmd, char **token);
+
+/* cmd */
+int		isredir(char *arg);
+void	redir_error(char *token);
+int		count_cmdargs(char **args);
+
 
 #endif
