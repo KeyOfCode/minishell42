@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/22 16:09:20 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/23 13:48:49 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ t_cmd	*ft_init_cmd(void)
 	cmd->c_args = NULL;
 	cmd->c_abs_path = NULL;
 	cmd->c_env_path = NULL;
-	cmd->fd[WRITE_END] = dup(STDOUT_FILENO);
-	cmd->fd[READ_END] = dup(STDIN_FILENO);
+	cmd->fd[WRITE_END] = STDOUT_FILENO;
+	cmd->fd[READ_END] = STDIN_FILENO;
 	cmd->flag = NULL;
 	cmd->next = NULL;
 	return (cmd);
@@ -77,7 +77,7 @@ int	ft_fillcmd(t_cmd *newcmd, char **args)
 		return (0);
 	i = 0;
 	j = 0;
-	while ((j < c) || (args[i] && ft_strncmp(args[i], "|", 1)))
+	while ((j < c) || (args[i] != NULL && ft_strncmp(args[i], "|", 1)))
 	{
 		if (!isredir(args[i]))
 			newcmd->c_args[j++] = args[i];
@@ -140,7 +140,7 @@ void	ft_cmdlst(t_mini *data)
 			count++;
 	if (data->full_cmd[0][0] == '|' || data->full_cmd[i - 1][0] == '|')
 		return (ft_error("bash: syntax error near unexpected token `|`"));
-	data->cmd_lst = calloc(count, sizeof(t_cmd *));
+	data->cmd_lst = ft_calloc(count, sizeof(t_cmd *));
 	data->cmd_count = count;
 	i = 0;
 	head = 0;

@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/22 16:35:23 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/23 12:37:59 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ typedef struct s_mini
 	t_env	*env_lst;
 	char	**envp;
 	char	**full_cmd;
-	char	*full_path;
+	char	**full_path;
 	int		saved_stdin;
 	int		saved_stdout;
 	int		fd[2];

@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:16:18 by disantam          #+#    #+#             */
-/*   Updated: 2024/02/22 16:30:47 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/23 11:04:02 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,6 @@ void	redir_error(char *token)
 {
 	ft_putstr_fd("bash: syntax error near unexpected token `", 2);
 	write(2, token, 1);
-	write(2, "\n", 1);
+	write(2, "`\n", 2);
 	g_status = 1;
 }
