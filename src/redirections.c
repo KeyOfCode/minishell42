@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/23 11:11:03 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:41:34 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	input_redir(t_cmd *cmd, char **token)
 	{
 		return (redir_error(token[1]), 1);
 	}
-	ft_putstr_fd("file:", 2);
+	ft_putstr_fd("infile: ", 2);
 	ft_putstr_fd(token[1], 2);
 	ft_putstr_fd("\n", 2);
 	fd = open(token[1], O_RDONLY);
@@ -44,13 +44,14 @@ int	output_redir(t_cmd *cmd, char **token)
 
 	// if (cmd->fd[WRITE_END] != STDOUT_FILENO)
 	// 	close(cmd->fd[WRITE_END]);
-if (token[1] == NULL)
-		return (ft_error("bash: syntax error near unexpected token `newline\'"), 1);
+	if (token[1] == NULL)
+		return (ft_error("bash: syntax error near \
+unexpected token `newline\'"), 1);
 	if (isredir(token[1]) || !ft_strncmp(token[1], "|", 1))
 	{
 		return (redir_error(token[1]), 1);
 	}
-	ft_putstr_fd("file:", 2);
+	ft_putstr_fd("outfile: ", 2);
 	ft_putstr_fd(token[1], 2);
 	ft_putstr_fd("\n", 2);
 	fd = open(token[1], O_CREAT | O_TRUNC | O_WRONLY, 0644);
@@ -76,7 +77,7 @@ int	output_redir_append(t_cmd *cmd, char **token)
 	{
 		return (redir_error(token[1]), 1);
 	}
-	ft_putstr_fd("file:", 2);
+	ft_putstr_fd("append outfile:", 2);
 	ft_putstr_fd(token[1], 2);
 	ft_putstr_fd("\n", 2);
 	fd = open(token[1], O_CREAT | O_APPEND | O_RDWR, 0644);

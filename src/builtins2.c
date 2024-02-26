@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/22 15:40:29 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:42:37 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	ft_mini_exit(t_mini *data)
 {
 	clear_history();
 	ft_env_lstclear(data->env_lst);
-	exit(g_status);
+	// exit(g_status);
+	exit(EXIT_SUCCESS);
 }
 
 int	echo(t_cmd	*cmd)

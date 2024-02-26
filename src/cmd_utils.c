@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:16:18 by disantam          #+#    #+#             */
-/*   Updated: 2024/02/26 12:23:16 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:50:36 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ int	isredir(char *arg)
 int	count_cmdargs(char **args)
 {
 	int		i;
-	int		c;
-	char	ch;
+	int		count;
+	char	count_print;
 
 	i = 0;
-	c = 0;
+	count = 0;
 	while (args[i] && ft_strncmp(args[i], "|", 1))
 	{
 		if (!isredir(args[i]))
 		{
-			c++;
+			count++;
 		}
 		else if (args[i + 1])
 		{
@@ -42,10 +42,10 @@ int	count_cmdargs(char **args)
 		}
 		i++;
 	}
-	ch = '0' + c;
-	write(2, &ch, 1);
-	write(2, "\n", 1);
-	return (c);
+	count_print = '0' + count;
+	write(2, &count_print, 1);
+	write(2, "-\n", 2);
+	return (count);
 }
 
 void	redir_error(char *token)

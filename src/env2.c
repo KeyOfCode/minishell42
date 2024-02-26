@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/02/12 13:56:13 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:22:50 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,3 +84,47 @@ void	ft_dup_envp(t_mini *data, char **envp)
 		ft_env_lstadd_back(data, node);
 	}
 }
+
+/* void	set_env(t_mini *data, char *name, char *value)
+{
+	t_env	*current;
+	int		flag;
+
+	flag = 0;
+	current = data->env_lst;
+	while (current && !flag)
+	{
+		if (!ft_strncmp(current->nm, name,
+				ft_strlen(current->nm)))
+			flag = 1;
+		else
+			current = current->next;
+	}
+	if (flag)
+	{
+		current->val = value;
+		// return (1);
+	}
+	// return (0);
+}
+
+char	*get_env(t_mini *data, char *name)
+{
+	t_env	*current;
+	int		flag;
+
+	flag = 0;
+	current = data->env_lst;
+	while (current && !flag)
+	{
+		if (!ft_strncmp(current->nm, name,
+				ft_strlen(current->nm)))
+			flag = 1;
+		else
+			current = current->next;
+	}
+	if (flag)
+		return (current->val);
+	return (0);
+}
+ */
