@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/19 16:40:14 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:42:28 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * @note #Second IF checks if it's << or <
  * 
  */
-void	ft_spchar(char *str, size_t *i, size_t *size, int mode)
+void	ft_spchar(char *str, int *i, size_t *size, int mode)
 {
 	if (!mode)
 	{
@@ -48,15 +48,15 @@ int	ft_quotes(char *s, size_t i, char q)
 	else
 	{
 		ft_error("Unclosed quote error");
-		free(s);
-		exit(g_status);
+		g_status = 0;
+		return (-1);
 	}
 	return (0);
 }
 
 size_t	ft_count_splits(char *str, size_t size)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (str[i] != '\0')
@@ -71,6 +71,8 @@ size_t	ft_count_splits(char *str, size_t size)
 				i = ft_quotes(str, i, '\"');
 			else if (str[i] == '\'')
 				i = ft_quotes(str, i, '\'');
+			if (i == -1)
+				return (0);
 			i++;
 		}
 		if (ft_strchr("|<>", str[i]) && str[i] != '\0')
@@ -84,8 +86,8 @@ size_t	ft_count_splits(char *str, size_t size)
  */
 char	*ft_store_string(char *str, size_t *pos)
 {
-	size_t	i;
-	size_t	j;
+	int	i;
+	int	j;
 
 	i = *pos;
 	while (str[i] == ' ' && str[i])

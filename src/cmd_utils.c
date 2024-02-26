@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:16:18 by disantam          #+#    #+#             */
-/*   Updated: 2024/02/23 11:04:02 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/26 12:23:16 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,24 @@ void	redir_error(char *token)
 	write(2, token, 1);
 	write(2, "`\n", 2);
 	g_status = 1;
+}
+
+void	free_cmds(t_cmd **cmd_lst)
+{
+	int		i;
+	t_cmd	*head;
+
+	head = *cmd_lst;
+	while (*cmd_lst != NULL)
+	{
+		head = *cmd_lst;
+		i =-1;
+		while (head->c_args[++i] != NULL)
+		{
+			free(head->c_args[i]);
+		}
+		free(head->c_args);
+		*cmd_lst = head->next;
+		free(head);
+	}
 }

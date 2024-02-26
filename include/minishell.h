@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/23 12:37:59 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/26 12:24:33 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ typedef struct s_env
 typedef struct s_mini
 {
 	char	*prompt;
-	t_cmd	**cmd_lst;
+	t_cmd	*cmd_lst;
 	int		cmd_count;
 	t_env	*env_lst;
 	char	**envp;
@@ -217,6 +217,7 @@ int		output_redir_append(t_cmd *cmd, char **token);
 int		isredir(char *arg);
 void	redir_error(char *token);
 int		count_cmdargs(char **args);
+void	free_cmds(t_cmd **cmd_lst);
 
 
 #endif

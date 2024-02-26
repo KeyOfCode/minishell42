@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/23 13:48:49 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/26 11:46:47 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,6 @@ void	ft_cmdlst(t_mini *data)
 			count++;
 	if (data->full_cmd[0][0] == '|' || data->full_cmd[i - 1][0] == '|')
 		return (ft_error("bash: syntax error near unexpected token `|`"));
-	data->cmd_lst = ft_calloc(count, sizeof(t_cmd *));
 	data->cmd_count = count;
 	i = 0;
 	head = 0;
@@ -148,10 +147,10 @@ void	ft_cmdlst(t_mini *data)
 	{
 		newcmd = ft_init_cmd();
 		i += ft_fillcmd(newcmd, &data->full_cmd[i]);
-		ft_cmd_lstadd_back(data->cmd_lst, newcmd);
+		ft_cmd_lstadd_back(&data->cmd_lst, newcmd);
 		head++;
 	}
-	ft_print_cmds(data->cmd_lst);
+	ft_print_cmds(&data->cmd_lst);
 }
 /* 	printf("\nNode number %d\n\n", head);
 	printf("\nft_fillcmd check! i = %d\n\n", i);
