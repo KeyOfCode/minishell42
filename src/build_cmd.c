@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd.c                                              :+:      :+:    :+:   */
+/*   build_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/26 11:46:47 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/01 19:41:06 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_cmd	*ft_init_cmd(void)
+t_cmd	*ft_init_cmd(t_mini *data)
 {
 	t_cmd	*cmd;
 
@@ -22,9 +22,10 @@ t_cmd	*ft_init_cmd(void)
 	cmd->c_args = NULL;
 	cmd->c_abs_path = NULL;
 	cmd->c_env_path = NULL;
-	cmd->fd[WRITE_END] = STDOUT_FILENO;
-	cmd->fd[READ_END] = STDIN_FILENO;
+	cmd->fd[READ_END] = dup(STDIN_FILENO);
+	cmd->fd[WRITE_END] = dup(STDOUT_FILENO);
 	cmd->flag = NULL;
+	cmd->data = data;
 	cmd->next = NULL;
 	return (cmd);
 }
@@ -47,16 +48,22 @@ int	check_redirections(t_cmd *cmd, char	**arg)
 	ft_putstr_fd("token: ", 2);
 	ft_putstr_fd(token, 2);
 	ft_putstr_fd("\n", 2);
-	if (!ft_strncmp(token, "<", 1))
+	if (!ft_strncmp(&token[1], "|", 1))
+	{
+		return (redir_error(&token[1]), 1);
+	}
+	if (!ft_strncmp(token, "<", 2))
 		g_status = input_redir(cmd, arg);
-	if (!ft_strncmp(token, ">", 1))
+	else if (!ft_strncmp(token, ">", 2))
 		g_status = output_redir(cmd, arg);
-	if (!ft_strncmp(token, "<<", 2))
+	else if (!ft_strncmp(token, "<<", 2))
 		g_status = input_heredoc(cmd, arg);
-	if (!ft_strncmp(token, ">>", 2))
+	else if (!ft_strncmp(token, ">>", 2))
 		g_status = output_redir_append(cmd, arg);
 	return (0);
 }
+
+// isredir(&token[1]) || 
 
 /**
  * @brief 
@@ -145,7 +152,7 @@ void	ft_cmdlst(t_mini *data)
 	head = 0;
 	while (head < count)
 	{
-		newcmd = ft_init_cmd();
+		newcmd = ft_init_cmd(data);
 		i += ft_fillcmd(newcmd, &data->full_cmd[i]);
 		ft_cmd_lstadd_back(&data->cmd_lst, newcmd);
 		head++;

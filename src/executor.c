@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/26 11:07:50 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/01 19:35:30 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,29 @@ void	ft_exe(t_mini *data, t_cmd *cmd)
 
 void	child_process(t_mini *data, t_cmd *cmd)
 {
-	// close(data->fd[READ_END]);
-	// dup2(data->fd[WRITE_END], STDOUT_FILENO);
-	// dup2(cmd->fd[WRITE_END], data->fd[WRITE_END]);
-	// close(data->fd[WRITE_END]);
 	if (cmd->next)
 	{
 		close(data->fd[READ_END]);
 		dup2(data->fd[WRITE_END], STDOUT_FILENO);
 		close(data->fd[WRITE_END]);
 	}
-	if (cmd->fd[WRITE_END] != STDOUT_FILENO)
-	{
-		close(data->fd[READ_END]);
-		dup2(data->fd[WRITE_END], cmd->fd[WRITE_END]);
-		close(data->fd[WRITE_END]);
-	}
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	ft_exe(data, cmd);
+	execve(cmd->c_env_path, cmd->c_args, data->envp);
+	exit (127);
 }
+
+	// close(data->fd[READ_END]);
+	// dup2(data->fd[WRITE_END], STDOUT_FILENO);
+	// dup2(cmd->fd[WRITE_END], data->fd[WRITE_END]);
+	// close(data->fd[WRITE_END]);
+	
+	// if (cmd->fd[WRITE_END] != STDOUT_FILENO)
+	// {
+	// 	close(data->fd[READ_END]);
+	// 	dup2(data->fd[WRITE_END], cmd->fd[WRITE_END]);
+	// 	close(data->fd[WRITE_END]);
+	// }
 
 	// close(cmd->next->pipes->fd[WRITE_END]);
 // pipe(cmd->pipes->fd);
@@ -49,14 +52,18 @@ void	child_process(t_mini *data, t_cmd *cmd)
 void	parent_process(t_mini *data, t_cmd *cmd, int pid, int *exit_code)
 {
 	// (void)cmd;
-	close(data->fd[WRITE_END]);
-	dup2(data->fd[READ_END], STDIN_FILENO);
-	// dup2(cmd->fd[READ_END], data->fd[READ_END]);
-	if (cmd->fd[READ_END] != STDIN_FILENO)
-		dup2(data->fd[READ_END], cmd->fd[READ_END]);
-	close(data->fd[READ_END]);
+	if (cmd->next)
+	{
+		close(data->fd[WRITE_END]);
+		dup2(data->fd[READ_END], STDIN_FILENO);
+		close(data->fd[READ_END]);
+	}
 	waitpid(pid, exit_code, 0);
 }
+
+	// dup2(cmd->fd[READ_END], data->fd[READ_END]);
+	// if (cmd->fd[READ_END] != STDIN_FILENO)
+	// 	dup2(data->fd[READ_END], cmd->fd[READ_END]);
 
 /**
  * ! In it's current state, unknown commands have leaks, fix.
@@ -72,8 +79,6 @@ int	ft_executor(t_mini *data, t_cmd *cmd)
 
 	exit_code = 0;
 	update_envp(data);
-	// if (!get_cmd_path(data, cmd))
-	// 	ft_error("bash: command not found");
 	if (cmd->next)
 		if (pipe(data->fd) == -1)
 			return (ft_error("Pipe Error"), 1);

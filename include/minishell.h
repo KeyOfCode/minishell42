@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/26 12:24:33 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/01 20:20:00 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ typedef enum s_flags
  * 
  */
 
+struct	s_mini;
+
 //? add pointer back to t_mini??
 typedef struct s_cmd
 {
@@ -102,7 +104,10 @@ typedef struct s_cmd
 	char			*c_abs_path;
 	char			*c_env_path;
 	int				fd[2];
+	int				infile;
+	int				outfile;
 	t_flags			*flag;
+	struct s_mini	*data;
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -162,6 +167,7 @@ typedef struct s_mini
 void	ft_error(char *err_msg);
 void	ft_print_splits(char **splits);
 void	ft_print_cmds(t_cmd **cmds);
+char	*ft_join_free(char *s1, char *s2);
 
 /* Lexer */
 char	**ft_cmdtrim(char *s);

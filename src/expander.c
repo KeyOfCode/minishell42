@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/19 16:58:58 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:35:26 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
