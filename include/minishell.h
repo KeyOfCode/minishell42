@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/26 12:24:33 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/27 10:38:35 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,8 +170,6 @@ int		ft_quotes(char *s, size_t i, char q);
 /* Expander */
 void	ft_expander(t_mini *data);
 
-void	ft_cmdlst(t_mini *data);
-
 /* Parser */
 void	ft_parser(t_mini *data);
 
@@ -197,7 +195,7 @@ int		cd(t_mini *data, t_cmd *cmd);
 void	empty_export(t_mini *data);
 void	ft_mini_exit(t_mini *data);
 
-/* signals */
+/* Signals */
 void	handle_sigint(int sig);
 
 /* Executor */
@@ -213,11 +211,13 @@ int		input_heredoc(t_cmd *cmd, char **token);
 int		output_redir(t_cmd *cmd, char **token);
 int		output_redir_append(t_cmd *cmd, char **token);
 
-/* cmd */
+/* Commands */
 int		isredir(char *arg);
 void	redir_error(char *token);
 int		count_cmdargs(char **args);
 void	free_cmds(t_cmd **cmd_lst);
+void	*ft_cmdlst(t_mini *data);
+
 
 
 #endif

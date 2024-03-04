@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/26 11:46:47 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/04 13:30:23 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_cmd	*ft_init_cmd(void)
 }
 
 /**
- * ? Redirections. 
+ * ? Redirections.
  * 
  *  - infile: Only accepts the last one as input, ignores all before.
  *  - heredoc: Only accepts the last one as EOF
@@ -42,20 +42,26 @@ t_cmd	*ft_init_cmd(void)
 int	check_redirections(t_cmd *cmd, char	**arg)
 {
 	char	*token;
+	int		status;
 
 	token = *arg;
 	ft_putstr_fd("token: ", 2);
 	ft_putstr_fd(token, 2);
 	ft_putstr_fd("\n", 2);
 	if (!ft_strncmp(token, "<", 1))
-		g_status = input_redir(cmd, arg);
+		status = input_redir(cmd, arg);
 	if (!ft_strncmp(token, ">", 1))
-		g_status = output_redir(cmd, arg);
+		status = output_redir(cmd, arg);
 	if (!ft_strncmp(token, "<<", 2))
-		g_status = input_heredoc(cmd, arg);
+		status = input_heredoc(cmd, arg);
 	if (!ft_strncmp(token, ">>", 2))
-		g_status = output_redir_append(cmd, arg);
-	return (0);
+		status = output_redir_append(cmd, arg);
+	if (status > 0)
+	{
+		g_status = status;
+		return (status);
+	}
+	return (status);
 }
 
 /**
@@ -65,32 +71,34 @@ int	check_redirections(t_cmd *cmd, char	**arg)
  * @param args 
  * @return int 
  */
-int	ft_fillcmd(t_cmd *newcmd, char **args)
+int	*ft_fillcmd(t_cmd *newcmd, char **args, int *index)
 {
 	int		i;
 	int		j;
-	int		c;
+	int		count;
 
-	c = count_cmdargs(args);
-	newcmd->c_args = ft_calloc(c + 1, sizeof(char *));
-	if (!newcmd)
-		return (0);
+	count = count_cmdargs(args);
+	if (count == 0)
+		return (NULL);
+	newcmd->c_args = ft_calloc(count + 1, sizeof(char *));
 	i = 0;
 	j = 0;
-	while ((j < c) || (args[i] != NULL && ft_strncmp(args[i], "|", 1)))
+	while ((j < count) || (args[i] != NULL && ft_strncmp(args[i], "|", 1)))
 	{
 		if (!isredir(args[i]))
 			newcmd->c_args[j++] = args[i];
 		else
 		{
-			check_redirections(newcmd, args + i);
+			if (check_redirections(newcmd, args + i) > 0)
+				return (NULL);
 			if (args[i + 1] != NULL)
 				i++;
 		}
 		i++;
 	}
 	newcmd->c_abs_path = newcmd->c_args[0];
-	return (i + 1);
+	*index += i + 1;
+	return (index);
 }
 
 void	ft_cmd_lstadd_back(t_cmd **cmd_lst, t_cmd *new)
@@ -126,7 +134,7 @@ void	ft_cmd_lstadd_back(t_cmd **cmd_lst, t_cmd *new)
 	printf("\n\tc_abs_path: %s\n", cmd->c_args[0]);
 } */
 
-void	ft_cmdlst(t_mini *data)
+void	*ft_cmdlst(t_mini *data)
 {
 	t_cmd	*newcmd;
 	int		count;
@@ -139,18 +147,20 @@ void	ft_cmdlst(t_mini *data)
 		if (!ft_strncmp(data->full_cmd[i++], "|", 1))
 			count++;
 	if (data->full_cmd[0][0] == '|' || data->full_cmd[i - 1][0] == '|')
-		return (ft_error("bash: syntax error near unexpected token `|`"));
+		return (ft_error("bash: syntax error near unexpected token `|'"), NULL);
 	data->cmd_count = count;
 	i = 0;
 	head = 0;
 	while (head < count)
 	{
 		newcmd = ft_init_cmd();
-		i += ft_fillcmd(newcmd, &data->full_cmd[i]);
+		if (!ft_fillcmd(newcmd, &data->full_cmd[i], &i))
+			return (NULL);
 		ft_cmd_lstadd_back(&data->cmd_lst, newcmd);
 		head++;
 	}
 	ft_print_cmds(&data->cmd_lst);
+	return(data);
 }
 /* 	printf("\nNode number %d\n\n", head);
 	printf("\nft_fillcmd check! i = %d\n\n", i);

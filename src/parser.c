@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/26 12:25:53 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/04 17:25:52 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ void	ft_parser(t_mini *data)
 		ft_putstr_fd(head->c_abs_path, 2);
 		ft_putstr_fd("\n", 2);
 		builtin(data, head);
-		dup2(data->saved_stdin, STDIN_FILENO);
-		dup2(data->saved_stdout, STDOUT_FILENO);
 		head = head->next;
 	}
 	free_cmds(&data->cmd_lst);

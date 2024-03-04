@@ -11,7 +11,8 @@ INCLUDES=	$(LIBFT)
 HEADER=		include/minishell.h
 VALGRIND=	valgrind --leak-check=yes 
 # VALGRIND=	valgrind --leak-check=full --show-leak-kinds=all
-LIB=		-L /usr/local/opt/readline/lib -I /usr/local/opt/readline/include -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include -lreadline
+LIB=		-L /usr/local/opt/readline/lib -I /usr/local/opt/readline/include \
+			-L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include -lreadline
 # -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline/include
 COMMIT:=	""
 BRANCH:=	""

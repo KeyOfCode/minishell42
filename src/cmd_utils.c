@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:16:18 by disantam          #+#    #+#             */
-/*   Updated: 2024/02/26 12:23:16 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/29 11:52:44 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ int	isredir(char *arg)
 int	count_cmdargs(char **args)
 {
 	int		i;
-	int		c;
+	int		count;
 	char	ch;
 
 	i = 0;
-	c = 0;
+	count = 0;
 	while (args[i] && ft_strncmp(args[i], "|", 1))
 	{
 		if (!isredir(args[i]))
 		{
-			c++;
+			count++;
 		}
 		else if (args[i + 1])
 		{
@@ -42,17 +42,17 @@ int	count_cmdargs(char **args)
 		}
 		i++;
 	}
-	ch = '0' + c;
+	ch = '0' + count;
 	write(2, &ch, 1);
 	write(2, "\n", 1);
-	return (c);
+	return (count);
 }
 
 void	redir_error(char *token)
 {
 	ft_putstr_fd("bash: syntax error near unexpected token `", 2);
 	write(2, token, 1);
-	write(2, "`\n", 2);
+	write(2, "'\n", 2);
 	g_status = 1;
 }
 
@@ -65,10 +65,14 @@ void	free_cmds(t_cmd **cmd_lst)
 	while (*cmd_lst != NULL)
 	{
 		head = *cmd_lst;
-		i =-1;
+		i = -1;
 		while (head->c_args[++i] != NULL)
 		{
 			free(head->c_args[i]);
+		}
+		if (head->c_env_path != NULL)
+		{
+			free(head->c_env_path);
 		}
 		free(head->c_args);
 		*cmd_lst = head->next;

@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/22 12:49:36 by disantam         ###   ########.fr       */
+/*   Updated: 2024/02/27 10:55:14 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	is_whitespace(char c)
 
 void	ft_error(char *err_msg)
 {
-	g_status = 1;
 	ft_putendl_fd(err_msg, 2);
 }
 
