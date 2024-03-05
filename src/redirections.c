@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/29 11:01:56 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/05 11:20:27 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int	input_redir(t_cmd *cmd, char **token)
 {
 	int		fd;
 
-	// if (cmd->fd[READ_END] != STDIN_FILENO)
-	// 	close(cmd->fd[READ_END]);
 	if (token[1] == NULL)
 		return (ft_error("bash: syntax error near unexpected token `newline\'"), 1);
 	if (isredir(token[1]) || !ft_strncmp(token[1], "|", 1))
@@ -33,8 +31,6 @@ int	input_redir(t_cmd *cmd, char **token)
 		return (ft_error("bash: test: No such file or directory"), 127);
 	}
 	cmd->fd[READ_END] = fd;
-	dup2(cmd->fd[READ_END], STDIN_FILENO);
-	close(cmd->fd[READ_END]);
 	return (0);
 }
 
@@ -42,8 +38,6 @@ int	output_redir(t_cmd *cmd, char **token)
 {
 	int		fd;
 
-	// if (cmd->fd[WRITE_END] != STDOUT_FILENO)
-	// 	close(cmd->fd[WRITE_END]);
 if (token[1] == NULL)
 		return (ft_error("bash: syntax error near unexpected token `newline\'"), 1);
 	if (isredir(token[1]) || !ft_strncmp(token[1], "|", 1))
@@ -59,8 +53,6 @@ if (token[1] == NULL)
 		return (ft_error("bash: test: No such file or directory"), 127);
 	}
 	cmd->fd[WRITE_END] = fd;
-	dup2(cmd->fd[WRITE_END], STDOUT_FILENO);
-	close(cmd->fd[WRITE_END]);
 	return (0);
 }
 
@@ -85,8 +77,6 @@ int	output_redir_append(t_cmd *cmd, char **token)
 		return (ft_error("bash: test: No such file or directory"), 127);
 	}
 	cmd->fd[WRITE_END] = fd;
-	dup2(cmd->fd[WRITE_END], STDOUT_FILENO);
-	close(cmd->fd[WRITE_END]);
 	return (0);
 }
 

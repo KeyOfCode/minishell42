@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:16:18 by disantam          #+#    #+#             */
-/*   Updated: 2024/02/29 11:52:44 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/05 14:20:27 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	count_cmdargs(char **args)
 {
 	int		i;
 	int		count;
-	char	ch;
 
 	i = 0;
 	count = 0;
@@ -42,9 +41,6 @@ int	count_cmdargs(char **args)
 		}
 		i++;
 	}
-	ch = '0' + count;
-	write(2, &ch, 1);
-	write(2, "\n", 1);
 	return (count);
 }
 
