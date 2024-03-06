@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/27 13:29:32 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/06 16:44:37 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	echo(t_cmd	*cmd)
 	i = 0;
 	flag = 0;
 	if (cmd->c_args[1] == NULL)
-		ft_putendl_fd("", 0);
-	if (!ft_strncmp(cmd->c_args[1], "-n", 2))
+		ft_putendl_fd("", 1);
+	if (cmd->c_args[1] && !ft_strncmp(cmd->c_args[1], "-n", 2))
 	{
 		flag = 1;
 		i = 1;
@@ -38,10 +38,10 @@ int	echo(t_cmd	*cmd)
 	{
 		ft_putstr_fd(cmd->c_args[i], 2);
 		if (cmd->c_args[i + 1])
-			ft_putstr_fd(" ", 2);
+			ft_putstr_fd(" ", 1);
 	}
 	if (!flag)
-		ft_putendl_fd("", 0);
+		ft_putendl_fd("", 1);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/26 18:39:40 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:02:51 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 int	g_status;
 
+void	ft_error(char *err_msg)
+{
+	g_status = 1;
+	ft_putendl_fd(err_msg, 2);
+}
+
 int	is_whitespace(char c)
 {
 	if (c == ' ' || c == '\t' || c == '\n')
 		return (1);
 	else
 		return (0);
-}
-
-void	ft_error(char *err_msg)
-{
-	g_status = 1;
-	ft_putendl_fd(err_msg, 2);
 }
 
 void	ft_print_splits(char **splits)
@@ -61,18 +61,41 @@ void	ft_print_cmds(t_cmd **cmds)
 	}
 }
 
+char	*ft_join_free(char *s1, char *s2)
+{
+	char	*aux;
+
+	aux = ft_strjoin(s1, s2);
+	return (aux);
+}
+
 void	handle_sigint(int sig)
 {
 	if (sig == SIGINT)
 	{
 		g_status = 130;
 		rl_redisplay();
-		ft_putstr_fd("  \n", STDOUT_FILENO);
+		ft_putstr_fd("\n", STDOUT_FILENO);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}
 }
+		// g_status = 130;
+		// rl_redisplay();
+		// ft_putstr_fd("\n", STDOUT_FILENO);
+		// // ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		// rl_replace_line("", 0);
+		// rl_on_new_line();
+		// rl_redisplay();
+
+	// if (g_status != 0 && g_status != -1)
+	// {
+	// 	ft_putstr("\n");
+	// 	kill (g_status, SIGKILL);
+	// 	g_status = 130;
+	// 	g_status = 0;
+	// }
 
 // void	ft_ctrl_d(t_mini *data)
 // {

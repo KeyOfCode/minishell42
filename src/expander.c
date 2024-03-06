@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/27 14:35:26 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/04 20:46:15 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*ft_substr_expand(char	*str, t_mini *data)
 	if (!var && str[i] == '$')
 		var = ft_itoa(prompt->pid);
 	else if (!var && str[i] == '?')
-		var = ft_itoa(g_status);
+		var = ft_itoa(g_status->status);
 */
 
 char	*ft_chrrmv(char *str, char c)

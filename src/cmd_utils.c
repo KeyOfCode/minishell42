@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:16:18 by disantam          #+#    #+#             */
-/*   Updated: 2024/02/26 19:03:32 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:00:50 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,16 @@ int	count_cmdargs(char **args)
 		i++;
 	}
 	count_print = '0' + count;
-	write(2, &count_print, 1);
-	write(2, "-\n", 2);
+	ft_putstr_fd(&count_print, 2);
+	ft_putstr_fd("-\n", 2);
 	return (count);
 }
 
 void	redir_error(char *token)
 {
 	ft_putstr_fd("bash: syntax error near unexpected token `", 2);
-	write(2, token, 1);
-	write(2, "`\n", 2);
+	ft_putstr_fd(token, 2);
+	ft_putstr_fd("`\n", 2);
 	g_status = 1;
 }
 
@@ -65,10 +65,14 @@ void	free_cmds(t_cmd **cmd_lst)
 	while (*cmd_lst != NULL)
 	{
 		head = *cmd_lst;
-		i =-1;
+		i = -1;
 		while (head->c_args[++i] != NULL)
 		{
 			free(head->c_args[i]);
+		}
+		if (head->c_env_path != NULL)
+		{
+			free(head->c_env_path);
 		}
 		free(head->c_args);
 		*cmd_lst = head->next;

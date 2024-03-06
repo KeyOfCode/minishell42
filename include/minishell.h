@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/01 20:20:00 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:37:31 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,6 +212,7 @@ char	*get_cmd_path(t_mini *data, t_cmd *cmd);
 void	save_path(t_mini *data);
 void	update_envp(t_mini *data);
 char	*get_cmd_path(t_mini *data, t_cmd *cmd);
+int		ft_builtin(t_mini	*data, t_cmd *head);
 
 /* Redirections */
 int		input_redir(t_cmd *cmd, char **token);

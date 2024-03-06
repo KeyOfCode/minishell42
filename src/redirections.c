@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/01 20:18:55 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:05:40 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ unexpected token `newline\'"), 1);
 	ft_putstr_fd("append outfile:", 2);
 	ft_putstr_fd(token[1], 2);
 	ft_putstr_fd("\n", 2);
-	cmd->fd[WRITE_END] = open(token[1], O_CREAT | O_APPEND | O_RDWR, 0644);
+	cmd->fd[WRITE_END] = open(token[1], O_CREAT | O_APPEND | O_WRONLY, 0644);
 	if (cmd->fd[WRITE_END] < 0)
 	{
 		return (ft_error("bash: app_outfile: No such file or directory"), 127);
@@ -66,13 +66,13 @@ unexpected token `newline\'"), 1);
 	return (0);
 }
 
-char	*ft_join_free(char *s1, char *s2)
+/* char	*ft_join_free(char *s1, char *s2)
 {
 	char	*aux;
 
 	aux = ft_strjoin(s1, s2);
 	return (aux);
-}
+} */
 
 int	ft_redir_heredoc(t_cmd *cmd, char *heredoc, t_mini *data)
 {
@@ -91,6 +91,7 @@ int	ft_redir_heredoc(t_cmd *cmd, char *heredoc, t_mini *data)
 		dup2(cmd->fd[WRITE_END], STDOUT_FILENO);
 		close(cmd->fd[WRITE_END]);
 		ft_putstr_fd(heredoc, STDOUT_FILENO);
+		exit(EXIT_SUCCESS);
 	}
 	else
 	{

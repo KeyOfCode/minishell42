@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/01 19:41:06 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:31:56 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,22 +117,6 @@ void	ft_cmd_lstadd_back(t_cmd **cmd_lst, t_cmd *new)
 	last_elem->next = new;
 }
 
-/* {current = current->next; printf("current: %s\n", current->c_abs_path);} */
-
-/* void	ft_print_node(t_cmd **cmd_lst)
-{
-	t_cmd	*cmd;
-	int		j;
-
-	cmd = *cmd_lst;
-	printf("node \n");
-	printf("\tc_args: \n");
-	j = 0;
-	while (cmd->c_args[j])
-		printf("\t\t%s\n", cmd->c_args[j++]);
-	printf("\n\tc_abs_path: %s\n", cmd->c_args[0]);
-} */
-
 void	ft_cmdlst(t_mini *data)
 {
 	t_cmd	*newcmd;
@@ -157,9 +141,10 @@ void	ft_cmdlst(t_mini *data)
 		ft_cmd_lstadd_back(&data->cmd_lst, newcmd);
 		head++;
 	}
-	ft_print_cmds(&data->cmd_lst);
 }
+
 /* 	printf("\nNode number %d\n\n", head);
+	// ft_print_cmds(&data->cmd_lst);
 	printf("\nft_fillcmd check! i = %d\n\n", i);
 	printf("c_abs_args: %s\n\n", data->cmd_lst->c_abs_path);
 	printf("Node added\n");
