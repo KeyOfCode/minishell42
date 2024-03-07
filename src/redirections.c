@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/06 18:05:40 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/07 13:16:31 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	input_redir(t_cmd *cmd, char **token)
 		close(cmd->fd[READ_END]);
 	if (token[1] == NULL)
 		return (ft_error("bash: syntax error near \
-unexpected token `newline\'"), 1);
+	unexpected token `newline\'"), 1);
 	ft_putstr_fd("infile: ", 2);
 	ft_putstr_fd(token[1], 2);
 	ft_putstr_fd("\n", 2);
@@ -36,7 +36,7 @@ int	output_redir(t_cmd *cmd, char **token)
 		close(cmd->fd[WRITE_END]);
 	if (token[1] == NULL)
 		return (ft_error("bash: syntax error near \
-unexpected token `newline\'"), 1);
+	unexpected token `newline\'"), 1);
 	ft_putstr_fd("outfile: ", 2);
 	ft_putstr_fd(token[1], 2);
 	ft_putstr_fd("\n", 2);
@@ -54,7 +54,7 @@ int	output_redir_append(t_cmd *cmd, char **token)
 	close(cmd->fd[WRITE_END]);
 	if (token[1] == NULL)
 		return (ft_error("bash: syntax error near \
-unexpected token `newline\'"), 1);
+	unexpected token `newline\'"), 1);
 	ft_putstr_fd("append outfile:", 2);
 	ft_putstr_fd(token[1], 2);
 	ft_putstr_fd("\n", 2);
@@ -65,14 +65,6 @@ unexpected token `newline\'"), 1);
 	}
 	return (0);
 }
-
-/* char	*ft_join_free(char *s1, char *s2)
-{
-	char	*aux;
-
-	aux = ft_strjoin(s1, s2);
-	return (aux);
-} */
 
 int	ft_redir_heredoc(t_cmd *cmd, char *heredoc, t_mini *data)
 {

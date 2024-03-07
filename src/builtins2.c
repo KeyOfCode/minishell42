@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/06 16:44:37 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/07 16:23:54 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ int	echo(t_cmd	*cmd)
 	i = 0;
 	flag = 0;
 	if (cmd->c_args[1] == NULL)
+	{
 		ft_putendl_fd("", 1);
+		return (0);
+	}
 	if (cmd->c_args[1] && !ft_strncmp(cmd->c_args[1], "-n", 2))
 	{
 		flag = 1;

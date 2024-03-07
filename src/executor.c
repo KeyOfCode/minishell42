@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/06 18:11:26 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:45:37 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,26 @@ void	ft_redir(int *fd, t_cmd *cmd)
 	}
 }
 
+int	child_builtin(t_mini *data, t_cmd *head)
+{
+	char	*cmd;
+	int		l;
+
+	cmd = head->c_abs_path;
+	l = ft_strlen(cmd);
+	if (!ft_strncmp(cmd, "pwd", l) || !ft_strncmp(cmd, "PWD", l))
+		g_status = pwd();
+	else if (!ft_strncmp(cmd, "env", l) || !ft_strncmp(cmd, "ENV", l))
+		g_status = env(data);
+	else if (!ft_strncmp(cmd, "echo", l) || !ft_strncmp(cmd, "ECHO", l))
+		g_status = echo(head);
+	else if (!ft_strncmp(cmd, "export", l) && !head->c_args[1])
+		g_status = export(data, head); 
+	else
+		return (0);
+	return (1);
+}
+
 void	child_process(int *fd, t_cmd *cmd)
 {
 	close(fd[READ_END]);
@@ -36,7 +56,7 @@ void	child_process(int *fd, t_cmd *cmd)
 	ft_redir(fd, cmd);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	if (!ft_builtin(cmd->data, cmd))
+	if (!child_builtin(cmd->data, cmd))
 	{
 		if (!get_cmd_path(cmd->data, cmd))
 			ft_error("bash: command not found");
@@ -66,22 +86,6 @@ void	child_process(int *fd, t_cmd *cmd)
 	exit (127);
 } */
 
-	// close(data->fd[READ_END]);
-	// dup2(data->fd[WRITE_END], STDOUT_FILENO);
-	// dup2(cmd->fd[WRITE_END], data->fd[WRITE_END]);
-	// close(data->fd[WRITE_END]);
-	// if (cmd->fd[WRITE_END] != STDOUT_FILENO)
-	// {
-	// 	close(data->fd[READ_END]);
-	// 	dup2(data->fd[WRITE_END], cmd->fd[WRITE_END]);
-	// 	close(data->fd[WRITE_END]);
-	// }
-
-	// close(cmd->next->pipes->fd[WRITE_END]);
-// pipe(cmd->pipes->fd);
-// 		dup2(cmd->next->pipes->fd[READ_END], cmd->pipes->fd[WRITE_END]);
-// 		dup2(cmd->pipes->fd[READ_END], cmd->next->pipes->fd[WRITE_END]);
-
 void	parent_process(int *fd, t_cmd *cmd, int pid, int *exit_code)
 {
 	(void)cmd;
@@ -90,40 +94,6 @@ void	parent_process(int *fd, t_cmd *cmd, int pid, int *exit_code)
 	close(fd[READ_END]);
 	waitpid(pid, exit_code, 0);
 }
-
-/* void	parent_process(t_mini *data, t_cmd *cmd, int pid, int *exit_code)
-{
-	if (cmd->next)
-	{
-		cmd->fd[READ_END] = dup(fd[READ_END]);
-	}
-	close(fd[READ_END]);
-	close(fd[WRITE_END]);
-	if (cmd->next)
-	{
-		close(data->fd[WRITE_END]);
-		dup2(data->fd[READ_END], STDIN_FILENO);
-		close(data->fd[READ_END]);
-	}
-	if (cmd->next)
-	{
-		close(cmd->fd[WRITE_END]);
-		cmd->fd[READ_END] = dup(fd[READ_END]);
-		dup2(cmd->fd[READ_END], STDIN_FILENO);
-		close(cmd->fd[READ_END]);
-	}
-	if (cmd->fd[READ_END] != STDIN_FILENO)
-	{
-		close(fd[WRITE_END]);
-		dup2(cmd->fd[READ_END], STDIN_FILENO);
-		close(cmd->fd[READ_END]);
-	}
-	waitpid(pid, exit_code, 0);
-} */
-
-	// dup2(cmd->fd[READ_END], data->fd[READ_END]);
-	// if (cmd->fd[READ_END] != STDIN_FILENO)
-	// 	dup2(data->fd[READ_END], cmd->fd[READ_END]);
 
 /**
  * 
@@ -151,10 +121,6 @@ int	ft_executor(t_mini *data, t_cmd *cmd)
 	data->fd[WRITE_END] = dup(data->saved_stdin);
 	return (WEXITSTATUS(exit_code));
 }
-
-	// if (cmd->next)
-	// 	if (pipe(cmd->fd) == -1)
-	// 		return (ft_error("Pipe Error"), 1);
 
 /**
  * 
@@ -187,12 +153,3 @@ int	ft_executor(t_mini *data, t_cmd *cmd)
 	return (WEXITSTATUS(exit_code));
 } */
 
-	// ft_free_matrix(data->envp);
-
-/* 
-printf("Check: get_env_path. env_path: %s\n", cmd->c_env_path);
-printf("Check: update_envp\n");
-update_envp(data);
-execve(cmd->c_env_path, cmd->c_args, data->envp);
-free(data->envp);
- */
