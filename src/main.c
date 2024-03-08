@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/04 20:46:15 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/08 16:51:06 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,12 @@ void	ft_init_data(t_mini *data)
 	data->envp = NULL;
 	data->full_cmd = NULL;
 	data->full_path = NULL;
-	data->fd[READ_END] = dup(STDIN_FILENO);
-	data->fd[WRITE_END] = dup(STDOUT_FILENO);
+	data->fd[READ_END] = (STDIN_FILENO);
+	data->fd[WRITE_END] = (STDOUT_FILENO);
 	data->saved_stdin = dup(STDIN_FILENO);
 	data->saved_stdout = dup(STDOUT_FILENO);
+	ft_printf_fd(2, "saved_stdin: %d\n", data->saved_stdin);
+	ft_printf_fd(2, "saved_stdout: %d\n", data->saved_stdout);
 	g_status = 0;
 }
 

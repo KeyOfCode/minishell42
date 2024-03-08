@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/06 18:05:40 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:37:54 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	input_redir(t_cmd *cmd, char **token)
 {
-	if (cmd->fd[READ_END] != cmd->data->saved_stdin)
+	if (cmd->fd[READ_END] != -1)
 		close(cmd->fd[READ_END]);
 	if (token[1] == NULL)
 		return (ft_error("bash: syntax error near \
@@ -32,7 +32,7 @@ unexpected token `newline\'"), 1);
 
 int	output_redir(t_cmd *cmd, char **token)
 {
-	if (cmd->fd[WRITE_END] != cmd->data->saved_stdout)
+	if (cmd->fd[WRITE_END] != -1)
 		close(cmd->fd[WRITE_END]);
 	if (token[1] == NULL)
 		return (ft_error("bash: syntax error near \
@@ -50,8 +50,8 @@ unexpected token `newline\'"), 1);
 
 int	output_redir_append(t_cmd *cmd, char **token)
 {
-	// if (cmd->fd[WRITE_END] != STDOUT_FILENO)
-	close(cmd->fd[WRITE_END]);
+	if (cmd->fd[WRITE_END] != -1)
+		close(cmd->fd[WRITE_END]);
 	if (token[1] == NULL)
 		return (ft_error("bash: syntax error near \
 unexpected token `newline\'"), 1);
@@ -108,6 +108,7 @@ int	input_heredoc(t_cmd *cmd, char **token)
 	char	*input;
 	char	*heredoc;
 	int		extern_stdout;
+	int		exit_code;
 
 	input = NULL;
 	heredoc = NULL;
@@ -123,10 +124,10 @@ int	input_heredoc(t_cmd *cmd, char **token)
 		input = readline("> $ ");
 	}
 	free(input);
-	ft_redir_heredoc(cmd, heredoc, cmd->data);
+	exit_code = ft_redir_heredoc(cmd, heredoc, cmd->data);
 	dup2(extern_stdout, STDOUT_FILENO);
 	close(extern_stdout);
-	return (0);
+	return (exit_code);
 }
 
 /* char	*heredoc(char *eof)

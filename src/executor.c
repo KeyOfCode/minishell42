@@ -6,36 +6,43 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/06 18:11:26 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:40:07 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_redir(int *fd, t_cmd *cmd)
+void	ft_redir(t_cmd *cmd)
 {
-	if (cmd->fd[READ_END] != STDIN_FILENO)
+	if (cmd->fd[READ_END] != -1)
 	{
-		close(fd[WRITE_END]);
+		// close(cmd->fd[WRITE_END]);
 		dup2(cmd->fd[READ_END], STDIN_FILENO);
-		close(cmd->fd[READ_END]);
+		// close(cmd->fd[READ_END]);
 	}
-	if (cmd->fd[WRITE_END] != STDOUT_FILENO)
+	if (cmd->fd[WRITE_END] != -1)
 	{
-		close(fd[READ_END]);
+		// close(cmd->fd[READ_END]);
 		dup2(cmd->fd[WRITE_END], STDOUT_FILENO);
-		close(cmd->fd[WRITE_END]);
+		// close(cmd->fd[WRITE_END]);
 	}
+	ft_printf_fd(2, "Infile: %d\n", cmd->fd[READ_END]);
+	ft_printf_fd(2, "Outfile: %d\n", cmd->fd[WRITE_END]);
 }
 
 void	child_process(int *fd, t_cmd *cmd)
 {
-	close(fd[READ_END]);
-	dup2(fd[WRITE_END], STDOUT_FILENO);
-	close(fd[WRITE_END]);
-	ft_redir(fd, cmd);
+	ft_redir(cmd);
+	if (cmd->next)
+	{
+		close(fd[READ_END]);
+		dup2(fd[WRITE_END], STDOUT_FILENO);
+		close(fd[WRITE_END]);
+	}
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
+	ft_printf_fd(2, "child READ: %d\n", fd[READ_END]);
+	ft_printf_fd(2, "child WRITE: %d\n", fd[WRITE_END]);
 	if (!ft_builtin(cmd->data, cmd))
 	{
 		if (!get_cmd_path(cmd->data, cmd))
@@ -97,8 +104,6 @@ void	parent_process(int *fd, t_cmd *cmd, int pid, int *exit_code)
 	{
 		cmd->fd[READ_END] = dup(fd[READ_END]);
 	}
-	close(fd[READ_END]);
-	close(fd[WRITE_END]);
 	if (cmd->next)
 	{
 		close(data->fd[WRITE_END]);
@@ -134,21 +139,29 @@ void	parent_process(int *fd, t_cmd *cmd, int pid, int *exit_code)
 int	ft_executor(t_mini *data, t_cmd *cmd)
 {
 	pid_t	pid;
-	int		fd[2];
 	int		exit_code;
 
 	exit_code = 0;
 	update_envp(data);
-	if (pipe(fd) == -1)
-		return (ft_error("Pipe Error"), 1);
+	// if (cmd->next)
+		if (pipe(data->fd) == -1)
+			return (ft_error("Pipe Error"), 1);
+	ft_printf_fd(2, "data READ: %d\n", data->fd[READ_END]);
+	ft_printf_fd(2, "data WRITE: %d\n", data->fd[WRITE_END]);
 	pid = fork();
 	if (pid < 0)
 		return (ft_error("Fork Error"), 1);
 	else if (pid == 0)
-		child_process(fd, cmd);
+		child_process(data->fd, cmd);
 	else
-		parent_process(fd, cmd, pid, &exit_code);
-	data->fd[WRITE_END] = dup(data->saved_stdin);
+		parent_process(data->fd, cmd, pid, &exit_code);
+	ft_putstr_fd("\nft_Executor finish\n", 2);
+	// close(fd[READ_END]);
+	// close(fd[WRITE_END]);
+	close(cmd->fd[READ_END]);
+	close(cmd->fd[WRITE_END]);
+	// data->fd[WRITE_END] = dup(data->saved_stdin);
+	// data->fd[READ_END] = dup(data->saved_stdout);
 	return (WEXITSTATUS(exit_code));
 }
 

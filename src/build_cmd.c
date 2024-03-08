@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/06 17:31:56 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/08 16:54:11 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,18 @@ t_cmd	*ft_init_cmd(t_mini *data)
 	cmd->c_args = NULL;
 	cmd->c_abs_path = NULL;
 	cmd->c_env_path = NULL;
-	cmd->fd[READ_END] = dup(STDIN_FILENO);
-	cmd->fd[WRITE_END] = dup(STDOUT_FILENO);
+	cmd->fd[READ_END] = -1;
+	cmd->fd[WRITE_END] = -1;
 	cmd->flag = NULL;
 	cmd->data = data;
 	cmd->next = NULL;
 	return (cmd);
 }
+
+	// ft_printf_fd(2, "STDIN_FILENO: %d\n", STDIN_FILENO);
+	// ft_printf_fd(2, "STDOUT_FILENO: %d\n", STDOUT_FILENO);
+	// ft_printf_fd(2, "OG_Infile: %d\n", cmd->fd[READ_END]);
+	// ft_printf_fd(2, "OG_Outfile: %d\n", cmd->fd[WRITE_END]);
 
 /**
  * ? Redirections. 
