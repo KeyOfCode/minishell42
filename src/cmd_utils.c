@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:16:18 by disantam          #+#    #+#             */
-/*   Updated: 2024/03/07 15:26:14 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/08 15:31:50 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	redir_error(char *token)
 	ft_putstr_fd("bash: syntax error near unexpected token `", 2);
 	ft_putstr_fd(token, 2);
 	ft_putstr_fd("`\n", 2);
-	g_status = 1;
+	g_status.exit_code = 1;
 }
 
 void	free_cmds(t_cmd **cmd_lst)
@@ -79,3 +79,4 @@ void	free_cmds(t_cmd **cmd_lst)
 		free(head);
 	}
 }
+

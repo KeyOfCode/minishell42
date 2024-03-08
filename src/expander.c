@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/04 20:46:15 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/08 14:42:57 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,9 +129,6 @@ void	ft_expander(t_mini *data)
 	}
 }
 
-// printf("Current token: %s\n", data->full_cmd[i]);
-// printf("\nTransformed token: %s\n", data->full_cmd[i]);
-
 /* 
 void	ft_expander(t_mini *data)
 {
@@ -172,14 +169,6 @@ void	ft_expander(t_mini *data)
 			j++;
 		} */
 
-/**
- * @brief 
- * 
- * @param str 
- * @param env 
- * @param mode 
- * @return char* 
- */
 // char	*ft_subdivide(char *str, t_env *env, int mode)
 // {
 // 	static int		i;

@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/08 13:20:05 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/08 14:49:51 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,9 @@ unexpected token `newline`"), 1);
 	else if (!ft_strncmp(*arg, ">>", 2))
 		redir_st = output_redir_append(cmd, arg);
 	if (redir_st > 0)
-		g_status = redir_st;
+		g_status.exit_code = redir_st;
 	return (redir_st);
 }
-
-// isredir(&token[1]) || 
 
 /**
  * @brief 
@@ -152,14 +150,6 @@ void	*ft_cmdlst(t_mini *data)
 	return (data);
 }
 
-/* 	printf("\nNode number %d\n\n", head);
-	// ft_print_cmds(&data->cmd_lst);
-	printf("\nft_fillcmd check! i = %d\n\n", i);
-	printf("c_abs_args: %s\n\n", data->cmd_lst->c_abs_path);
-	printf("Node added\n");
-	printf("EXIT!\n"); 
-*/
-
 /* t_cmd	*ft_fillcmd(char *args, int *i)
 {
 	t_cmd	*newcmd;
@@ -237,16 +227,3 @@ void	*ft_cmdlst(t_mini *data)
 	}
 } */
 
-/* void	ft_print_node(t_mini *data)
-{
-	t_cmd	*cmd;
-	int		j;
-
-	cmd = *data->cmd_lst;
-	printf("node \n");
-	printf("\tc_args: \n");
-	j = 0;
-	while (cmd->c_args[j])
-		printf("\t\t%s\n", cmd->c_args[j++]);
-	printf("\n\tc_abs_path: %s\n", cmd->c_args[0]);
-} */

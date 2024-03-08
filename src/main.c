@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/08 13:14:34 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/08 14:38:03 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ void	*ft_lexer(t_mini *data)
 	data->full_cmd = ft_cmdtrim(data->prompt);
 	if (!data->full_cmd)
 	{
-		g_status = 1;
+		g_status.exit_code = 1;
 		return (NULL);
 	}
 	ft_expander(data);
 	if (!ft_cmdlst(data))
 	{
-		g_status = 1;
+		g_status.exit_code = 1;
 		return (NULL);
 	}
 	trim = data->full_cmd;
@@ -57,13 +57,6 @@ void	*ft_lexer(t_mini *data)
 	return (data);
 	// ft_print_nodes(data->cmd_lst);
 }
-	// char	**trim;
-	// trim = data->full_cmd;
-	// ft_print_splits(trim);
-	// free(trim);
-// void	ft_free_data(t_mini *data)
-// {
-// }
 
 void	ft_prompt(t_mini *data)
 {
@@ -100,7 +93,8 @@ void	ft_init_data(t_mini *data)
 	data->fd[WRITE_END] = dup(STDOUT_FILENO);
 	data->saved_stdin = dup(STDIN_FILENO);
 	data->saved_stdout = dup(STDOUT_FILENO);
-	g_status = 0;
+	g_status.exit_code = 0;
+	g_status.pid = 0;
 }
 
 /**

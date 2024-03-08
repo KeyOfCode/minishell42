@@ -6,17 +6,17 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/06 18:02:51 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/08 15:26:03 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	g_status;
+t_global	g_status;
 
 void	ft_error(char *err_msg)
 {
-	g_status = 1;
+	g_status.exit_code = 1;
 	ft_putendl_fd(err_msg, 2);
 }
 
@@ -71,11 +71,17 @@ char	*ft_join_free(char *s1, char *s2)
 
 void	handle_sigint(int sig)
 {
-	if (sig == SIGINT)
+	if (g_status.pid != 0 && g_status.pid != -1)
 	{
-		g_status = 130;
+		printf("\n");
+		kill(g_status.pid, SIGKILL);
+		g_status.exit_code = 130;
+		g_status.pid = 0;
+	}
+	else if (sig == SIGINT)
+	{
 		rl_redisplay();
-		ft_putstr_fd("\n", STDOUT_FILENO);
+		printf("  \n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
@@ -97,15 +103,3 @@ void	handle_sigint(int sig)
 	// 	g_status = 0;
 	// }
 
-// void	ft_ctrl_d(t_mini *data)
-// {
-// 	if (!data->prompt)
-// 	{
-// 		rl_on_new_line();
-// 		rl_redisplay();
-// 		ft_putstr_fd("exit\n", STDOUT_FILENO);
-// 		clear_history();
-// 		ft_env_lstclear(data->env_lst);
-// 		exit(g_status);
-// 	}
-// }

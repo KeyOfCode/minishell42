@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/08 13:15:17 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/08 14:40:27 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,6 @@ char	*ft_store_string(char *str, size_t *pos)
 		*pos = i;
 	return (ft_strndup(&str[j], i - j));
 }
-	/* printf("i: %zu\t j: %zu\n", i, j);
-	printf("&str[j]: %s\n", &str[j]);
-	printf("i - j: %zu\n", i - j);
-	printf("%s\n", newstr); 
-	*/
 
 char	**ft_cmdtrim(char *s)
 {
@@ -137,5 +132,3 @@ char	**ft_cmdtrim(char *s)
 	out[i] = NULL;
 	return (out);
 }
-/* 	printf("nº tokens: %zu\n", size);
-	printf("#:%s\n\n", out[i]); */

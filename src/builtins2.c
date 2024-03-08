@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/08 13:18:17 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/08 14:51:58 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_mini_exit(t_mini *data)
 {
 	clear_history();
 	ft_env_lstclear(data->env_lst);
-	exit(g_status);
+	exit(g_status.exit_code);
 }
 
 int	echo(t_cmd	*cmd)
@@ -115,3 +115,4 @@ int	cd(t_mini *data, t_cmd *cmd)
 	set_env(data, "PWD", getcwd(NULL, 0));
 	return (0);
 }
+

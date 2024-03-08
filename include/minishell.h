@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/08 13:14:04 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/08 15:30:43 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@
 # define WRITE_END 1
 
 # pragma endregion
-
-extern int	g_status;
 
 /**
  * @brief Pipes
@@ -162,6 +160,19 @@ typedef struct s_mini
 	int		saved_stdout;
 	int		fd[2];
 }		t_mini;
+
+/**
+ * @brief t_global: Global structure that contains general data of the program.
+ * @param exit_code: Exit status of the last process executed.
+ * @param pid: Current process id.
+ */
+typedef struct	s_global
+{
+	int	exit_code;
+	int	pid;
+}	t_global;
+
+extern t_global g_status;
 
 /* Functions */
 void	ft_error(char *err_msg);

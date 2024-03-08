@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/08 14:15:27 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/08 15:09:06 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ int	child_builtin(t_mini *data, t_cmd *head)
 	cmd = head->c_abs_path;
 	l = ft_strlen(cmd);
 	if (!ft_strncmp(cmd, "pwd", l) || !ft_strncmp(cmd, "PWD", l))
-		g_status = pwd();
+		g_status.exit_code = pwd();
 	else if (!ft_strncmp(cmd, "env", l) || !ft_strncmp(cmd, "ENV", l))
-		g_status = env(data);
+		g_status.exit_code = env(data);
 	else if (!ft_strncmp(cmd, "echo", l) || !ft_strncmp(cmd, "ECHO", l))
-		g_status = echo(head);
+		g_status.exit_code = echo(head);
 	else if (!ft_strncmp(cmd, "export", l) && !head->c_args[1])
-		g_status = export(data, head); 
+		g_status.exit_code = export(data, head); 
 	else
 		return (0);
 	return (1);
@@ -63,7 +63,7 @@ void	child_process(int *fd, t_cmd *cmd)
 		else
 			execve(cmd->c_env_path, cmd->c_args, cmd->data->envp);
 	}
-	exit (127);
+	exit(127);
 }
 
 void	parent_process(int *fd, t_cmd *cmd, int pid, int *exit_code)
@@ -92,6 +92,8 @@ int	ft_executor(t_mini *data, t_cmd *cmd)
 	if (pipe(fd) == -1)
 		return (ft_error("Pipe Error"), 1);
 	pid = fork();
+	if (pid != 0)
+		g_status.pid = pid;
 	if (pid < 0)
 		return (ft_error("Fork Error"), 1);
 	else if (pid == 0)
