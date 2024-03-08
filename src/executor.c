@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/07 15:45:37 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/08 14:15:27 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,26 +66,6 @@ void	child_process(int *fd, t_cmd *cmd)
 	exit (127);
 }
 
-/* void	child_process(t_mini *data, t_cmd *cmd)
-{
-	if (cmd->next)
-	{
-		close(data->fd[READ_END]);
-		dup2(data->fd[WRITE_END], STDOUT_FILENO);
-		close(data->fd[WRITE_END]);
-	}
-	if (cmd->fd[READ_END] != STDIN_FILENO)
-	{
-		close(fd[WRITE_END]);
-		dup2(cmd->fd[READ_END], STDIN_FILENO);
-		close(cmd->fd[READ_END]);
-	}
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	execve(cmd->c_env_path, cmd->c_args, data->envp);
-	exit (127);
-} */
-
 void	parent_process(int *fd, t_cmd *cmd, int pid, int *exit_code)
 {
 	(void)cmd;
@@ -121,35 +101,3 @@ int	ft_executor(t_mini *data, t_cmd *cmd)
 	data->fd[WRITE_END] = dup(data->saved_stdin);
 	return (WEXITSTATUS(exit_code));
 }
-
-/**
- * 
- * @param data 
- * @param cmd 
- * @return int 
- */
-/* int	ft_executor(t_mini *data, t_cmd *cmd)
-{
-	pid_t	pid;
-	int		exit_code;
-
-	exit_code = 0;
-	update_envp(data);
-	if (cmd->next)
-		if (pipe(data->fd) == -1)
-			return (ft_error("Pipe Error"), 1);
-	pid = fork();
-	if (pid < 0)
-		return (ft_error("Fork Error"), 1);
-	else if (pid == 0)
-	{
-		if (!get_cmd_path(data, cmd))
-			return (ft_error("bash: command not found"), 127);
-		child_process(data, cmd);
-	}
-	else
-		parent_process(data, cmd, pid, &exit_code);
-	data->fd[WRITE_END] = dup(data->saved_stdin);
-	return (WEXITSTATUS(exit_code));
-} */
-

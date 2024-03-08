@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/06 17:37:31 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/08 13:14:04 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ int		ft_quotes(char *s, size_t i, char q);
 /* Expander */
 void	ft_expander(t_mini *data);
 
-void	ft_cmdlst(t_mini *data);
+void	*ft_cmdlst(t_mini *data);
 
 /* Parser */
 void	ft_parser(t_mini *data);

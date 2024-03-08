@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/06 17:31:56 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/08 13:20:05 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,30 @@ t_cmd	*ft_init_cmd(t_mini *data)
  */
 int	check_redirections(t_cmd *cmd, char	**arg)
 {
-	char	*token;
+	int	redir_st;
 
-	token = *arg;
+	redir_st = 0;
 	ft_putstr_fd("token: ", 2);
-	ft_putstr_fd(token, 2);
+	ft_putstr_fd(*arg, 2);
 	ft_putstr_fd("\n", 2);
-	if (!ft_strncmp(&token[1], "|", 1))
+	if (arg[1] == NULL)
+		return (ft_error("bash: syntax error near \
+unexpected token `newline`"), 1);
+	if (isredir(arg[1]) || !ft_strncmp(arg[1], "|", 1))
 	{
-		return (redir_error(&token[1]), 1);
+		return (redir_error(arg[1]), 1);
 	}
-	if (!ft_strncmp(token, "<", 2))
-		g_status = input_redir(cmd, arg);
-	else if (!ft_strncmp(token, ">", 2))
-		g_status = output_redir(cmd, arg);
-	else if (!ft_strncmp(token, "<<", 2))
-		g_status = input_heredoc(cmd, arg);
-	else if (!ft_strncmp(token, ">>", 2))
-		g_status = output_redir_append(cmd, arg);
-	return (0);
+	if (!ft_strncmp(*arg, "<", 1))
+		redir_st = input_redir(cmd, arg);
+	else if (!ft_strncmp(*arg, ">", 1))
+		redir_st = output_redir(cmd, arg);
+	else if (!ft_strncmp(*arg, "<<", 2))
+		redir_st = input_heredoc(cmd, arg);
+	else if (!ft_strncmp(*arg, ">>", 2))
+		redir_st = output_redir_append(cmd, arg);
+	if (redir_st > 0)
+		g_status = redir_st;
+	return (redir_st);
 }
 
 // isredir(&token[1]) || 
@@ -72,7 +77,7 @@ int	check_redirections(t_cmd *cmd, char	**arg)
  * @param args 
  * @return int 
  */
-int	ft_fillcmd(t_cmd *newcmd, char **args)
+int	*ft_fillcmd(t_cmd *newcmd, char **args, int *index)
 {
 	int		i;
 	int		j;
@@ -80,8 +85,8 @@ int	ft_fillcmd(t_cmd *newcmd, char **args)
 
 	c = count_cmdargs(args);
 	newcmd->c_args = ft_calloc(c + 1, sizeof(char *));
-	if (!newcmd)
-		return (0);
+	if (c == 0 || !newcmd->c_args)
+		return (NULL);
 	i = 0;
 	j = 0;
 	while ((j < c) || (args[i] != NULL && ft_strncmp(args[i], "|", 1)))
@@ -90,14 +95,16 @@ int	ft_fillcmd(t_cmd *newcmd, char **args)
 			newcmd->c_args[j++] = args[i];
 		else
 		{
-			check_redirections(newcmd, args + i);
+			if (check_redirections(newcmd, args + i) > 0)
+				return (NULL);
 			if (args[i + 1] != NULL)
 				i++;
 		}
 		i++;
 	}
 	newcmd->c_abs_path = newcmd->c_args[0];
-	return (i + 1);
+	*index += i + 1;
+	return (index);
 }
 
 void	ft_cmd_lstadd_back(t_cmd **cmd_lst, t_cmd *new)
@@ -117,7 +124,7 @@ void	ft_cmd_lstadd_back(t_cmd **cmd_lst, t_cmd *new)
 	last_elem->next = new;
 }
 
-void	ft_cmdlst(t_mini *data)
+void	*ft_cmdlst(t_mini *data)
 {
 	t_cmd	*newcmd;
 	int		count;
@@ -130,17 +137,19 @@ void	ft_cmdlst(t_mini *data)
 		if (!ft_strncmp(data->full_cmd[i++], "|", 1))
 			count++;
 	if (data->full_cmd[0][0] == '|' || data->full_cmd[i - 1][0] == '|')
-		return (ft_error("bash: syntax error near unexpected token `|`"));
+		return (ft_error("bash: syntax error near unexpected token `|`"), NULL);
 	data->cmd_count = count;
 	i = 0;
 	head = 0;
 	while (head < count)
 	{
 		newcmd = ft_init_cmd(data);
-		i += ft_fillcmd(newcmd, &data->full_cmd[i]);
+		if (!ft_fillcmd(newcmd, &data->full_cmd[i], &i))
+			return (NULL);
 		ft_cmd_lstadd_back(&data->cmd_lst, newcmd);
 		head++;
 	}
+	return (data);
 }
 
 /* 	printf("\nNode number %d\n\n", head);

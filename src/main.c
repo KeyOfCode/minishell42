@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/04 20:46:15 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/08 13:14:34 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,18 @@ void	*ft_lexer(t_mini *data)
 	data->full_cmd = ft_cmdtrim(data->prompt);
 	if (!data->full_cmd)
 	{
+		g_status = 1;
 		return (NULL);
 	}
 	ft_expander(data);
-	ft_cmdlst(data);
+	if (!ft_cmdlst(data))
+	{
+		g_status = 1;
+		return (NULL);
+	}
 	trim = data->full_cmd;
 	ft_print_splits(trim);
 	free(trim);
-	if (g_status == 1)
-		exit(EXIT_FAILURE);
 	return (data);
 	// ft_print_nodes(data->cmd_lst);
 }

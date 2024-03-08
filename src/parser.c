@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/07 15:39:54 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/08 13:22:25 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,6 @@ int	ft_builtin(t_mini	*data, t_cmd *head)
 
 	cmd = head->c_abs_path;
 	l = ft_strlen(cmd);
-	//if (!ft_strncmp(cmd, "pwd", l) || !ft_strncmp(cmd, "PWD", l))
-	//	g_status = pwd();
-	//else if (!ft_strncmp(cmd, "env", l) || !ft_strncmp(cmd, "ENV", l))
-	//	g_status = env(data);
-	//else if (!ft_strncmp(cmd, "echo", l) || !ft_strncmp(cmd, "ECHO", l))
-	//	g_status = echo(head);
 	if (!ft_strncmp(cmd, "cd", l))
 		g_status = cd(data, head);
 	else if (!ft_strncmp(cmd, "export", l) && head->c_args[1])
@@ -35,7 +29,7 @@ int	ft_builtin(t_mini	*data, t_cmd *head)
 		ft_mini_exit(data);
 	else
 		g_status = ft_executor(data, head);	
-	return (1);
+	return (0);
 }
 
 void	ft_parser(t_mini *data)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/04 20:46:15 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/08 13:15:17 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ int	ft_quotes(char *s, size_t i, char q)
 	}
 	else
 	{
-		ft_error("Unclosed quote error");
-		g_status = 0;
-		return (-1);
+		return (ft_error("Unclosed quote error"), -1);
 	}
 	return (0);
 }
