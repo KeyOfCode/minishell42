@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/08 17:37:54 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/09 19:27:37 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,30 +74,31 @@ unexpected token `newline\'"), 1);
 	return (aux);
 } */
 
-int	ft_redir_heredoc(t_cmd *cmd, char *heredoc, t_mini *data)
+int	ft_redir_heredoc(char *heredoc)
 {
 	pid_t	pid;
+	int		pipefd[2];
 	int		exit_code;
 
 	exit_code = 0;
-	if (pipe(data->fd) == -1)
+	if (pipe(pipefd) == -1)
 		return (ft_error("Pipe Error"), 1);
 	pid = fork();
 	if (pid < 0)
 		return (ft_error("Fork Error"), 1);
 	else if (pid == 0)
 	{
-		close(cmd->fd[READ_END]);
-		dup2(cmd->fd[WRITE_END], STDOUT_FILENO);
-		close(cmd->fd[WRITE_END]);
+		close(pipefd[READ_END]);
+		dup2(pipefd[WRITE_END], STDOUT_FILENO);
+		close(pipefd[WRITE_END]);
 		ft_putstr_fd(heredoc, STDOUT_FILENO);
 		exit(EXIT_SUCCESS);
 	}
 	else
 	{
-		close(cmd->fd[WRITE_END]);
-		dup2(cmd->fd[READ_END], STDIN_FILENO);
-		close(cmd->fd[READ_END]);
+		close(pipefd[WRITE_END]);
+		dup2(pipefd[READ_END], STDIN_FILENO);
+		close(pipefd[READ_END]);
 		waitpid(pid, &exit_code, 0);
 	}
 	return (WEXITSTATUS(exit_code));
@@ -124,7 +125,7 @@ int	input_heredoc(t_cmd *cmd, char **token)
 		input = readline("> $ ");
 	}
 	free(input);
-	exit_code = ft_redir_heredoc(cmd, heredoc, cmd->data);
+	exit_code = ft_redir_heredoc(heredoc);
 	dup2(extern_stdout, STDOUT_FILENO);
 	close(extern_stdout);
 	return (exit_code);

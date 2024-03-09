@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/09 19:02:31 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/09 19:12:01 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,8 +156,8 @@ int	ft_executor(t_mini *data, t_cmd *cmd)
 	else
 		parent_process(data->fd, cmd, pid, &exit_code);
 	ft_putstr_fd("\nft_Executor finish\n", 2);
-	// close(fd[READ_END]);
-	// close(fd[WRITE_END]);
+	close(data->fd[READ_END]);
+	close(data->fd[WRITE_END]);
 	close(cmd->fd[READ_END]);
 	close(cmd->fd[WRITE_END]);
 	// data->fd[WRITE_END] = dup(data->saved_stdin);
