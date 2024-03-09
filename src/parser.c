@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/08 16:53:03 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/09 18:59:10 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ void	ft_parser(t_mini *data)
 		g_status = ft_executor(data, cmd);
 		// ft_printf_fd(2, "Infile: %d\n", cmd->fd[READ_END]);
 		// ft_printf_fd(2, "Outfile: %d\n", cmd->fd[WRITE_END]);
-		dup2(data->saved_stdin, STDIN_FILENO);
-		dup2(data->saved_stdout, STDOUT_FILENO);
+		// dup2(data->saved_stdin, STDIN_FILENO);
+		// dup2(data->saved_stdout, STDOUT_FILENO);
 		ft_putstr_fd("", 0);
 		cmd = cmd->next;
 	}
-	// dup2(data->saved_stdin, STDIN_FILENO);
-	// dup2(data->saved_stdout, STDOUT_FILENO);
+	dup2(data->saved_stdin, STDIN_FILENO);
+	dup2(data->saved_stdout, STDOUT_FILENO);
 	ft_printf_fd(2, "saved_stdin: %d\n", data->saved_stdin);
 	ft_printf_fd(2, "saved_stdout: %d\n", data->saved_stdout);
 	free_cmds(&data->cmd_lst);

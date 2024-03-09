@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/08 17:40:07 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/09 19:02:31 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ void	ft_redir(t_cmd *cmd)
 
 void	child_process(int *fd, t_cmd *cmd)
 {
-	ft_redir(cmd);
 	if (cmd->next)
 	{
 		close(fd[READ_END]);
 		dup2(fd[WRITE_END], STDOUT_FILENO);
 		close(fd[WRITE_END]);
 	}
+	ft_redir(cmd);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	ft_printf_fd(2, "child READ: %d\n", fd[READ_END]);
@@ -143,7 +143,7 @@ int	ft_executor(t_mini *data, t_cmd *cmd)
 
 	exit_code = 0;
 	update_envp(data);
-	// if (cmd->next)
+	if (cmd->next)
 		if (pipe(data->fd) == -1)
 			return (ft_error("Pipe Error"), 1);
 	ft_printf_fd(2, "data READ: %d\n", data->fd[READ_END]);
