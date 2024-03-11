@@ -6,32 +6,11 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/08 14:38:03 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/11 14:02:15 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-// void	ft_print_nodes(t_cmd **cmd_lst)
-// {
-// 	t_cmd	*cmd;
-// 	int		j;
-// 	int		i;
-
-// 	cmd = *cmd_lst;
-// 	i = 1;
-// 	while (cmd)
-// 	{
-// 		printf("node %d:\n", i);
-// 		printf("\tc_args: \n");
-// 		j = -1;
-// 		while (cmd->c_args[++j])
-// 			printf("\t\t%s--\n", cmd->c_args[j]);
-// 		printf("\n\tc_abs_path: %s\n", cmd->c_args[0]);
-// 		i++;
-// 		cmd = cmd->next;
-// 	}
-// }
 
 void	*ft_lexer(t_mini *data)
 {
@@ -89,8 +68,8 @@ void	ft_init_data(t_mini *data)
 	data->envp = NULL;
 	data->full_cmd = NULL;
 	data->full_path = NULL;
-	data->fd[READ_END] = dup(STDIN_FILENO);
-	data->fd[WRITE_END] = dup(STDOUT_FILENO);
+	data->fd[READ_END] = (STDIN_FILENO);
+	data->fd[WRITE_END] = (STDOUT_FILENO);
 	data->saved_stdin = dup(STDIN_FILENO);
 	data->saved_stdout = dup(STDOUT_FILENO);
 	g_status.exit_code = 0;

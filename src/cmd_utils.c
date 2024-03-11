@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:16:18 by disantam          #+#    #+#             */
-/*   Updated: 2024/03/08 15:31:50 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:57:00 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,3 @@ void	free_cmds(t_cmd **cmd_lst)
 		free(head);
 	}
 }
-

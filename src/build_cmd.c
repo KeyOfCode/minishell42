@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/08 14:49:51 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/11 13:53:34 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ t_cmd	*ft_init_cmd(t_mini *data)
 	cmd->c_args = NULL;
 	cmd->c_abs_path = NULL;
 	cmd->c_env_path = NULL;
-	cmd->fd[READ_END] = dup(STDIN_FILENO);
-	cmd->fd[WRITE_END] = dup(STDOUT_FILENO);
+	cmd->fd[READ_END] = -1;
+	cmd->fd[WRITE_END] = -1;
 	cmd->flag = NULL;
 	cmd->data = data;
 	cmd->next = NULL;

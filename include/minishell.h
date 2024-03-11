@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/08 15:30:43 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/11 16:40:46 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ void	ft_error(char *err_msg);
 void	ft_print_splits(char **splits);
 void	ft_print_cmds(t_cmd **cmds);
 char	*ft_join_free(char *s1, char *s2);
+void	ft_printf_fd(int fd, char const *str, ...);
 
 /* Lexer */
 char	**ft_cmdtrim(char *s);
@@ -213,6 +214,7 @@ int		export(t_mini *data, t_cmd *cmd);
 int		cd(t_mini *data, t_cmd *cmd);
 void	empty_export(t_mini *data);
 void	ft_mini_exit(t_mini *data);
+int		isbuiltin(t_cmd *head);
 
 /* signals */
 void	handle_sigint(int sig);
@@ -223,7 +225,7 @@ char	*get_cmd_path(t_mini *data, t_cmd *cmd);
 void	save_path(t_mini *data);
 void	update_envp(t_mini *data);
 char	*get_cmd_path(t_mini *data, t_cmd *cmd);
-int		ft_builtin(t_mini	*data, t_cmd *head);
+void	ft_builtin(t_mini	*data, t_cmd *head);
 
 /* Redirections */
 int		input_redir(t_cmd *cmd, char **token);
