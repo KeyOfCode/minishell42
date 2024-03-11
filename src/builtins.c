@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/14 15:48:15 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/09 19:43:29 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int	env(t_mini *data)
 	{
 		if (head->equal)
 		{
-			printf("%s", head->nm);
-			printf("=%s", head->val);
-			printf("\n");
+			ft_putstr_fd(head->nm, 1);
+			ft_putstr_fd(head->val, 1);
+			ft_putstr_fd("\n", 1);
 		}
 		head = head->next;
 	}
@@ -47,10 +47,15 @@ void	empty_export(t_mini *data)
 	head = data->env_lst;
 	while (head)
 	{
-		printf("declare -x %s", head->nm);
+		ft_putstr_fd("declare -x ", 1);
+		ft_putstr_fd(head->nm, 1);
 		if (head->equal)
-			printf("=\"%s\"", head->val);
-		printf("\n");
+		{
+			ft_putstr_fd("=\"", 1);
+			ft_putstr_fd(head->val, 1);
+			ft_putstr_fd("\"", 1);
+		}
+		ft_putstr_fd("\n", 1);
 		head = head->next;
 	}
 }
@@ -77,21 +82,6 @@ int	unset(t_mini *data, t_cmd *cmd)
 	return (0);
 }
 
-/* void	empty_export(t_mini *data)
-{
-	t_env	*head;
-
-	head = data->env_lst;
-	while (head)
-	{
-		printf("declare -x %s", head->nm);
-		if (head->equal)
-			printf("=\"%s\"", head->val);
-		printf("\n");
-		head = head->next;
-	}
-} */
-
 /* void	ft_add_envp(t_mini *data, char *envp)
 {
 	int		i;
@@ -104,7 +94,7 @@ int	unset(t_mini *data, t_cmd *cmd)
 		return ;
 	if (ft_env_forbidden_chars(node->nm, ft_strlen(node->nm)))
 	{
-		printf("export: '%s': not a valid identifier\n", node->nm);
+		ft_putstr_fd("export: '%s': not a valid identifier\n", node->nm);
 		free (node);
 		return ;
 	}

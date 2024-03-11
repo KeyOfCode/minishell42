@@ -6,14 +6,14 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/04 20:46:15 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/09 19:50:48 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 /**
- * @brief Currently doesn't considers if the env doesn't have a =
+ * @brief
  * 
  * @param str 
  * @param envp 
@@ -44,10 +44,6 @@ char	*ft_env_expand(char *ogstr, t_env *envp, int *i)
 	}
 	return ("");
 }
-
-// printf("\nstr: %s\n", str);
-// printf("before i: %d\n", *i);
-// printf("after i: %d\n", *i);
 
 /**
  * @brief 

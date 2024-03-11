@@ -3,42 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execve_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/02/21 18:39:56 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/09 19:50:27 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-/* char	*get_path(char *cmd, char **env)
-{
-	int		i;
-	char	*exec;
-	char	**allpath;
-	char	*path_part;
-	char	**s_cmd;
-
-	i = -1;
-	allpath = ft_split(my_getenv("PATH", env), ':');
-	s_cmd = ft_split(cmd, ' ');
-	while (allpath[++i])
-	{
-		path_part = ft_strjoin(allpath[i], "/");
-		exec = ft_strjoin(path_part, s_cmd[0]);
-		free(path_part);
-		if (access(exec, F_OK | X_OK) == 0)
-		{
-			ft_free_split(s_cmd);
-			return (exec);
-		}
-		free(exec);
-	}
-	ft_free_split(allpath);
-	ft_free_split(s_cmd);
-	return (cmd);
-} */
 
 void	save_path(t_mini *data)
 {
@@ -73,10 +45,6 @@ char	*get_cmd_path(t_mini *data, t_cmd *cmd)
 	while (data->full_path[++i])
 	{
 		try_path = ft_strjoin(data->full_path[i], cmd->c_args[0]);
-/* 		if (!ft_strncmp(cmd->c_abs_path, data->full_path[i],
-				ft_strlen(data->full_path[i])))
-		else
-			try_path = ft_strdup(cmd->c_abs_path); */
 		if (access(try_path, F_OK) == 0)
 		{
 			cmd->c_env_path = ft_strdup(try_path);
@@ -87,12 +55,17 @@ char	*get_cmd_path(t_mini *data, t_cmd *cmd)
 	free(try_path);
 	return (0);
 }
+
+/* 		if (!ft_strncmp(cmd->c_abs_path, data->full_path[i],
+				ft_strlen(data->full_path[i])))
+		else
+			try_path = ft_strdup(cmd->c_abs_path); */
+
 // printf("%s--\n", try_path);
 // printf("Success: %s\n", cmd->c_env_path);
 // printf("Failure: \n");
 // | X_OK
 
-/* Right now it causes error on command not found */
 void	update_envp(t_mini *data)
 {
 	t_env	*head;
@@ -100,8 +73,6 @@ void	update_envp(t_mini *data)
 
 	head = data->env_lst;
 	i = 0;
-	// if (data->envp)
-	// 	ft_free_matrix(data->envp);
 	while (head)
 	{
 		head = head->next;
@@ -122,6 +93,9 @@ void	update_envp(t_mini *data)
 	}
 }
 
+	// if (data->envp)
+	// 	ft_free_matrix(data->envp);
+
 /* char	**free_matrix(char **matrix)
 {
 	int	i;
@@ -137,6 +111,34 @@ void	update_envp(t_mini *data)
 		free(matrix);
 	}
 	return (NULL);
+} */
+
+/* char	*get_path(char *cmd, char **env)
+{
+	int		i;
+	char	*exec;
+	char	**allpath;
+	char	*path_part;
+	char	**s_cmd;
+
+	i = -1;
+	allpath = ft_split(my_getenv("PATH", env), ':');
+	s_cmd = ft_split(cmd, ' ');
+	while (allpath[++i])
+	{
+		path_part = ft_strjoin(allpath[i], "/");
+		exec = ft_strjoin(path_part, s_cmd[0]);
+		free(path_part);
+		if (access(exec, F_OK | X_OK) == 0)
+		{
+			ft_free_split(s_cmd);
+			return (exec);
+		}
+		free(exec);
+	}
+	ft_free_split(allpath);
+	ft_free_split(s_cmd);
+	return (cmd);
 } */
 
 /* char	**ft_2rows_split(char *str, char c)

@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/09 19:27:37 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/09 19:59:38 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@ int	input_redir(t_cmd *cmd, char **token)
 	if (token[1] == NULL)
 		return (ft_error("bash: syntax error near \
 unexpected token `newline\'"), 1);
-	ft_putstr_fd("infile: ", 2);
-	ft_putstr_fd(token[1], 2);
-	ft_putstr_fd("\n", 2);
 	cmd->fd[READ_END] = open(token[1], O_RDONLY);
 	if (cmd->fd[READ_END] < 0)
 	{
@@ -30,6 +27,8 @@ unexpected token `newline\'"), 1);
 	return (0);
 }
 
+// 	ft_printf_fd(2, "infile: %s\n", token[1]);
+
 int	output_redir(t_cmd *cmd, char **token)
 {
 	if (cmd->fd[WRITE_END] != -1)
@@ -37,9 +36,6 @@ int	output_redir(t_cmd *cmd, char **token)
 	if (token[1] == NULL)
 		return (ft_error("bash: syntax error near \
 unexpected token `newline\'"), 1);
-	ft_putstr_fd("outfile: ", 2);
-	ft_putstr_fd(token[1], 2);
-	ft_putstr_fd("\n", 2);
 	cmd->fd[WRITE_END] = open(token[1], O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (cmd->fd[WRITE_END] < 0)
 	{
@@ -48,6 +44,8 @@ unexpected token `newline\'"), 1);
 	return (0);
 }
 
+// ft_printf_fd(2, "outfile: %s\n", token[1]);
+
 int	output_redir_append(t_cmd *cmd, char **token)
 {
 	if (cmd->fd[WRITE_END] != -1)
@@ -55,9 +53,6 @@ int	output_redir_append(t_cmd *cmd, char **token)
 	if (token[1] == NULL)
 		return (ft_error("bash: syntax error near \
 unexpected token `newline\'"), 1);
-	ft_putstr_fd("append outfile:", 2);
-	ft_putstr_fd(token[1], 2);
-	ft_putstr_fd("\n", 2);
 	cmd->fd[WRITE_END] = open(token[1], O_CREAT | O_APPEND | O_WRONLY, 0644);
 	if (cmd->fd[WRITE_END] < 0)
 	{
@@ -66,21 +61,13 @@ unexpected token `newline\'"), 1);
 	return (0);
 }
 
-/* char	*ft_join_free(char *s1, char *s2)
-{
-	char	*aux;
+// 	ft_printf_fd(2, "append outfile: %s\n", token[1]);
 
-	aux = ft_strjoin(s1, s2);
-	return (aux);
-} */
-
-int	ft_redir_heredoc(char *heredoc)
+int	ft_redir_heredoc(char *heredoc, int *exit_code)
 {
 	pid_t	pid;
 	int		pipefd[2];
-	int		exit_code;
 
-	exit_code = 0;
 	if (pipe(pipefd) == -1)
 		return (ft_error("Pipe Error"), 1);
 	pid = fork();
@@ -99,11 +86,19 @@ int	ft_redir_heredoc(char *heredoc)
 		close(pipefd[WRITE_END]);
 		dup2(pipefd[READ_END], STDIN_FILENO);
 		close(pipefd[READ_END]);
-		waitpid(pid, &exit_code, 0);
+		waitpid(pid, exit_code, 0);
 	}
 	return (WEXITSTATUS(exit_code));
 }
 
+/**
+ * @brief TODO: Currently, other inputs take precedence over
+ * the heredoc, even when set after. Talk to Pablo for help.
+ * 
+ * @param cmd 
+ * @param token 
+ * @return int 
+ */
 int	input_heredoc(t_cmd *cmd, char **token)
 {
 	char	*input;
@@ -111,6 +106,9 @@ int	input_heredoc(t_cmd *cmd, char **token)
 	int		extern_stdout;
 	int		exit_code;
 
+	if (token[1] == NULL)
+		return (ft_error("bash: syntax error near \
+unexpected token `newline\'"), 1);
 	input = NULL;
 	heredoc = NULL;
 	extern_stdout = dup(STDOUT_FILENO);
@@ -125,56 +123,11 @@ int	input_heredoc(t_cmd *cmd, char **token)
 		input = readline("> $ ");
 	}
 	free(input);
-	exit_code = ft_redir_heredoc(heredoc);
+	ft_redir_heredoc(heredoc, &exit_code);
 	dup2(extern_stdout, STDOUT_FILENO);
 	close(extern_stdout);
 	return (exit_code);
 }
-
-/* char	*heredoc(char *eof)
-{
-	char	*aux;
-	char	*temp;
-	char	*str;
-
-	str = NULL;
-	temp = NULL;
-	while (ft_strncmp(str, eof, ft_strlen(eof)))
-	{
-		str = readline("> $ ");
-		aux = ft_strjoin(temp, str);
-		temp = aux;
-	}
-}
-
-int	input_heredoc(t_cmd *cmd, char **token)
-{
-	char	*fd_path;
-	char	*aux;
-	char	*temp;
-	char	*str;
-	int		fd;
-
-	(void)cmd;
-	(void)token;
-	str = NULL;
-	temp = NULL;
-	close(cmd->fd[READ_END]);
-	if (token[1] == NULL)
-		return (ft_error("bash: syntax error near \
-unexpected token `newline\'"), 1);
-	while (ft_strncmp(temp, token[1], ft_strlen(token)))
-	{
-		str = readline("> $ ");
-		aux = ft_strjoin(temp, str);
-		temp = aux;
-	}
-	close(cmd->fd[READ_END]);
-	dup2(cmd->fd[WRITE_END], STDOUT_FILENO);
-	close(cmd->fd[WRITE_END]);
-	ft_putstr_fd(temp, STDOUT_FILENO);
-	return (0);
-} */
 
 int	input_redir(t_cmd *cmd, char **token);
 int	input_heredoc(t_cmd *cmd, char **token);

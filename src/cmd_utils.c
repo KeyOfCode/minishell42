@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:16:18 by disantam          #+#    #+#             */
-/*   Updated: 2024/03/06 17:00:50 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/09 19:45:59 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,11 @@ int	count_cmdargs(char **args)
 		i++;
 	}
 	count_print = '0' + count;
-	ft_putstr_fd(&count_print, 2);
-	ft_putstr_fd("-\n", 2);
 	return (count);
 }
+
+	// ft_putstr_fd(&count_print, 2);
+	// ft_putstr_fd("-\n", 2);
 
 void	redir_error(char *token)
 {

@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/08 16:54:11 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/09 19:37:31 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,6 @@ int	check_redirections(t_cmd *cmd, char	**arg)
 	char	*token;
 
 	token = *arg;
-	ft_putstr_fd("token: ", 2);
-	ft_putstr_fd(token, 2);
-	ft_putstr_fd("\n", 2);
 	if (!ft_strncmp(&token[1], "|", 1))
 	{
 		return (redir_error(&token[1]), 1);
@@ -68,7 +65,7 @@ int	check_redirections(t_cmd *cmd, char	**arg)
 	return (0);
 }
 
-// isredir(&token[1]) || 
+// 	ft_printf_fd(2, "token: %s\n", token);
 
 /**
  * @brief 

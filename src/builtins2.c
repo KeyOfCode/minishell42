@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/06 16:44:37 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/09 19:45:14 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	echo(t_cmd	*cmd)
 	}
 	while (cmd->c_args[++i])
 	{
-		ft_putstr_fd(cmd->c_args[i], 2);
+		ft_putstr_fd(cmd->c_args[i], 1);
 		if (cmd->c_args[i + 1])
 			ft_putstr_fd(" ", 1);
 	}
@@ -63,9 +63,7 @@ void	set_env(t_mini *data, char *name, char *value)
 	if (flag)
 	{
 		current->val = value;
-		// return (1);
 	}
-	// return (0);
 }
 
 char	*get_env(t_mini *data, char *name)
