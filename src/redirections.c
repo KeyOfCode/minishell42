@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/11 18:09:53 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:52:39 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,11 @@ int	input_redir(t_cmd *cmd, char **token)
 {
 	if (cmd->fd[READ_END] != cmd->data->saved_stdin)
 		close(cmd->fd[READ_END]);
-	ft_putstr_fd("infile: ", 2);
-	ft_putstr_fd(token[1], 2);
-	ft_putstr_fd("\n", 2);
+	ft_error("infile: %s\n", token[1]);
 	cmd->fd[READ_END] = open(token[1], O_RDONLY);
 	if (cmd->fd[READ_END] < 0)
 	{
-		return (ft_error("bash: infile: No such file or directory"), 127);
+		return (ft_error("minishell: %s: No such file or directory\n", token[1]), 127);
 	}
 	return (0);
 }
@@ -31,13 +29,11 @@ int	output_redir(t_cmd *cmd, char **token)
 {
 	if (cmd->fd[WRITE_END] != cmd->data->saved_stdout)
 		close(cmd->fd[WRITE_END]);
-	ft_putstr_fd("outfile: ", 2);
-	ft_putstr_fd(token[1], 2);
-	ft_putstr_fd("\n", 2);
+	ft_error("outfile: %s\n", token[1]);
 	cmd->fd[WRITE_END] = open(token[1], O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (cmd->fd[WRITE_END] < 0)
 	{
-		return (ft_error("bash: outfile: No such file or directory"), 127);
+		return (ft_error("minishell: %s: No such file or directory\n", token[1]), 127);
 	}
 	return (0);
 }
@@ -46,13 +42,11 @@ int	output_redir_append(t_cmd *cmd, char **token)
 {
 	// if (cmd->fd[WRITE_END] != STDOUT_FILENO)
 	close(cmd->fd[WRITE_END]);
-	ft_putstr_fd("append outfile:", 2);
-	ft_putstr_fd(token[1], 2);
-	ft_putstr_fd("\n", 2);
+	ft_error("outfile: %s\n", token[1]);
 	cmd->fd[WRITE_END] = open(token[1], O_CREAT | O_APPEND | O_WRONLY, 0644);
 	if (cmd->fd[WRITE_END] < 0)
 	{
-		return (ft_error("bash: app_outfile: No such file or directory"), 127);
+		return (ft_error("minishell: %s: No such file or directory\n", token[1]), 127);
 	}
 	return (0);
 }
@@ -65,10 +59,10 @@ int	ft_redir_heredoc(char *heredoc)
 
 	exit_code = 0;
 	if (pipe(pipefd) == -1)
-		return (ft_error("Pipe Error"), 1);
+		return (ft_error("Pipe Error\n", NULL), 1);
 	pid = fork();
 	if (pid < 0)
-		return (ft_error("Fork Error"), 1);
+		return (ft_error("Fork Error\n", NULL), 1);
 	else if (pid == 0)
 	{
 		close(pipefd[READ_END]);

@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:16:18 by disantam          #+#    #+#             */
-/*   Updated: 2024/03/11 17:57:00 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:42:00 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,6 @@ int	count_cmdargs(char **args)
 	ft_putstr_fd(&count_print, 2);
 	ft_putstr_fd("-\n", 2);
 	return (count);
-}
-
-void	redir_error(char *token)
-{
-	ft_putstr_fd("bash: syntax error near unexpected token `", 2);
-	ft_putstr_fd(token, 2);
-	ft_putstr_fd("`\n", 2);
-	g_status.exit_code = 1;
 }
 
 void	free_cmds(t_cmd **cmd_lst)

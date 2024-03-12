@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/08 14:40:27 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:51:33 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_quotes(char *s, size_t i, char q)
 	}
 	else
 	{
-		return (ft_error("Unclosed quote error"), -1);
+		return (ft_error("Unclosed quote error\n", NULL), -1);
 	}
 	return (0);
 }

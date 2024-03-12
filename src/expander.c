@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/08 14:42:57 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:17:20 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,6 @@ char	*ft_env_expand(char *ogstr, t_env *envp, int *i)
 	return ("");
 }
 
-// printf("\nstr: %s\n", str);
-// printf("before i: %d\n", *i);
-// printf("after i: %d\n", *i);
-
 /**
  * @brief 
  * 
@@ -79,11 +75,6 @@ char	*ft_substr_expand(char	*str, t_mini *data)
 	return (str);
 }
 
-// printf("\nstr: %s\n", str);
-// printf("\naux: %s\n", aux);
-// printf("str[i]: %c\n", str[i]);
-// printf("after str[i]: %c\n", str[i]);
-// printf("var: %s\n", var);
 /*
 	if (!var && str[i] == '$')
 		var = ft_itoa(prompt->pid);
@@ -155,19 +146,6 @@ void	ft_expander(t_mini *data)
 		i++;
 	}
 }
- */
-/* j = 0;
-		while (data->full_cmd[i][j])
-		{
-			if (data->full_cmd[i][j] == '\'')
-				while (data->full_cmd[i][j] != '\'')
-					j++;
-			if (ft_strchr("$~", data->full_cmd[i][j]))
-			{
-				ft_env_expand(&data->full_cmd[i][j], data->env_lst);
-			}
-			j++;
-		} */
 
 // char	*ft_subdivide(char *str, t_env *env, int mode)
 // {
@@ -190,3 +168,4 @@ void	ft_expander(t_mini *data)
 // 		return (ft_substr(str, start, i - start));
 // 	}
 // }
+*/

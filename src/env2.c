@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/02/26 18:22:50 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:09:22 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_add_envp(t_mini *data, char **envp)
 			return ;
 		if (ft_env_forbidden_chars(node->nm, ft_strlen(node->nm)))
 		{
-			printf("export: '%s': not a valid identifier\n", node->nm);
+			ft_error("export: '%s': not a valid identifier\n", node->nm);
 			free(node);
 			return ;
 		}
@@ -75,8 +75,8 @@ void	ft_dup_envp(t_mini *data, char **envp)
 			return ;
 		if (ft_env_forbidden_chars(node->nm, ft_strlen(node->nm)))
 		{
-			printf("export: '%s': not a valid identifier\n", node->nm);
-			free (node);
+			ft_error("export: '%s': not a valid identifier\n", node->nm);
+			free(node);
 			return ;
 		}
 		if (ft_strncmp(node->nm, "OLDPWD", ft_strlen(node->nm)) == 0)
@@ -84,47 +84,3 @@ void	ft_dup_envp(t_mini *data, char **envp)
 		ft_env_lstadd_back(data, node);
 	}
 }
-
-/* void	set_env(t_mini *data, char *name, char *value)
-{
-	t_env	*current;
-	int		flag;
-
-	flag = 0;
-	current = data->env_lst;
-	while (current && !flag)
-	{
-		if (!ft_strncmp(current->nm, name,
-				ft_strlen(current->nm)))
-			flag = 1;
-		else
-			current = current->next;
-	}
-	if (flag)
-	{
-		current->val = value;
-		// return (1);
-	}
-	// return (0);
-}
-
-char	*get_env(t_mini *data, char *name)
-{
-	t_env	*current;
-	int		flag;
-
-	flag = 0;
-	current = data->env_lst;
-	while (current && !flag)
-	{
-		if (!ft_strncmp(current->nm, name,
-				ft_strlen(current->nm)))
-			flag = 1;
-		else
-			current = current->next;
-	}
-	if (flag)
-		return (current->val);
-	return (0);
-}
- */

@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/02/14 15:48:15 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:13:41 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ int	env(t_mini *data)
 	{
 		if (head->equal)
 		{
-			printf("%s", head->nm);
-			printf("=%s", head->val);
-			printf("\n");
+			printf("%s=%s\n", head->nm, head->val);
 		}
 		head = head->next;
 	}
@@ -76,21 +74,6 @@ int	unset(t_mini *data, t_cmd *cmd)
 		ft_env_remove(data, cmd->c_args[i]);
 	return (0);
 }
-
-/* void	empty_export(t_mini *data)
-{
-	t_env	*head;
-
-	head = data->env_lst;
-	while (head)
-	{
-		printf("declare -x %s", head->nm);
-		if (head->equal)
-			printf("=\"%s\"", head->val);
-		printf("\n");
-		head = head->next;
-	}
-} */
 
 /* void	ft_add_envp(t_mini *data, char *envp)
 {

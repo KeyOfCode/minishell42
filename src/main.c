@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/11 14:02:15 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:32:33 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_prompt(t_mini *data)
 	{
 		add_history(data->prompt);
 		if (ft_lexer(data) != NULL)
-			ft_parser(data);
+				ft_parser(data);
 	}
 	free(data->prompt);
 	// ft_free_data(data);
@@ -72,8 +72,8 @@ void	ft_init_data(t_mini *data)
 	data->fd[WRITE_END] = (STDOUT_FILENO);
 	data->saved_stdin = dup(STDIN_FILENO);
 	data->saved_stdout = dup(STDOUT_FILENO);
-	g_status.exit_code = 0;
-	g_status.pid = 0;
+	g_status = 0;
+	data->pid = 0;
 }
 
 /**
@@ -89,11 +89,11 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	if (argc > 1)
-		return (ft_error("Arg Error."), 1);
+		return (ft_error("Arg Error.\n", NULL), 1);
 	ft_init_data(&data);
 	data.envp = envp;
 	if (!data.envp)
-		return (ft_error("Env Error."), 1);
+		return (ft_error("Env Error.\n", NULL), 1);
 	ft_dup_envp(&data, envp);
 	while (1)
 	{

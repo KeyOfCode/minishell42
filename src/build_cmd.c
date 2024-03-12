@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/11 13:53:34 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:34:38 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,14 @@ int	check_redirections(t_cmd *cmd, char	**arg)
 	int	redir_st;
 
 	redir_st = 0;
-	ft_putstr_fd("token: ", 2);
-	ft_putstr_fd(*arg, 2);
-	ft_putstr_fd("\n", 2);
+	ft_error("token: %s\n", *arg);
 	if (arg[1] == NULL)
-		return (ft_error("bash: syntax error near \
-unexpected token `newline`"), 1);
+		return (ft_error("minishell: syntax error near \
+unexpected token `newline'\n", NULL), 1);
 	if (isredir(arg[1]) || !ft_strncmp(arg[1], "|", 1))
 	{
-		return (redir_error(arg[1]), 1);
+		return (ft_error("minishell: syntax error near \
+unexpected token `%s'\n", arg[1]), 1);
 	}
 	if (!ft_strncmp(*arg, "<", 1))
 		redir_st = input_redir(cmd, arg);
@@ -64,7 +63,7 @@ unexpected token `newline`"), 1);
 	else if (!ft_strncmp(*arg, ">>", 2))
 		redir_st = output_redir_append(cmd, arg);
 	if (redir_st > 0)
-		g_status.exit_code = redir_st;
+		g_status = redir_st;
 	return (redir_st);
 }
 
@@ -135,7 +134,7 @@ void	*ft_cmdlst(t_mini *data)
 		if (!ft_strncmp(data->full_cmd[i++], "|", 1))
 			count++;
 	if (data->full_cmd[0][0] == '|' || data->full_cmd[i - 1][0] == '|')
-		return (ft_error("bash: syntax error near unexpected token `|`"), NULL);
+		return (ft_error("minishell: syntax error near unexpected token `%s'\n", "|"), NULL);
 	data->cmd_count = count;
 	i = 0;
 	head = 0;

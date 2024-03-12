@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/11 16:40:46 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:32:48 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ typedef struct s_mini
 	int		saved_stdin;
 	int		saved_stdout;
 	int		fd[2];
+	int		pid;
 }		t_mini;
 
 /**
@@ -172,14 +173,12 @@ typedef struct	s_global
 	int	pid;
 }	t_global;
 
-extern t_global g_status;
+extern int g_status;
 
 /* Functions */
-void	ft_error(char *err_msg);
+void	ft_error(char const *str, char *type);
 void	ft_print_splits(char **splits);
-void	ft_print_cmds(t_cmd **cmds);
 char	*ft_join_free(char *s1, char *s2);
-void	ft_printf_fd(int fd, char const *str, ...);
 
 /* Lexer */
 char	**ft_cmdtrim(char *s);
@@ -235,7 +234,6 @@ int		output_redir_append(t_cmd *cmd, char **token);
 
 /* cmd */
 int		isredir(char *arg);
-void	redir_error(char *token);
 int		count_cmdargs(char **args);
 void	free_cmds(t_cmd **cmd_lst);
 
