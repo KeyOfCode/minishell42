@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 19:36:33 by darismen          #+#    #+#             */
-/*   Updated: 2023/12/08 18:35:38 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/13 18:47:24 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_num_len(unsigned long value, char *base)
 	return (l);
 }
 
-int	ft_puthex(unsigned int n, char cap)
+int	ft_puthex_fd(unsigned int n, char cap, int fd)
 {
 	int		count;
 	char	*base;
@@ -37,11 +37,11 @@ int	ft_puthex(unsigned int n, char cap)
 		base = MAY_BASE_HEX;
 	else
 		base = BASE_HEX;
-	count += ft_putnbr(base, n);
+	count += ft_putnbr_base_fd(base, n, fd);
 	return (count);
 }
 
-int	ft_putsigned(int n)
+int	ft_putsigned_fd(int n, int fd)
 {
 	int	count;
 
@@ -56,18 +56,18 @@ int	ft_putsigned(int n)
 		count += ft_putchar('-');
 		n *= -1;
 	}
-	count += ft_putnbr(BASE_DEC, n);
+	count += ft_putnbr_base_fd(BASE_DEC, n, fd);
 	return (count);
 }
 
-int	ft_putptr(void *ptr)
+int	ft_putptr_fd(void *ptr, int fd)
 {
 	int		count;
 
 	count = 0;
 	ft_putstr("0x");
 	count += 2;
-	count += ft_putnbr(BASE_HEX, (unsigned long long)ptr);
+	count += ft_putnbr_base_fd(BASE_HEX, (unsigned long long)ptr, fd);
 	return (count);
 }
 

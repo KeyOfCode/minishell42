@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:39:10 by darismen          #+#    #+#             */
-/*   Updated: 2023/12/08 18:31:32 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/13 18:49:21 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,16 @@
 # define BASE_DEC "0123456789"
 # include "libft.h"
 
-int		ft_printf(char const *str, ...);
+int		ft_printf_fd(int fd, char const *str, ...);
+int		ft_printf(char const *str, va_list args);
 int		ft_putchar(int c);
-int		ft_putnbr(char *base, unsigned long long n);
+int		ft_putnbr_base_fd(char *base, unsigned long long n, int fd);
 int		ft_putstr(char *str);
-int		ft_putptr(void *ptr);
-int		ft_puthex(unsigned int n, char cap);
-int		ft_putunsigned(unsigned int n);
-int		ft_putsigned(int n);
+int		ft_putptr_fd(void *ptr, int fd);
+int		ft_puthex_fd(unsigned int n, char cap, int fd);
+int		ft_putsigned_fd(int n, int fd);
 int		ft_num_len(unsigned long value, char *base);
+// int		ft_putunsigned_fd(unsigned int n, int fd);
 // size_t	ft_strlen(const char *s);
 
 #endif

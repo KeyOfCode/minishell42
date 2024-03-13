@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:16:18 by disantam          #+#    #+#             */
-/*   Updated: 2024/03/11 17:57:00 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:40:38 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,18 @@ int	count_cmdargs(char **args)
 		i++;
 	}
 	count_print = '0' + count;
-	ft_putstr_fd(&count_print, 2);
-	ft_putstr_fd("-\n", 2);
 	return (count);
 }
+
+	// ft_putstr_fd(&count_print, 2);
+	// ft_putstr_fd("-\n", 2);
 
 void	redir_error(char *token)
 {
 	ft_putstr_fd("bash: syntax error near unexpected token `", 2);
 	ft_putstr_fd(token, 2);
 	ft_putstr_fd("`\n", 2);
-	g_status.exit_code = 1;
+	g_exit_code = 1;
 }
 
 void	free_cmds(t_cmd **cmd_lst)

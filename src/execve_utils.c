@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/02/21 18:39:56 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:17:34 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ char	*get_cmd_path(t_mini *data, t_cmd *cmd)
 	save_path(data);
 	while (data->full_path[++i])
 	{
-		try_path = ft_strjoin(data->full_path[i], cmd->c_args[0]);
-/* 		if (!ft_strncmp(cmd->c_abs_path, data->full_path[i],
+		if (!ft_strncmp(cmd->c_abs_path, data->full_path[i],
 				ft_strlen(data->full_path[i])))
+			try_path = ft_strdup(cmd->c_abs_path);
 		else
-			try_path = ft_strdup(cmd->c_abs_path); */
+			try_path = ft_strjoin(data->full_path[i], cmd->c_args[0]);
 		if (access(try_path, F_OK) == 0)
 		{
 			cmd->c_env_path = ft_strdup(try_path);

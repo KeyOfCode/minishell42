@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/11 18:09:53 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:08:15 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,12 @@
 
 int	input_redir(t_cmd *cmd, char **token)
 {
-	if (cmd->fd[READ_END] != cmd->data->saved_stdin)
+	if (cmd->fd[READ_END] != -1)
 		close(cmd->fd[READ_END]);
-	ft_putstr_fd("infile: ", 2);
-	ft_putstr_fd(token[1], 2);
-	ft_putstr_fd("\n", 2);
 	cmd->fd[READ_END] = open(token[1], O_RDONLY);
 	if (cmd->fd[READ_END] < 0)
 	{
+		ft_printf_fd(2, "bash: infile: %s: No such file\n", token[1]);
 		return (ft_error("bash: infile: No such file or directory"), 127);
 	}
 	return (0);
@@ -29,11 +27,8 @@ int	input_redir(t_cmd *cmd, char **token)
 
 int	output_redir(t_cmd *cmd, char **token)
 {
-	if (cmd->fd[WRITE_END] != cmd->data->saved_stdout)
+	if (cmd->fd[WRITE_END] != -1)
 		close(cmd->fd[WRITE_END]);
-	ft_putstr_fd("outfile: ", 2);
-	ft_putstr_fd(token[1], 2);
-	ft_putstr_fd("\n", 2);
 	cmd->fd[WRITE_END] = open(token[1], O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (cmd->fd[WRITE_END] < 0)
 	{
@@ -44,11 +39,8 @@ int	output_redir(t_cmd *cmd, char **token)
 
 int	output_redir_append(t_cmd *cmd, char **token)
 {
-	// if (cmd->fd[WRITE_END] != STDOUT_FILENO)
-	close(cmd->fd[WRITE_END]);
-	ft_putstr_fd("append outfile:", 2);
-	ft_putstr_fd(token[1], 2);
-	ft_putstr_fd("\n", 2);
+	if (cmd->fd[WRITE_END] != -1)
+		close(cmd->fd[WRITE_END]);
 	cmd->fd[WRITE_END] = open(token[1], O_CREAT | O_APPEND | O_WRONLY, 0644);
 	if (cmd->fd[WRITE_END] < 0)
 	{
@@ -57,13 +49,11 @@ int	output_redir_append(t_cmd *cmd, char **token)
 	return (0);
 }
 
-int	ft_redir_heredoc(char *heredoc)
+int	ft_redir_heredoc(char *heredoc, int *exit_code)
 {
 	pid_t	pid;
 	int		pipefd[2];
-	int		exit_code;
 
-	exit_code = 0;
 	if (pipe(pipefd) == -1)
 		return (ft_error("Pipe Error"), 1);
 	pid = fork();
@@ -79,13 +69,22 @@ int	ft_redir_heredoc(char *heredoc)
 	}
 	else
 	{
+		waitpid(pid, exit_code, 0);
 		close(pipefd[WRITE_END]);
-		dup2(pipefd[READ_END], STDIN_FILENO);
-		close(pipefd[READ_END]);
-		waitpid(pid, &exit_code, 0);
+		return (pipefd[READ_END]);
 	}
-	return (WEXITSTATUS(exit_code));
 }
+
+	// return (waitpid(pid, exit_code, 0), close(pipefd[WRITE_END]),
+	// 	pipefd[READ_END]);
+	// else
+	// {
+	// 	close(pipefd[WRITE_END]);
+	// 	readfd = dup(pipefd[READ_END]);
+	// 	dup2(pipefd[READ_END], STDIN_FILENO);
+	// 	close(pipefd[READ_END]);
+	// 	waitpid(pid, exit_code, 0);
+	// }
 
 int	input_heredoc(t_cmd *cmd, char **token)
 {
@@ -96,6 +95,8 @@ int	input_heredoc(t_cmd *cmd, char **token)
 
 	input = NULL;
 	heredoc = NULL;
+	if (cmd->fd[READ_END] != -1)
+		close(cmd->fd[READ_END]);
 	extern_stdout = dup(STDOUT_FILENO);
 	dup2(cmd->data->saved_stdin, STDIN_FILENO);
 	dup2(cmd->data->saved_stdout, STDOUT_FILENO);
@@ -108,10 +109,10 @@ int	input_heredoc(t_cmd *cmd, char **token)
 		input = readline("> $ ");
 	}
 	free(input);
-	exit_code = ft_redir_heredoc(heredoc);
+	cmd->fd[READ_END] = ft_redir_heredoc(heredoc, &exit_code);
 	dup2(extern_stdout, STDOUT_FILENO);
 	close(extern_stdout);
-	return (exit_code);
+	return (0);
 }
 
 /* char	*heredoc(char *eof)

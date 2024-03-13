@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/11 17:57:27 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:40:38 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ void	ft_builtin(t_mini *data, t_cmd *head)
 	cmd = head->c_abs_path;
 	l = ft_strlen(cmd);
 	if (!ft_strncmp(cmd, "cd", l))
-		g_status.exit_code = cd(data, head);
+		g_exit_code = cd(data, head);
 	if (!ft_strncmp(cmd, "export", l) && head->c_args[1])
-		g_status.exit_code = export(data, head);
+		g_exit_code = export(data, head);
 	if (!ft_strncmp(cmd, "unset", l))
-		g_status.exit_code = unset(data, head);
+		g_exit_code = unset(data, head);
 	if (!ft_strncmp(cmd, "exit", l))
 		ft_mini_exit(data);
 }
@@ -83,7 +83,7 @@ void	ft_parser(t_mini *data)
 	{
 		if (isbuiltin(cmd))
 			ft_builtin(data, cmd);
-		g_status.exit_code = ft_executor(data, cmd);
+		g_exit_code = ft_executor(data, cmd);
 		cmd = cmd->next;
 	}
 	close(data->fd[READ_END]);

@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 16:21:17 by darismen          #+#    #+#             */
-/*   Updated: 2022/12/27 17:25:42 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/13 18:38:43 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  */
 /* Descripción 
 	Envía el número ’n’ al file descriptor dado. */
-void	ft_putnbr_fd(int n, int fd)
+int	ft_putnbr_fd(int n, int fd)
 {
 	if (n == -2147483648)
 	{
@@ -40,4 +40,5 @@ void	ft_putnbr_fd(int n, int fd)
 	}
 	if (n < 10)
 		ft_putchar_fd(n + 48, fd);
+	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/11 14:02:15 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:39:43 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,27 @@
 void	*ft_lexer(t_mini *data)
 {
 	int		i;
-	char	**trim;
 
 	i = -1;
 	data->full_cmd = ft_cmdtrim(data->prompt);
 	if (!data->full_cmd)
 	{
-		g_status.exit_code = 1;
+		g_exit_code = 1;
 		return (NULL);
 	}
 	ft_expander(data);
 	if (!ft_cmdlst(data))
 	{
-		g_status.exit_code = 1;
+		g_exit_code = 1;
 		return (NULL);
 	}
-	trim = data->full_cmd;
-	ft_print_splits(trim);
-	free(trim);
 	return (data);
-	// ft_print_nodes(data->cmd_lst);
 }
+
+	// char	**trim;
+	// trim = data->full_cmd;
+	// ft_print_splits(trim);
+	// free(trim);
 
 void	ft_prompt(t_mini *data)
 {
@@ -49,7 +49,6 @@ void	ft_prompt(t_mini *data)
 		printf("exit\n");
 		ft_mini_exit(data);
 	}
-	// ft_ctrl_d(data);
 	if (data->prompt[0] != '\0')
 	{
 		add_history(data->prompt);
@@ -57,7 +56,6 @@ void	ft_prompt(t_mini *data)
 			ft_parser(data);
 	}
 	free(data->prompt);
-	// ft_free_data(data);
 }
 
 void	ft_init_data(t_mini *data)
@@ -72,8 +70,8 @@ void	ft_init_data(t_mini *data)
 	data->fd[WRITE_END] = (STDOUT_FILENO);
 	data->saved_stdin = dup(STDIN_FILENO);
 	data->saved_stdout = dup(STDOUT_FILENO);
-	g_status.exit_code = 0;
-	g_status.pid = 0;
+	g_exit_code = 0;
+	data->pid = 0;
 }
 
 /**

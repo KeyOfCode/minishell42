@@ -6,17 +6,17 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/08 15:26:03 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:58:40 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_global	g_status;
+int	g_exit_code;
 
 void	ft_error(char *err_msg)
 {
-	g_status.exit_code = 1;
+	g_exit_code = 1;
 	ft_putendl_fd(err_msg, 2);
 }
 
@@ -71,14 +71,14 @@ char	*ft_join_free(char *s1, char *s2)
 
 void	handle_sigint(int sig)
 {
-	if (g_status.pid != 0 && g_status.pid != -1)
-	{
-		printf("\n");
-		kill(g_status.pid, SIGKILL);
-		g_status.exit_code = 130;
-		g_status.pid = 0;
-	}
-	else if (sig == SIGINT)
+	// if (data->pid != 0 && data->pid != -1)
+	// {
+	// 	printf("\n");
+	// 	kill(data->pid, SIGKILL);
+	// 	g_exit_code = 130;
+	// 	data->pid = 0;
+	// }
+	if (sig == SIGINT)
 	{
 		rl_redisplay();
 		printf("  \n");

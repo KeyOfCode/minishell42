@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/11 16:40:46 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:39:00 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ typedef enum s_flags
 	APPEND,
 }	t_flags;
 
+struct	s_mini;
+
 /**
  * @brief	Command Nodes
  * 
@@ -92,10 +94,6 @@ typedef enum s_flags
  * 					when c_args[0] don't have abs_path
  * 
  */
-
-struct	s_mini;
-
-//? add pointer back to t_mini??
 typedef struct s_cmd
 {
 	char			**c_args;
@@ -108,6 +106,8 @@ typedef struct s_cmd
 	struct s_mini	*data;
 	struct s_cmd	*next;
 }	t_cmd;
+
+// 	char			*heredoc;
 
 /**
  * @brief t_env: linked list with all enviroment variables
@@ -154,6 +154,7 @@ typedef struct s_mini
 	int		cmd_count;
 	t_env	*env_lst;
 	char	**envp;
+	pid_t	pid;
 	char	**full_cmd;
 	char	**full_path;
 	int		saved_stdin;
@@ -161,18 +162,18 @@ typedef struct s_mini
 	int		fd[2];
 }		t_mini;
 
-/**
- * @brief t_global: Global structure that contains general data of the program.
- * @param exit_code: Exit status of the last process executed.
- * @param pid: Current process id.
- */
-typedef struct	s_global
-{
-	int	exit_code;
-	int	pid;
-}	t_global;
+// /**
+//  * @brief t_global: Global structure that contains general data of the program.
+//  * @param exit_code: Exit status of the last process executed.
+//  * @param pid: Current process id.
+//  */
+// typedef struct s_global
+// {
+// 	int	exit_code;
+// 	int	pid;
+// }	t_global;
 
-extern t_global g_status;
+extern int g_exit_code;
 
 /* Functions */
 void	ft_error(char *err_msg);
@@ -232,12 +233,12 @@ int		input_redir(t_cmd *cmd, char **token);
 int		input_heredoc(t_cmd *cmd, char **token);
 int		output_redir(t_cmd *cmd, char **token);
 int		output_redir_append(t_cmd *cmd, char **token);
+int		ft_redir_heredoc(char *heredoc, int *exit_code);
 
 /* cmd */
 int		isredir(char *arg);
 void	redir_error(char *token);
 int		count_cmdargs(char **args);
 void	free_cmds(t_cmd **cmd_lst);
-
 
 #endif
