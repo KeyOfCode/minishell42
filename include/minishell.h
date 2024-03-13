@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/12 17:39:00 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:34:51 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ void	ft_error(char *err_msg);
 void	ft_print_splits(char **splits);
 void	ft_print_cmds(t_cmd **cmds);
 char	*ft_join_free(char *s1, char *s2);
-void	ft_printf_fd(int fd, char const *str, ...);
+// void	ft_printf_fd(int fd, char const *str, ...);
 
 /* Lexer */
 char	**ft_cmdtrim(char *s);

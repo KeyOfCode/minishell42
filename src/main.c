@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/12 17:39:43 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:35:23 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_prompt(t_mini *data)
 	free(data->prompt);
 }
 
-void	ft_init_data(t_mini *data)
+void	ft_init_data(t_mini *data, char **envp)
 {
 	data->prompt = NULL;
 	data->cmd_lst = NULL;
@@ -70,6 +70,10 @@ void	ft_init_data(t_mini *data)
 	data->fd[WRITE_END] = (STDOUT_FILENO);
 	data->saved_stdin = dup(STDIN_FILENO);
 	data->saved_stdout = dup(STDOUT_FILENO);
+	ft_dup_envp(data, envp);
+	update_envp(data);
+	if (!data->envp)
+		ft_error("Env Error.");
 	g_exit_code = 0;
 	data->pid = 0;
 }
@@ -88,11 +92,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	if (argc > 1)
 		return (ft_error("Arg Error."), 1);
-	ft_init_data(&data);
-	data.envp = envp;
-	if (!data.envp)
-		return (ft_error("Env Error."), 1);
-	ft_dup_envp(&data, envp);
+	ft_init_data(&data, envp);
 	while (1)
 	{
 		ft_prompt(&data);

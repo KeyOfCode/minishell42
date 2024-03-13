@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:41:05 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/13 18:37:31 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:34:35 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int				ft_putchar_fd(char c, int fd);
 int				ft_putstr_fd(char *s, int fd);
 int				ft_putendl_fd(char *s, int fd);
 int				ft_putnbr_fd(int n, int fd);
-void			ft_error(char const *s);
+void			ft_errorf(char const *s);
 
 /* ************************************************************************** */
 /* t_list			*ft_lstnew(void *content);

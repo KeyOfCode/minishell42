@@ -6,39 +6,13 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/03/12 16:17:34 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:27:46 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-/* char	*get_path(char *cmd, char **env)
-{
-	int		i;
-	char	*exec;
-	char	**allpath;
-	char	*path_part;
-	char	**s_cmd;
 
-	i = -1;
-	allpath = ft_split(my_getenv("PATH", env), ':');
-	s_cmd = ft_split(cmd, ' ');
-	while (allpath[++i])
-	{
-		path_part = ft_strjoin(allpath[i], "/");
-		exec = ft_strjoin(path_part, s_cmd[0]);
-		free(path_part);
-		if (access(exec, F_OK | X_OK) == 0)
-		{
-			ft_free_split(s_cmd);
-			return (exec);
-		}
-		free(exec);
-	}
-	ft_free_split(allpath);
-	ft_free_split(s_cmd);
-	return (cmd);
-} */
 
 void	save_path(t_mini *data)
 {
@@ -92,7 +66,22 @@ char	*get_cmd_path(t_mini *data, t_cmd *cmd)
 // printf("Failure: \n");
 // | X_OK
 
-/* Right now it causes error on command not found */
+void	ft_free_matrix(char **matrix)
+{
+	int	i;
+
+	i = 0;
+	if (matrix != NULL)
+	{
+		while (matrix[i] != NULL)
+		{
+			free(matrix[i]);
+			i++;
+		}
+		// free(matrix);
+	}
+}
+
 void	update_envp(t_mini *data)
 {
 	t_env	*head;
@@ -100,8 +89,8 @@ void	update_envp(t_mini *data)
 
 	head = data->env_lst;
 	i = 0;
-	// if (data->envp)
-	// 	ft_free_matrix(data->envp);
+	if (data->envp)
+		free(data->envp);
 	while (head)
 	{
 		head = head->next;
@@ -121,6 +110,34 @@ void	update_envp(t_mini *data)
 		head = head->next;
 	}
 }
+
+/* char	*get_path(char *cmd, char **env)
+{
+	int		i;
+	char	*exec;
+	char	**allpath;
+	char	*path_part;
+	char	**s_cmd;
+
+	i = -1;
+	allpath = ft_split(my_getenv("PATH", env), ':');
+	s_cmd = ft_split(cmd, ' ');
+	while (allpath[++i])
+	{
+		path_part = ft_strjoin(allpath[i], "/");
+		exec = ft_strjoin(path_part, s_cmd[0]);
+		free(path_part);
+		if (access(exec, F_OK | X_OK) == 0)
+		{
+			ft_free_split(s_cmd);
+			return (exec);
+		}
+		free(exec);
+	}
+	ft_free_split(allpath);
+	ft_free_split(s_cmd);
+	return (cmd);
+} */
 
 /* char	**free_matrix(char **matrix)
 {

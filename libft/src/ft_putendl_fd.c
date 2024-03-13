@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 16:20:05 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/13 18:22:29 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:34:34 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_putendl_fd(char const *s, int fd);
 
-void	ft_error(char const *s)
+void	ft_errorf(char const *s)
 {
 	ft_putendl_fd(s, 2);
 }
