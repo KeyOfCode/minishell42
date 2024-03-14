@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/12 17:34:38 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:55:31 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,16 +93,16 @@ int	*ft_fillcmd(t_cmd *newcmd, char **args, int *index)
 		else
 		{
 			if (check_redirections(newcmd, args + i) > 0)
-				return (NULL);
+				return (free(newcmd), NULL);
 			if (args[i + 1] != NULL)
 				i++;
 		}
 		i++;
 	}
-	newcmd->c_abs_path = newcmd->c_args[0];
 	*index += i + 1;
 	return (index);
 }
+	// newcmd->c_abs_path = newcmd->c_args[0];
 
 void	ft_cmd_lstadd_back(t_cmd **cmd_lst, t_cmd *new)
 {
@@ -143,6 +143,7 @@ void	*ft_cmdlst(t_mini *data)
 		newcmd = ft_init_cmd(data);
 		if (!ft_fillcmd(newcmd, &data->full_cmd[i], &i))
 			return (NULL);
+		newcmd->c_abs_path = newcmd->c_args[0];
 		ft_cmd_lstadd_back(&data->cmd_lst, newcmd);
 		head++;
 	}

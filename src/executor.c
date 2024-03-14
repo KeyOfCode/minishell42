@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/12 17:35:45 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/14 14:30:25 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,16 @@ void	child_process(int *fd, t_cmd *cmd)
 	if (!isbuiltin(cmd))
 	{
 		if (!get_cmd_path(cmd->data, cmd))
-			ft_error("minishell: %s: command not found\n", cmd->c_abs_path);
+			ft_error("minishell: %s: No such file or directory\n", cmd->c_abs_path);
 		else
+		{
 			execve(cmd->c_env_path, cmd->c_args, cmd->data->envp);
+			exit(127);
+		}
 	}
 	else
 		child_builtin(cmd->data, cmd); 
-	exit(127);
+	exit(0);
 }
 
 void	parent_process(int *fd, int pid, int *exit_code)
@@ -93,8 +96,6 @@ int	ft_executor(t_mini *data, t_cmd *cmd)
 			return (ft_error("Pipe Error\n", NULL), 1);
 	}
 	pid = fork();
-	if (pid != 0)
-		data->pid = pid;
 	if (pid < 0)
 		return (ft_error("Fork Error\n", NULL), 1);
 	if (pid == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/12 14:17:20 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/14 13:09:16 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@ char	*ft_env_expand(char *ogstr, t_env *envp, int *i)
 		}
 		head = head->next;
 	}
+	if (ft_strchr("?", str[1]))
+	{
+		return (new = ft_itoa(g_status), *i += 1, new);
+	}
 	return ("");
 }
 
@@ -68,6 +72,7 @@ char	*ft_substr_expand(char	*str, t_mini *data)
 			aux = ft_substr(str, 0, i);
 			var = ft_env_expand(&str[i], data->env_lst, &i);
 			full = ft_strjoin(aux, var);
+			free(aux);
 			i++;
 			return (ft_strjoin(full, ft_substr_expand(&str[i], data)));
 		}
@@ -92,10 +97,12 @@ char	*ft_chrrmv(char *str, char c)
 	i = 0;
 	rm = 0;
 	while (str[i])
+	{
 		if (str[i++] == c)
 			rm++;
-	i = 0;
+	}
 	newstr = (char *)malloc(sizeof(char) * (ft_strlen(str) - rm + 1));
+	i = 0;
 	j = 0;
 	while (str[i])
 	{
@@ -103,6 +110,7 @@ char	*ft_chrrmv(char *str, char c)
 			newstr[j++] = str[i];
 		i++;
 	}
+	free(str);
 	return (newstr);
 }
 
@@ -116,6 +124,8 @@ void	ft_expander(t_mini *data)
 		data->full_cmd[i] = ft_substr_expand(data->full_cmd[i], data);
 		if (data->full_cmd[i][0] == '"')
 			data->full_cmd[i] = ft_chrrmv(data->full_cmd[i], '\"');
+		else if (data->full_cmd[i][0] == '\'')
+			data->full_cmd[i] = ft_chrrmv(data->full_cmd[i], '\'');
 		i++;
 	}
 }

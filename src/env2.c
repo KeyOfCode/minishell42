@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/03/12 16:09:22 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/14 13:54:46 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_env	*ft_2rows_split(char *str)
 		;
 	node->nm = ft_substr(str, 0, i);
 	if (!node->nm)
-		return (free(&node), NULL);
+		return (free(node), NULL);
 	if (str[i] == '=' && i < len - 1)
 	{
 		node->val = ft_substr(str, i + 1, len - i - 1);
@@ -70,9 +70,9 @@ void	ft_dup_envp(t_mini *data, char **envp)
 	while (envp[++i])
 	{
 		node = ft_2rows_split(envp[i]);
-		node->next = NULL;
 		if (!node)
 			return ;
+		node->next = NULL;
 		if (ft_env_forbidden_chars(node->nm, ft_strlen(node->nm)))
 		{
 			ft_error("export: '%s': not a valid identifier\n", node->nm);
@@ -83,4 +83,32 @@ void	ft_dup_envp(t_mini *data, char **envp)
 			node->val = NULL;
 		ft_env_lstadd_back(data, node);
 	}
+}
+
+char	**ft_dup_matrix(char **matrix)
+{
+	int		i;
+	char	**new;
+
+	i = 0;
+	while (matrix[i] != NULL)
+	{
+		i++;
+	}
+	new = ft_calloc(i + 1, sizeof(char *));
+	if (!new)
+		return (NULL);
+	i = -1;
+	while (matrix[++i] != NULL)
+	{
+		new[i] = ft_strdup(matrix[i]); 
+	}
+	return (new);
+}
+
+void	ft_delnode(t_env *del)
+{
+	free(del->nm);
+	free(del->val);
+	free(del);
 }

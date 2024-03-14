@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/12 17:32:33 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/14 13:37:21 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	*ft_lexer(t_mini *data)
 	data->full_cmd = ft_cmdtrim(data->prompt);
 	if (!data->full_cmd)
 	{
-		g_status.exit_code = 1;
+		g_status = 1;
 		return (NULL);
 	}
 	ft_expander(data);
 	if (!ft_cmdlst(data))
 	{
-		g_status.exit_code = 1;
+		g_status = 1;
 		return (NULL);
 	}
 	trim = data->full_cmd;
@@ -73,7 +73,6 @@ void	ft_init_data(t_mini *data)
 	data->saved_stdin = dup(STDIN_FILENO);
 	data->saved_stdout = dup(STDOUT_FILENO);
 	g_status = 0;
-	data->pid = 0;
 }
 
 /**
@@ -91,7 +90,7 @@ int	main(int argc, char **argv, char **envp)
 	if (argc > 1)
 		return (ft_error("Arg Error.\n", NULL), 1);
 	ft_init_data(&data);
-	data.envp = envp;
+	data.envp = ft_dup_matrix(envp);
 	if (!data.envp)
 		return (ft_error("Env Error.\n", NULL), 1);
 	ft_dup_envp(&data, envp);

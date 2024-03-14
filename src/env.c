@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/02/13 15:07:40 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:39:11 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,11 @@ void	ft_env_remove(t_mini *data, char *str)
 	head = data->env_lst;
 	if (str[0] == '~')
 		str = "$HOME";
-	if (!ft_strncmp (head->nm, str, ft_strlen(head->nm)))
+	if (!ft_strncmp(head->nm, str, ft_strlen(head->nm)))
 	{
 		del = head->next;
 		head = del->next;
-		free(del);
+		ft_delnode(del);
 		return ;
 	}
 	while (head->next)
@@ -94,7 +94,7 @@ void	ft_env_remove(t_mini *data, char *str)
 		{
 			del = head->next;
 			head->next = del->next;
-			free(del);
+			ft_delnode(del);
 			return ;
 		}
 		head = head->next;
@@ -113,6 +113,6 @@ void	ft_env_lstclear(t_env *env)
 	{
 		del_node = head;
 		head = del_node->next;
-		free (del_node);
+		ft_delnode(del_node);
 	}
 }

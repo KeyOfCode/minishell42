@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/02/21 18:39:56 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:56:25 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 	return (cmd);
 } */
 
-void	save_path(t_mini *data)
+void	*save_path(t_mini *data)
 {
 	char	*aux;
 	t_env	*head;
@@ -50,33 +50,40 @@ void	save_path(t_mini *data)
 	while (head && ft_strncmp(head->nm, "PATH", 4))
 		head = head->next;
 	if (!ft_strncmp(head->nm, "PATH", 4))
+	{
 		data->full_path = ft_split(head->val, ':');
+	}
 	else
-		return ;
+	{
+		return (NULL);
+	}
 	i = 0;
 	while (data->full_path[i])
 	{
 		aux = ft_strjoin(data->full_path[i], "/");
+		free(data->full_path[i]);
 		data->full_path[i] = aux;
 		i++;
 	}
 	free(aux);
+	return (data);
 }
 
 char	*get_cmd_path(t_mini *data, t_cmd *cmd)
-{
-	char	*try_path;
-	int		i;
-
-	i = -1;
-	save_path(data);
-	while (data->full_path[++i])
 	{
-		try_path = ft_strjoin(data->full_path[i], cmd->c_args[0]);
-/* 		if (!ft_strncmp(cmd->c_abs_path, data->full_path[i],
+		char	*try_path;
+		int		i;
+
+		i = -1;
+		if(!save_path(data))
+			return (NULL);
+		while (data->full_path[++i])
+		{
+			if (!ft_strncmp(cmd->c_abs_path, data->full_path[i],
 				ft_strlen(data->full_path[i])))
+			try_path = ft_strdup(cmd->c_abs_path);
 		else
-			try_path = ft_strdup(cmd->c_abs_path); */
+			try_path = ft_strjoin(data->full_path[i], cmd->c_args[0]);
 		if (access(try_path, F_OK) == 0)
 		{
 			cmd->c_env_path = ft_strdup(try_path);
@@ -85,44 +92,10 @@ char	*get_cmd_path(t_mini *data, t_cmd *cmd)
 		}
 	}
 	free(try_path);
-	return (0);
-}
-// printf("%s--\n", try_path);
-// printf("Success: %s\n", cmd->c_env_path);
-// printf("Failure: \n");
-// | X_OK
-
-/* Right now it causes error on command not found */
-void	update_envp(t_mini *data)
-{
-	t_env	*head;
-	int		i;
-
-	head = data->env_lst;
-	i = 0;
-	// if (data->envp)
-	// 	ft_free_matrix(data->envp);
-	while (head)
-	{
-		head = head->next;
-		i++;
-	}
-	data->envp = ft_calloc(i, sizeof(char *));
-	if (!data->envp)
-		return ;
-	i = -1;
-	head = data->env_lst;
-	while (data->envp[++i])
-	{
-		if (head->equal)
-			data->envp[i] = ft_strjoin(head->nm, ft_strjoin("=", head->val));
-		else
-			data->envp[i] = ft_strdup(head->nm);
-		head = head->next;
-	}
+	return (NULL);
 }
 
-/* char	**free_matrix(char **matrix)
+void	ft_free_matrix(char **matrix)
 {
 	int	i;
 
@@ -136,8 +109,36 @@ void	update_envp(t_mini *data)
 		}
 		free(matrix);
 	}
-	return (NULL);
-} */
+}
+
+void	update_envp(t_mini *data)
+{
+	t_env	*head;
+	int		i;
+
+	head = data->env_lst;
+	i = 0;
+	if (data->envp)
+		ft_free_matrix(data->envp);
+	while (head != NULL)
+	{
+		head = head->next;
+		i++;
+	}
+	data->envp = ft_calloc(i + 1, sizeof(char *));
+	if (!data->envp)
+		return ;
+	i = -1;
+	head = data->env_lst;
+	while (head != NULL)
+	{
+		if (head->equal)
+			data->envp[++i] = ft_strjoin(head->nm, ft_strjoin("=", head->val));
+		else
+			data->envp[++i] = ft_strdup(head->nm);
+		head = head->next;
+	}
+}
 
 /* char	**ft_2rows_split(char *str, char c)
 {

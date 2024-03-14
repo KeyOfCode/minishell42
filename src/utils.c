@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/12 17:40:24 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/13 12:22:23 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,14 @@ char	*ft_join_free(char *s1, char *s2)
 
 void	handle_sigint(int sig)
 {
-	// if (g_status.pid != 0 && g_status.pid != -1)
-	// {
-	// 	printf("\n");
-	// 	kill(g_status.pid, SIGKILL);
-	// 	g_status.exit_code = 130;
-	// 	g_status.pid = 0;
-	// }
 	if (sig == SIGINT)
 	{
 		rl_redisplay();
-		printf("  \n");
 		rl_replace_line("", 0);
+		printf("  \n");
 		rl_on_new_line();
 		rl_redisplay();
+		g_status = 130;
 	}
 }
 

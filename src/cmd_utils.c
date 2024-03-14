@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:16:18 by disantam          #+#    #+#             */
-/*   Updated: 2024/03/12 14:42:00 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:03:29 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	count_cmdargs(char **args)
 {
 	int		i;
 	int		count;
-	char	count_print;
 
 	i = 0;
 	count = 0;
@@ -42,13 +41,22 @@ int	count_cmdargs(char **args)
 		}
 		i++;
 	}
-	count_print = '0' + count;
-	ft_putstr_fd(&count_print, 2);
-	ft_putstr_fd("-\n", 2);
 	return (count);
 }
 
-void	free_cmds(t_cmd **cmd_lst)
+void	free_fullcmd(char **args)
+{
+	int	i;
+
+	i = -1;
+	while (args[++i] != NULL)
+	{
+		free(args[i]);
+	}
+	free(args);
+}
+
+void	free_cmdlst(t_cmd **cmd_lst)
 {
 	int		i;
 	t_cmd	*head;
@@ -58,10 +66,6 @@ void	free_cmds(t_cmd **cmd_lst)
 	{
 		head = *cmd_lst;
 		i = -1;
-		while (head->c_args[++i] != NULL)
-		{
-			free(head->c_args[i]);
-		}
 		if (head->c_env_path != NULL)
 		{
 			free(head->c_env_path);
