@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/12 17:41:05 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:53:57 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,16 @@ void	ft_redir(t_cmd *cmd)
 void	child_builtin(t_mini *data, t_cmd *head)
 {
 	char	*cmd;
-	int		l;
 
 	cmd = head->c_abs_path;
-	l = ft_strlen(cmd);
-	if (!ft_strncmp(cmd, "pwd", l) || !ft_strncmp(cmd, "PWD", l))
-		g_exit_code = pwd();
-	if (!ft_strncmp(cmd, "env", l) || !ft_strncmp(cmd, "ENV", l))
-		g_exit_code = env(data);
-	if (!ft_strncmp(cmd, "echo", l) || !ft_strncmp(cmd, "ECHO", l))
-		g_exit_code = echo(head);
-	if (!ft_strncmp(cmd, "export", l) && !head->c_args[1])
-		g_exit_code = export(data, head);
+	if (!ft_strncmp(cmd, "pwd", 3) || !ft_strncmp(cmd, "PWD", 3))
+		g_status = pwd();
+	if (!ft_strncmp(cmd, "env", 3) || !ft_strncmp(cmd, "ENV", 3))
+		g_status = env(data);
+	if (!ft_strncmp(cmd, "echo", 4) || !ft_strncmp(cmd, "ECHO", 4))
+		g_status = echo(head);
+	if (!ft_strncmp(cmd, "export", 6) && !head->c_args[1])
+		g_status = export(data, head); 
 }
 
 void	child_process(int *fd, t_cmd *cmd)
@@ -59,13 +57,16 @@ void	child_process(int *fd, t_cmd *cmd)
 	if (!isbuiltin(cmd))
 	{
 		if (!get_cmd_path(cmd->data, cmd))
-			ft_error("bash: command not found");
+			ft_error("minishell: command not found: %s\n", cmd->c_abs_path);
 		else
+		{
 			execve(cmd->c_env_path, cmd->c_args, cmd->data->envp);
+		} 
+		exit(127);
 	}
 	else
-		child_builtin(cmd->data, cmd);
-	exit(127);
+		child_builtin(cmd->data, cmd); 
+	exit(g_status);
 }
 
 void	parent_process(int *fd, int pid, int *exit_code)
@@ -92,13 +93,11 @@ int	ft_executor(t_mini *data, t_cmd *cmd)
 	if (cmd->next)
 	{
 		if (pipe(data->fd) == -1)
-			return (ft_error("Pipe Error"), 1);
+			return (ft_error("Pipe Error\n", NULL), 1);
 	}
 	pid = fork();
-	if (pid != 0)
-		data->pid = pid;
 	if (pid < 0)
-		return (ft_error("Fork Error"), 1);
+		return (ft_error("Fork Error\n", NULL), 1);
 	if (pid == 0)
 		child_process(data->fd, cmd);
 	else

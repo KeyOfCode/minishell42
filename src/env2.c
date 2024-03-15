@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/02/26 18:22:50 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/14 13:54:46 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_env	*ft_2rows_split(char *str)
 		;
 	node->nm = ft_substr(str, 0, i);
 	if (!node->nm)
-		return (free(&node), NULL);
+		return (free(node), NULL);
 	if (str[i] == '=' && i < len - 1)
 	{
 		node->val = ft_substr(str, i + 1, len - i - 1);
@@ -53,7 +53,7 @@ void	ft_add_envp(t_mini *data, char **envp)
 			return ;
 		if (ft_env_forbidden_chars(node->nm, ft_strlen(node->nm)))
 		{
-			printf("export: '%s': not a valid identifier\n", node->nm);
+			ft_error("export: '%s': not a valid identifier\n", node->nm);
 			free(node);
 			return ;
 		}
@@ -70,13 +70,13 @@ void	ft_dup_envp(t_mini *data, char **envp)
 	while (envp[++i])
 	{
 		node = ft_2rows_split(envp[i]);
-		node->next = NULL;
 		if (!node)
 			return ;
+		node->next = NULL;
 		if (ft_env_forbidden_chars(node->nm, ft_strlen(node->nm)))
 		{
-			printf("export: '%s': not a valid identifier\n", node->nm);
-			free (node);
+			ft_error("export: '%s': not a valid identifier\n", node->nm);
+			free(node);
 			return ;
 		}
 		if (ft_strncmp(node->nm, "OLDPWD", ft_strlen(node->nm)) == 0)
@@ -85,46 +85,30 @@ void	ft_dup_envp(t_mini *data, char **envp)
 	}
 }
 
-/* void	set_env(t_mini *data, char *name, char *value)
+char	**ft_dup_matrix(char **matrix)
 {
-	t_env	*current;
-	int		flag;
+	int		i;
+	char	**new;
 
-	flag = 0;
-	current = data->env_lst;
-	while (current && !flag)
+	i = 0;
+	while (matrix[i] != NULL)
 	{
-		if (!ft_strncmp(current->nm, name,
-				ft_strlen(current->nm)))
-			flag = 1;
-		else
-			current = current->next;
+		i++;
 	}
-	if (flag)
+	new = ft_calloc(i + 1, sizeof(char *));
+	if (!new)
+		return (NULL);
+	i = -1;
+	while (matrix[++i] != NULL)
 	{
-		current->val = value;
-		// return (1);
+		new[i] = ft_strdup(matrix[i]); 
 	}
-	// return (0);
+	return (new);
 }
 
-char	*get_env(t_mini *data, char *name)
+void	ft_delnode(t_env *del)
 {
-	t_env	*current;
-	int		flag;
-
-	flag = 0;
-	current = data->env_lst;
-	while (current && !flag)
-	{
-		if (!ft_strncmp(current->nm, name,
-				ft_strlen(current->nm)))
-			flag = 1;
-		else
-			current = current->next;
-	}
-	if (flag)
-		return (current->val);
-	return (0);
+	free(del->nm);
+	free(del->val);
+	free(del);
 }
- */

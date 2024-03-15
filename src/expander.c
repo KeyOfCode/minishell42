@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/12 17:59:46 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:55:28 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,10 @@ char	*ft_env_expand(char *ogstr, t_env *envp, int *i)
 	}
 	if (ft_strchr("?", str[1]))
 	{
-		return (new = ft_itoa(g_exit_code), *i += 1, new);
+		return (new = ft_itoa(g_status), *i += 1, new);
 	}
 	return ("");
 }
-
-// printf("\nstr: %s\n", str);
-// printf("before i: %d\n", *i);
-// printf("after i: %d\n", *i);
 
 /**
  * @brief 
@@ -76,24 +72,13 @@ char	*ft_substr_expand(char	*str, t_mini *data)
 			aux = ft_substr(str, 0, i);
 			var = ft_env_expand(&str[i], data->env_lst, &i);
 			full = ft_strjoin(aux, var);
+			free(aux);
 			i++;
 			return (ft_strjoin(full, ft_substr_expand(&str[i], data)));
 		}
 	}
 	return (str);
 }
-
-// printf("\nstr: %s\n", str);
-// printf("\naux: %s\n", aux);
-// printf("str[i]: %c\n", str[i]);
-// printf("after str[i]: %c\n", str[i]);
-// printf("var: %s\n", var);
-/*
-	if (!var && str[i] == '$')
-		var = ft_itoa(prompt->pid);
-	else if (!var && str[i] == '?')
-		var = ft_itoa(g_status->status);
-*/
 
 char	*ft_chrrmv(char *str, char c)
 {
@@ -105,10 +90,12 @@ char	*ft_chrrmv(char *str, char c)
 	i = 0;
 	rm = 0;
 	while (str[i])
+	{
 		if (str[i++] == c)
 			rm++;
-	i = 0;
+	}
 	newstr = (char *)malloc(sizeof(char) * (ft_strlen(str) - rm + 1));
+	i = 0;
 	j = 0;
 	while (str[i])
 	{
@@ -116,6 +103,7 @@ char	*ft_chrrmv(char *str, char c)
 			newstr[j++] = str[i];
 		i++;
 	}
+	free(str);
 	return (newstr);
 }
 
@@ -134,65 +122,3 @@ void	ft_expander(t_mini *data)
 		i++;
 	}
 }
-
-/* 
-void	ft_expander(t_mini *data)
-{
-	char	**expanded;
-	int		count;
-	int		i;
-	int		j;
-
-	i = 0;
-	while (data->full_cmd[i])
-	{
-		j = 0;
-		printf("Current token: %s\n", data->full_cmd[i]);
-		count = ft_count_vars(data->full_cmd[i]);
-		printf("nº slices: %d\n", count);
-		expanded = (char **)malloc(sizeof(char *) * (count + 1));
-		expanded[count] = NULL;
-		while (j < count)
-		{
-			expanded[j] = ft_subdivide(data->full_cmd[i], data->env_lst, j);
-			j++;
-		}
-		ft_print_splits(expanded);
-		i++;
-	}
-}
- */
-/* j = 0;
-		while (data->full_cmd[i][j])
-		{
-			if (data->full_cmd[i][j] == '\'')
-				while (data->full_cmd[i][j] != '\'')
-					j++;
-			if (ft_strchr("$~", data->full_cmd[i][j]))
-			{
-				ft_env_expand(&data->full_cmd[i][j], data->env_lst);
-			}
-			j++;
-		} */
-
-// char	*ft_subdivide(char *str, t_env *env, int mode)
-// {
-// 	static int		i;
-// 	char			*new;
-// 	int				start;
-//
-// 	if (mode == 0)
-// 		i = 0;
-// 	start = i;
-// 	if (ft_strchr("$~", str[i]))
-// 	{
-// 		new = ft_env_expand(str, env, &i);
-// 		return (new);
-// 	}
-// 	else
-// 	{
-// 		while (!ft_strchr("$~", str[i]) && str[i] != '\0')
-// 			i++;
-// 		return (ft_substr(str, start, i - start));
-// 	}
-// }

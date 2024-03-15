@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/12 17:40:38 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:50:40 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 void	ft_mini_exit(t_mini *data)
 {
 	clear_history();
+	ft_free_matrix(data->envp);
 	ft_env_lstclear(data->env_lst);
-	exit(g_exit_code);
+	exit(g_status);
 }
 
 int	echo(t_cmd	*cmd)
@@ -87,32 +88,31 @@ char	*get_env(t_mini *data, char *name)
 	}
 	if (flag)
 		return (current->val);
-	return (0);
+	return (NULL);
 }
 
 int	cd(t_mini *data, t_cmd *cmd)
 {
-	if (!cmd->c_args[1] || !ft_strncmp(cmd->c_args[1], "~", 1))
-		cmd->c_args[1] = get_env(data, "HOME");
-	else if (!ft_strncmp(cmd->c_args[1], "-", 1))
+	char	*path;
+
+	path = cmd->c_args[1];
+	if (!path || !ft_strncmp(path, "~", 1))
+	{
+		 path = get_env(data, "HOME");
+	}
+	else if (!ft_strncmp(path, "-", 1))
 	{
 		if (!get_env(data, "OLDPWD"))
-		{
-			return (ft_error("bash: cd: OLDPWD not set\n"), 1);
-		}
+			return (ft_error("minishell: cd: OLDPWD not set\n", NULL), 1);
 		else
 		{
-			cmd->c_args[1] = get_env(data, "OLDPWD");
-			printf("%s\n", cmd->c_args[1]);
+			path = get_env(data, "OLDPWD");
 		}
 	}
-	if (!opendir(cmd->c_args[1]))
-	{
-		return (ft_error("bash: cd: %s: No such file or directory"), 127);
-	}
+	if (!opendir(path))
+		return (ft_error("minishell: cd: %s: No such file or directory\n", path), 127);
 	set_env(data, "OLDPWD", getcwd(NULL, 0));
-	chdir(cmd->c_args[1]);
+	chdir(path);
 	set_env(data, "PWD", getcwd(NULL, 0));
 	return (0);
 }
-

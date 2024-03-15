@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/13 19:35:23 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:56:55 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ void	*ft_lexer(t_mini *data)
 	data->full_cmd = ft_cmdtrim(data->prompt);
 	if (!data->full_cmd)
 	{
-		g_exit_code = 1;
+		g_status = 1;
 		return (NULL);
 	}
 	ft_expander(data);
 	if (!ft_cmdlst(data))
 	{
-		g_exit_code = 1;
+		g_status = 1;
 		return (NULL);
 	}
 	return (data);
@@ -53,7 +53,7 @@ void	ft_prompt(t_mini *data)
 	{
 		add_history(data->prompt);
 		if (ft_lexer(data) != NULL)
-			ft_parser(data);
+				ft_parser(data);
 	}
 	free(data->prompt);
 }
@@ -70,12 +70,7 @@ void	ft_init_data(t_mini *data, char **envp)
 	data->fd[WRITE_END] = (STDOUT_FILENO);
 	data->saved_stdin = dup(STDIN_FILENO);
 	data->saved_stdout = dup(STDOUT_FILENO);
-	ft_dup_envp(data, envp);
-	update_envp(data);
-	if (!data->envp)
-		ft_error("Env Error.");
-	g_exit_code = 0;
-	data->pid = 0;
+	g_status = 0;
 }
 
 /**
@@ -91,8 +86,12 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	if (argc > 1)
-		return (ft_error("Arg Error."), 1);
-	ft_init_data(&data, envp);
+		return (ft_error("Arg Error.\n", NULL), 1);
+	ft_init_data(&data);
+	data.envp = ft_dup_matrix(envp);
+	if (!data.envp)
+		return (ft_error("Env Error.\n", NULL), 1);
+	ft_dup_envp(&data, envp);
 	while (1)
 	{
 		ft_prompt(&data);

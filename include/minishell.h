@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/13 19:34:51 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:49:19 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,19 +125,6 @@ typedef struct s_env
 }	t_env;
 
 /**
- * @brief t_prompt: data structure for the prompt.
- * @param cmds: Una lista enlazada que almacenará comandos (estructuras t_mini).
- * @param envp: Un array que contiene las variables de entorno del shell.
- * @param pid: El identificador de proceso de la instancia actual del shell.
- */
-// typedef struct s_prompt
-// {
-// 	t_list	*cmds;
-// 	char	**envp;
-// 	pid_t	pid;
-// }		t_prompt;
-
-/**
  * @brief t_mini: data structure for each command?
  * @param cmd_lst: *list of t_cmd nodes.
  * @param env_lst: *list of t_env variables.
@@ -162,25 +149,12 @@ typedef struct s_mini
 	int		fd[2];
 }		t_mini;
 
-// /**
-//  * @brief t_global: Global structure that contains general data of the program.
-//  * @param exit_code: Exit status of the last process executed.
-//  * @param pid: Current process id.
-//  */
-// typedef struct s_global
-// {
-// 	int	exit_code;
-// 	int	pid;
-// }	t_global;
-
-extern int g_exit_code;
+extern int g_status;
 
 /* Functions */
-void	ft_error(char *err_msg);
+void	ft_error(char const *str, char *type);
 void	ft_print_splits(char **splits);
-void	ft_print_cmds(t_cmd **cmds);
 char	*ft_join_free(char *s1, char *s2);
-// void	ft_printf_fd(int fd, char const *str, ...);
 
 /* Lexer */
 char	**ft_cmdtrim(char *s);
@@ -189,13 +163,13 @@ int		ft_quotes(char *s, size_t i, char q);
 /* Expander */
 void	ft_expander(t_mini *data);
 
-void	*ft_cmdlst(t_mini *data);
-
 /* Parser */
 void	ft_parser(t_mini *data);
 
 /* env */
 t_env	*ft_2rows_split(char *str);
+char	**ft_dup_matrix(char **matrix);
+void	ft_free_matrix(char **matrix);
 void	ft_dup_envp(t_mini *data, char **envp);
 void	ft_add_envp(t_mini *data, char **envp);
 int		ft_env_forbidden_chars(char *name, int len);
@@ -203,6 +177,7 @@ void	ft_env_lstadd_back(t_mini *data, t_env *new);
 void	ft_env_add_or_replace(t_mini *data, t_env *new);
 void	ft_env_remove(t_mini *data, char *str);
 void	ft_env_lstclear(t_env *env);
+void	ft_delnode(t_env *del);
 void	set_env(t_mini *data, char *name, char *value);
 char	*get_env(t_mini *data, char *name);
 
@@ -223,7 +198,7 @@ void	handle_sigint(int sig);
 /* Executor */
 int		ft_executor(t_mini *data, t_cmd *cmd);
 char	*get_cmd_path(t_mini *data, t_cmd *cmd);
-void	save_path(t_mini *data);
+void	*save_path(t_mini *data);
 void	update_envp(t_mini *data);
 char	*get_cmd_path(t_mini *data, t_cmd *cmd);
 void	ft_builtin(t_mini	*data, t_cmd *head);
@@ -236,9 +211,10 @@ int		output_redir_append(t_cmd *cmd, char **token);
 int		ft_redir_heredoc(char *heredoc, int *exit_code);
 
 /* cmd */
+void	*ft_cmdlst(t_mini *data);
 int		isredir(char *arg);
-void	redir_error(char *token);
 int		count_cmdargs(char **args);
-void	free_cmds(t_cmd **cmd_lst);
+void	free_cmdlst(t_cmd **cmd_lst);
+void	free_fullcmd(char **args);
 
 #endif

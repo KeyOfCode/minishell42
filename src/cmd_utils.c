@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:16:18 by disantam          #+#    #+#             */
-/*   Updated: 2024/03/12 17:40:38 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:51:36 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	count_cmdargs(char **args)
 {
 	int		i;
 	int		count;
-	char	count_print;
 
 	i = 0;
 	count = 0;
@@ -42,22 +41,22 @@ int	count_cmdargs(char **args)
 		}
 		i++;
 	}
-	count_print = '0' + count;
 	return (count);
 }
 
-	// ft_putstr_fd(&count_print, 2);
-	// ft_putstr_fd("-\n", 2);
-
-void	redir_error(char *token)
+void	free_fullcmd(char **args)
 {
-	ft_putstr_fd("bash: syntax error near unexpected token `", 2);
-	ft_putstr_fd(token, 2);
-	ft_putstr_fd("`\n", 2);
-	g_exit_code = 1;
+	int	i;
+
+	i = -1;
+	while (args[++i] != NULL)
+	{
+		free(args[i]);
+	}
+	free(args);
 }
 
-void	free_cmds(t_cmd **cmd_lst)
+void	free_cmdlst(t_cmd **cmd_lst)
 {
 	int		i;
 	t_cmd	*head;
@@ -67,10 +66,6 @@ void	free_cmds(t_cmd **cmd_lst)
 	{
 		head = *cmd_lst;
 		i = -1;
-		while (head->c_args[++i] != NULL)
-		{
-			free(head->c_args[i]);
-		}
 		if (head->c_env_path != NULL)
 		{
 			free(head->c_env_path);
