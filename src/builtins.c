@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/12 14:13:41 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/15 11:49:42 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,22 +74,3 @@ int	unset(t_mini *data, t_cmd *cmd)
 		ft_env_remove(data, cmd->c_args[i]);
 	return (0);
 }
-
-/* void	ft_add_envp(t_mini *data, char *envp)
-{
-	int		i;
-	t_env	*node;
-
-	i = -1;
-	node = ft_2rows_split(envp);
-	node->next = NULL;
-	if (!node)
-		return ;
-	if (ft_env_forbidden_chars(node->nm, ft_strlen(node->nm)))
-	{
-		printf("export: '%s': not a valid identifier\n", node->nm);
-		free (node);
-		return ;
-	}
-	ft_env_add_or_replace(data, node);
-} */

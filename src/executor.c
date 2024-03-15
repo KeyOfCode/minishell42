@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/14 14:30:25 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:16:48 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,16 @@ void	child_process(int *fd, t_cmd *cmd)
 	if (!isbuiltin(cmd))
 	{
 		if (!get_cmd_path(cmd->data, cmd))
-			ft_error("minishell: %s: No such file or directory\n", cmd->c_abs_path);
+			ft_error("minishell: command not found: %s\n", cmd->c_abs_path);
 		else
 		{
 			execve(cmd->c_env_path, cmd->c_args, cmd->data->envp);
-			exit(127);
-		}
+		} 
+		exit(127);
 	}
 	else
 		child_builtin(cmd->data, cmd); 
-	exit(0);
+	exit(g_status);
 }
 
 void	parent_process(int *fd, int pid, int *exit_code)

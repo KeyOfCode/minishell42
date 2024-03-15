@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/14 14:21:36 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/15 11:49:47 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,4 +116,3 @@ int	cd(t_mini *data, t_cmd *cmd)
 	set_env(data, "PWD", getcwd(NULL, 0));
 	return (0);
 }
-

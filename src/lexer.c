@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/12 16:51:33 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/15 11:54:56 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 /**
  * @note #First IF checks if the previous character is not a special character
  * @note #Second IF checks if it's << or <
- * 
  */
 void	ft_spchar(char *str, int *i, size_t *size, int mode)
 {
@@ -79,9 +78,6 @@ size_t	ft_count_splits(char *str, size_t size)
 	return (size);
 }
 
-/**
- * @note 
- */
 char	*ft_store_string(char *str, size_t *pos)
 {
 	int	i;

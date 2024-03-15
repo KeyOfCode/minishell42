@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/14 13:09:16 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/15 11:32:24 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,6 @@ char	*ft_substr_expand(char	*str, t_mini *data)
 	return (str);
 }
 
-/*
-	if (!var && str[i] == '$')
-		var = ft_itoa(prompt->pid);
-	else if (!var && str[i] == '?')
-		var = ft_itoa(g_status->status);
-*/
-
 char	*ft_chrrmv(char *str, char c)
 {
 	char	*newstr;
@@ -129,53 +122,3 @@ void	ft_expander(t_mini *data)
 		i++;
 	}
 }
-
-/* 
-void	ft_expander(t_mini *data)
-{
-	char	**expanded;
-	int		count;
-	int		i;
-	int		j;
-
-	i = 0;
-	while (data->full_cmd[i])
-	{
-		j = 0;
-		printf("Current token: %s\n", data->full_cmd[i]);
-		count = ft_count_vars(data->full_cmd[i]);
-		printf("nº slices: %d\n", count);
-		expanded = (char **)malloc(sizeof(char *) * (count + 1));
-		expanded[count] = NULL;
-		while (j < count)
-		{
-			expanded[j] = ft_subdivide(data->full_cmd[i], data->env_lst, j);
-			j++;
-		}
-		ft_print_splits(expanded);
-		i++;
-	}
-}
-
-// char	*ft_subdivide(char *str, t_env *env, int mode)
-// {
-// 	static int		i;
-// 	char			*new;
-// 	int				start;
-//
-// 	if (mode == 0)
-// 		i = 0;
-// 	start = i;
-// 	if (ft_strchr("$~", str[i]))
-// 	{
-// 		new = ft_env_expand(str, env, &i);
-// 		return (new);
-// 	}
-// 	else
-// 	{
-// 		while (!ft_strchr("$~", str[i]) && str[i] != '\0')
-// 			i++;
-// 		return (ft_substr(str, start, i - start));
-// 	}
-// }
-*/

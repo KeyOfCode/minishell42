@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/14 14:29:29 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:21:33 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,24 +78,6 @@ typedef enum s_flags
 	APPEND,
 }	t_flags;
 
-/**
- * @brief	Command Nodes
- * 
- * 
- * @param c_args[0]		-> contains the cmd as the usu writes
- *					(WITH or WITHOUT absolute path)
- * @param c_args[...]	-> contains the arguments and flags of the command
- * @param c_abs_path	-> contains a copy of c_args[0] 
- * 						(WITH or WITHOUT abs_path)
- * @param c_env_path	-> contains a copy of c_abs_path if it has an abs_path,
- * 					OR a correct access path from $PATH
- * 					when c_args[0] don't have abs_path
- * 
- */
-
-struct	s_mini;
-
-//? add pointer back to t_mini??
 typedef struct s_cmd
 {
 	char			**c_args;
@@ -125,19 +107,6 @@ typedef struct s_env
 }	t_env;
 
 /**
- * @brief t_prompt: data structure for the prompt.
- * @param cmds: Una lista enlazada que almacenará comandos (estructuras t_mini).
- * @param envp: Un array que contiene las variables de entorno del shell.
- * @param pid: El identificador de proceso de la instancia actual del shell.
- */
-// typedef struct s_prompt
-// {
-// 	t_list	*cmds;
-// 	char	**envp;
-// 	pid_t	pid;
-// }		t_prompt;
-
-/**
  * @brief t_mini: data structure for each command?
  * @param cmd_lst: *list of t_cmd nodes.
  * @param env_lst: *list of t_env variables.
@@ -160,17 +129,6 @@ typedef struct s_mini
 	int		saved_stdout;
 	int		fd[2];
 }		t_mini;
-
-// /**
-//  * @brief t_global: Global structure that contains general data of the program.
-//  * @param exit_code: Exit status of the last process executed.
-//  * @param pid: Current process id.
-//  */
-// typedef struct	s_global
-// {
-// 	int	exit_code;
-// 	int	pid;
-// }	t_global;
 
 extern int g_status;
 
