@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:56:46 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/13 18:48:09 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:35:37 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ int	ft_printf_fd(int fd, char const *str, ...);
 
 int	ft_printf(char const *str, va_list args)
 {
-	ft_printf_fd(1, *str, args);
+	int	len;
+
+	len = ft_printf_fd(1, str, args);
+	return (len);
 }
 
 int	ft_printf_fd(int fd, char const *str, ...)

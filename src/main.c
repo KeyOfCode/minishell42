@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/15 13:56:55 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/15 20:32:44 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,15 @@ void	ft_prompt(t_mini *data)
 	{
 		add_history(data->prompt);
 		if (ft_lexer(data) != NULL)
-				ft_parser(data);
+			ft_parser(data);
 	}
 	free(data->prompt);
 }
 
-void	ft_init_data(t_mini *data, char **envp)
+void	ft_init_data(t_mini *data)
 {
 	data->prompt = NULL;
+	data->quote = 0;
 	data->cmd_lst = NULL;
 	data->env_lst = NULL;
 	data->envp = NULL;

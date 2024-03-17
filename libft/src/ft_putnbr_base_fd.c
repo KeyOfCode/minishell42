@@ -6,11 +6,12 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 12:06:56 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/13 18:52:32 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/15 18:49:03 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../includes/ft_printf.h"
+#include "../includes/libft.h"
 
 int	ft_putnbr_base_fd(char *base, unsigned long long n, int fd)
 {

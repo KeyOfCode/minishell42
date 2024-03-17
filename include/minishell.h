@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/15 13:49:19 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/15 20:31:50 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ typedef struct s_env
 typedef struct s_mini
 {
 	char	*prompt;
+	int		quote;
 	t_cmd	*cmd_lst;
 	int		cmd_count;
 	t_env	*env_lst;
@@ -158,7 +159,7 @@ char	*ft_join_free(char *s1, char *s2);
 
 /* Lexer */
 char	**ft_cmdtrim(char *s);
-int		ft_quotes(char *s, size_t i, char q);
+int		ft_quotes(char *s, int i, char q);
 
 /* Expander */
 void	ft_expander(t_mini *data);

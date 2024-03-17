@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/15 11:54:56 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/17 20:19:06 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,25 @@ void	ft_spchar(char *str, int *i, size_t *size, int mode)
 		if (str[*i] && !ft_strchr(" |<>", str[*i - 1]))
 			(*size)++;
 	}
-	if ((str[*i] == '<' && str[*i  + 1] == '<')
+	if ((str[*i] == '<' && str[*i + 1] == '<')
 		|| (str[*i] == '>' && str[*i + 1] == '>'))
 		(*i) += 2;
 	else
 		(*i)++;
 }
 
-int	ft_quotes(char *s, size_t i, char q)
+int	ft_quotes(char *str, int start, char q)
 {
 	int	j;
 
-	j = i + 1;
-	while (s[j] != '\0' && s[j] != q)
+	j = start + 1;
+	while (str[j] != '\0' && str[j] != q)
 		j++;
-	if (s[j] == q)
+	if (str[j] == q)
 	{
-		i++;
-		while (s[i] != q && s[i] != '\0')
-			i++;
-		return (i);
+		while (str[start + 1] != q && str[start + 1] != '\0')
+			start++;
+		return (start + 1);
 	}
 	else
 	{

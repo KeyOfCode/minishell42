@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/15 13:50:27 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/17 20:57:58 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	check_redirections(t_cmd *cmd, char	**arg)
 	int	redir_st;
 
 	redir_st = 0;
-	ft_error("token: %s\n", *arg);
 	if (arg[1] == NULL)
 		return (ft_error("minishell: syntax error near \
 unexpected token `newline'\n", NULL), 1);
@@ -66,6 +65,8 @@ unexpected token `%s'\n", arg[1]), 1);
 		g_status = redir_st;
 	return (redir_st);
 }
+
+	// ft_error("token: %s\n", *arg);
 
 /**
  * @brief 

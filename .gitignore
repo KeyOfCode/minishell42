@@ -11,3 +11,4 @@ test.c
 03_minishell.code-workspace
 val
 *test*
+count_args.sh

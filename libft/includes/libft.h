@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:41:05 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/13 19:34:35 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/17 20:24:48 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include "printf.h"
+# include "get_next_line.h"
 
 typedef struct s_list
 {
@@ -40,7 +42,7 @@ int				ft_isprint(int c);
 size_t			ft_strlen(const char *str);
 /*Writes len bytes of value c (converted to 
 	an unsigned char) to the string b. */
-void			*ft_memset(void *b, int c, unsigned long len);
+void			*ft_memset(void *b, int c, unsigned int len);
 /*Writes len bytes of value to the string b. */
 void			ft_bzero(void *s, unsigned long n);
 /*Copies n bytes from memory area src to memory area
@@ -100,6 +102,8 @@ int				ft_putstr_fd(char *s, int fd);
 int				ft_putendl_fd(char *s, int fd);
 int				ft_putnbr_fd(int n, int fd);
 void			ft_errorf(char const *s);
+
+char			*ft_chrrmv(char *str, char c);
 
 /* ************************************************************************** */
 /* t_list			*ft_lstnew(void *content);
