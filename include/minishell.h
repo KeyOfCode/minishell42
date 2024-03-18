@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/15 20:31:50 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:36:29 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@
  * @param last
  * @param out_error	
  */
-typedef struct s_pipe
+/* typedef struct s_pipe
 {
 	int	fd[2][2];
 	int	in;
@@ -76,7 +76,7 @@ typedef enum s_flags
 	READ,
 	OUT,
 	APPEND,
-}	t_flags;
+}	t_flags; */
 
 struct	s_mini;
 
@@ -102,7 +102,6 @@ typedef struct s_cmd
 	int				fd[2];
 	int				infile;
 	int				outfile;
-	t_flags			*flag;
 	struct s_mini	*data;
 	struct s_cmd	*next;
 }	t_cmd;
@@ -137,7 +136,8 @@ typedef struct s_env
 typedef struct s_mini
 {
 	char	*prompt;
-	int		quote;
+	int		dquote;
+	int		squote;
 	t_cmd	*cmd_lst;
 	int		cmd_count;
 	t_env	*env_lst;

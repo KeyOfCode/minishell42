@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/15 20:32:44 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:21:34 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void	ft_prompt(t_mini *data)
 void	ft_init_data(t_mini *data)
 {
 	data->prompt = NULL;
-	data->quote = 0;
+	data->dquote = 0;
+	data->squote = 0;
 	data->cmd_lst = NULL;
 	data->env_lst = NULL;
 	data->envp = NULL;
