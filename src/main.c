@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/18 19:21:34 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:51:10 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,15 +86,18 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_mini	data;
 
-	(void)argv;
 	if (argc > 1)
+	{
 		return (ft_error("Arg Error.\n", NULL), 1);
+	}
 	ft_init_data(&data);
 	data.envp = ft_dup_matrix(envp);
 	if (!data.envp)
+	{
 		return (ft_error("Env Error.\n", NULL), 1);
+	}
 	ft_dup_envp(&data, envp);
-	while (1)
+	while (argv)
 	{
 		ft_prompt(&data);
 	}

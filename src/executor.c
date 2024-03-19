@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/15 13:53:57 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:48:21 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,39 +34,49 @@ void	child_builtin(t_mini *data, t_cmd *head)
 
 	cmd = head->c_abs_path;
 	if (!ft_strncmp(cmd, "pwd", 3) || !ft_strncmp(cmd, "PWD", 3))
+	{
 		g_status = pwd();
+	}
 	if (!ft_strncmp(cmd, "env", 3) || !ft_strncmp(cmd, "ENV", 3))
+	{
 		g_status = env(data);
+	}
 	if (!ft_strncmp(cmd, "echo", 4) || !ft_strncmp(cmd, "ECHO", 4))
+	{
 		g_status = echo(head);
+	}
 	if (!ft_strncmp(cmd, "export", 6) && !head->c_args[1])
-		g_status = export(data, head); 
+	{
+		g_status = export(data, head);
+	}
 }
 
-void	child_process(int *fd, t_cmd *cmd)
+void	child_process(t_mini *data, t_cmd *cmd)
 {
 	if (cmd->next)
 	{
-		close(fd[READ_END]);
-		dup2(fd[WRITE_END], STDOUT_FILENO);
-		close(fd[WRITE_END]);
+		close(data->fd[READ_END]);
+		dup2(data->fd[WRITE_END], STDOUT_FILENO);
+		close(data->fd[WRITE_END]);
 	}
 	ft_redir(cmd);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	if (!isbuiltin(cmd))
+	if (isbuiltin(cmd))
 	{
-		if (!get_cmd_path(cmd->data, cmd))
+		child_builtin(cmd->data, cmd);
+		exit(g_status);
+	}
+	if (!get_cmd_path(cmd->data, cmd))
+	{
+		if (!isdir(cmd->c_abs_path))
 			ft_error("minishell: command not found: %s\n", cmd->c_abs_path);
 		else
-		{
-			execve(cmd->c_env_path, cmd->c_args, cmd->data->envp);
-		} 
-		exit(127);
+			ft_error("minishell: %s: is a directory\n", cmd->c_abs_path);
 	}
 	else
-		child_builtin(cmd->data, cmd); 
-	exit(g_status);
+		execve(cmd->c_env_path, cmd->c_args, cmd->data->envp);
+	exit(127);
 }
 
 void	parent_process(int *fd, int pid, int *exit_code)
@@ -99,7 +109,9 @@ int	ft_executor(t_mini *data, t_cmd *cmd)
 	if (pid < 0)
 		return (ft_error("Fork Error\n", NULL), 1);
 	if (pid == 0)
-		child_process(data->fd, cmd);
+	{
+		child_process(data, cmd);
+	}
 	else
 		parent_process(data->fd, pid, &exit_code);
 	close(data->fd[READ_END]);

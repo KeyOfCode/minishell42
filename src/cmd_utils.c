@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:16:18 by disantam          #+#    #+#             */
-/*   Updated: 2024/03/15 13:51:36 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:43:44 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,12 @@ void	free_fullcmd(char **args)
 
 void	free_cmdlst(t_cmd **cmd_lst)
 {
-	int		i;
 	t_cmd	*head;
 
 	head = *cmd_lst;
 	while (*cmd_lst != NULL)
 	{
 		head = *cmd_lst;
-		i = -1;
 		if (head->c_env_path != NULL)
 		{
 			free(head->c_env_path);
@@ -73,5 +71,20 @@ void	free_cmdlst(t_cmd **cmd_lst)
 		free(head->c_args);
 		*cmd_lst = head->next;
 		free(head);
+	}
+}
+
+void	ft_free_matrix(char **matrix)
+{
+	int	i;
+
+	i = -1;
+	if (matrix != NULL)
+	{
+		while (matrix[++i] != NULL)
+		{
+			free(matrix[i]);
+		}
+		free(matrix);
 	}
 }

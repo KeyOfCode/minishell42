@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/17 20:55:35 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:52:11 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,9 @@ int	input_heredoc(t_cmd *cmd, char **token)
 	input = NULL;
 	heredoc = NULL;
 	if (cmd->fd[READ_END] != -1)
+	{
 		close(cmd->fd[READ_END]);
+	}
 	extern_stdout = dup(STDOUT_FILENO);
 	dup2(cmd->data->saved_stdin, STDIN_FILENO);
 	dup2(cmd->data->saved_stdout, STDOUT_FILENO);

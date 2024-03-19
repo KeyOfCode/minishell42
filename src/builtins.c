@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/15 11:49:42 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:27:33 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ void	empty_export(t_mini *data)
 	{
 		printf("declare -x %s", head->nm);
 		if (head->equal)
+		{
 			printf("=\"%s\"", head->val);
+		}
 		printf("\n");
 		head = head->next;
 	}
@@ -59,9 +61,13 @@ int	export(t_mini *data, t_cmd *cmd)
 
 	i = 0;
 	if (!cmd->c_args[1])
+	{
 		empty_export(data);
+	}
 	else
+	{
 		ft_add_envp(data, &cmd->c_args[1]);
+	}
 	return (0);
 }
 
@@ -71,6 +77,8 @@ int	unset(t_mini *data, t_cmd *cmd)
 
 	i = 0;
 	while (cmd->c_args[++i])
+	{
 		ft_env_remove(data, cmd->c_args[i]);
+	}
 	return (0);
 }

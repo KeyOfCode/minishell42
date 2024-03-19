@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/18 19:36:29 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:41:29 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <signal.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <sys/ioctl.h>
 # include <fcntl.h>
 # include "../libft/includes/libft.h"
@@ -53,30 +54,6 @@
 # define WRITE_END 1
 
 # pragma endregion
-
-/**
- * @brief Pipes
- * @param in
- * @param out
- * @param last
- * @param out_error	
- */
-/* typedef struct s_pipe
-{
-	int	fd[2][2];
-	int	in;
-	int	out;
-	int	last;
-	int	out_error;
-}	t_pipe;
-
-typedef enum s_flags
-{
-	IN,
-	READ,
-	OUT,
-	APPEND,
-}	t_flags; */
 
 struct	s_mini;
 
@@ -197,6 +174,7 @@ int		isbuiltin(t_cmd *head);
 void	handle_sigint(int sig);
 
 /* Executor */
+int		isdir(const char *path);
 int		ft_executor(t_mini *data, t_cmd *cmd);
 char	*get_cmd_path(t_mini *data, t_cmd *cmd);
 void	*save_path(t_mini *data);

@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/17 18:57:30 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:52:20 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,15 @@ void	ft_error(char const *str, char *type)
 		if (str[i] == '%' && type != NULL)
 		{
 			if (str[i + 1] == 's')
+			{
 				ft_putstr_fd(type, 2);
+			}
 			i += 1;
 		}
 		else
+		{
 			ft_putchar_fd(str[i], 2);
+		}
 		i++;
 	}
 	g_status = 1;
@@ -37,9 +41,13 @@ void	ft_error(char const *str, char *type)
 int	is_whitespace(char c)
 {
 	if (c == ' ' || c == '\t' || c == '\n')
+	{
 		return (1);
+	}
 	else
+	{
 		return (0);
+	}
 }
 
 void	ft_print_splits(char **splits)
