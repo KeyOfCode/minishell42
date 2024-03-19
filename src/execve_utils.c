@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/03/19 14:46:30 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:46:41 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ void	*save_path(t_mini *data)
 	if (!head)
 		return (NULL);
 	if (!ft_strncmp(head->nm, "PATH", 4))
-	{
 		data->full_path = ft_split(head->val, ':');
-	}
 	i = -1;
 	while (data->full_path[++i])
 	{
