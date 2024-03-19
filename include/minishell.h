@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/19 14:41:29 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:01:39 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,6 @@
 
 # pragma region CONSTANTS
 
-# define ILLEGAL "ILLEGAL"
-# define E_O_F "EOF"
-// Identifiers + literals
-# define IDENT "IDENT"// add, foobar, x, y, ...
-# define INT "INT" // 1343456
-
-// Operators
-# define ASSIGN "="
-# define PLUS "+"
-// Delimiters
-# define COMMA ","
-# define SEMICOLON ""
-# define LPAREN "("
-# define RPAREN ")"
-# define LBRACE  "{"
-# define RBRACE "}"
-// Keywords
-# define FUNCTION "FUNCTION"
-# define LET "LET"
-# define PATH_MAX 255
 # define READ_END 0
 # define WRITE_END 1
 
@@ -127,7 +107,7 @@ typedef struct s_mini
 	int		fd[2];
 }		t_mini;
 
-extern int g_status;
+extern int	g_status;
 
 /* Functions */
 void	ft_error(char const *str, char *type);

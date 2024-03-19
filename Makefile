@@ -54,6 +54,9 @@ $(LIBFT):
 
 $(NAME): $(OBJECTS) 
 	@$(CC) $(CFLAGS) $(OBJECTS) $(INCLUDES) $(LIB) -o $(NAME)
+# @rm -rf objs
+# @mkdir objs
+# @mv ${SOURCES:.c=.o} objs
 	@echo "$(NAME): $(GREEN)$(NAME) was created$(RESET)"
 
 # $(OBJECTS):

@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 11:11:19 by darismen          #+#    #+#             */
-/*   Updated: 2022/10/11 17:17:23 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:02:50 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,6 @@ void	*ft_calloc(unsigned int count, unsigned int size)
 
 /* The calloc() function contiguously 
 	allocates enough space for count objects that 
-	are size bytes of memory each and returns a pointer to the allocated memory.  
-	The allocated memory is filled with bytes of value zero. */
+	are size bytes of memory each and returns a pointer 
+	to the allocated memory. The allocated memory is
+	filled with bytes of value zero. */

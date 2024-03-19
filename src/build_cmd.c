@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/19 14:40:35 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:58:30 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ unexpected token `%s'\n", arg[1]), 1);
 		g_status = redir_st;
 	return (redir_st);
 }
-
-	// ft_error("token: %s\n", *arg);
 
 /**
  * @brief 

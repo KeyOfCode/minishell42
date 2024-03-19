@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 09:51:05 by darismen          #+#    #+#             */
-/*   Updated: 2022/09/21 14:21:32 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:01:54 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_bzero(void *s, unsigned int n)
 	{
 		((unsigned char *)s)[i] = 0;
 		i++;
-	}	
+	}
 }
 
 /*

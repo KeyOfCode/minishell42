@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 10:46:22 by darismen          #+#    #+#             */
-/*   Updated: 2022/09/25 18:49:08 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:00:08 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ size_t	ft_strlcpy(char *dest, char *src, size_t size)
 			dest[n] = src[n];
 			n++;
 		}
-	dest[n] = '\0';
+		dest[n] = '\0';
 	}
 	return (srclen);
 }
+
 /* 
 #include <stdlib.h>
 #include <unistd.h>

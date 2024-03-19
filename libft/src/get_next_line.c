@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:28:52 by darismen          #+#    #+#             */
-/*   Updated: 2023/01/18 15:03:45 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:58:59 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	newline(char *line)
 		i++;
 	return (i);
 }
-
 
 char	*clean_stash(char **stash)
 {

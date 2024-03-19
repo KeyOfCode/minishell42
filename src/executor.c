@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/19 14:48:21 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:56:35 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,11 @@ void	ft_redir(t_cmd *cmd)
 {
 	if (cmd->fd[READ_END] != -1)
 	{
-		//close(fd[WRITE_END]);
 		dup2(cmd->fd[READ_END], STDIN_FILENO);
-		//close(cmd->fd[READ_END]);
 	}
 	if (cmd->fd[WRITE_END] != -1)
 	{
-		//close(fd[READ_END]);
 		dup2(cmd->fd[WRITE_END], STDOUT_FILENO);
-		//close(cmd->fd[WRITE_END]);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/19 14:50:36 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:42:23 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,10 +131,8 @@ void	ft_expander(t_mini *data)
 	i = 0;
 	while (data->full_cmd[i])
 	{
-		data->full_cmd[i] = ft_strdup(
-				ft_substr_expand(data->full_cmd[i], data));
-		data->full_cmd[i] = ft_quotes_rmv(data,
-				data->full_cmd[i]);
+		data->full_cmd[i] = ft_substr_expand(data->full_cmd[i], data);
+		data->full_cmd[i] = ft_quotes_rmv(data, data->full_cmd[i]);
 		i++;
 	}
 }
