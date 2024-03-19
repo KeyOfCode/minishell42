@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/03/14 17:39:11 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:03:36 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_env_add_or_replace(t_mini *data, t_env *new)
 	if (flag)
 		new->next = replace->next->next;
 	replace->next = new;
-} 
+}
 
 void	ft_env_lstadd_back(t_mini *data, t_env *new)
 {

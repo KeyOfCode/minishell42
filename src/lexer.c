@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/15 11:54:56 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:16:06 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,15 @@ void	ft_spchar(char *str, int *i, size_t *size, int mode)
 	if (!mode)
 	{
 		if (str[*i] && !ft_strchr(" |<>", str[*i - 1]))
+		{
 			(*size)++;
+		}
 	}
-	if ((str[*i] == '<' && str[*i  + 1] == '<')
+	if ((str[*i] == '<' && str[*i + 1] == '<')
 		|| (str[*i] == '>' && str[*i + 1] == '>'))
+	{
 		(*i) += 2;
+	}
 	else
 		(*i)++;
 }
@@ -73,7 +77,9 @@ size_t	ft_count_splits(char *str, size_t size)
 			i++;
 		}
 		if (ft_strchr("|<>", str[i]) && str[i] != '\0')
+		{
 			ft_spchar(str, &i, &size, 0);
+		}
 	}
 	return (size);
 }
@@ -101,7 +107,9 @@ char	*ft_store_string(char *str, size_t *pos)
 	else
 		ft_spchar(str, &i, pos, 1);
 	if (i > j)
+	{
 		*pos = i;
+	}
 	return (ft_strndup(&str[j], i - j));
 }
 

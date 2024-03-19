@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/15 11:49:47 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:38:08 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,16 @@ void	set_env(t_mini *data, char *name, char *value)
 	{
 		if (!ft_strncmp(current->nm, name,
 				ft_strlen(current->nm)))
+		{
 			flag = 1;
+		}
 		else
 			current = current->next;
 	}
 	if (flag)
 	{
 		current->val = value;
-		// return (1);
 	}
-	// return (0);
 }
 
 char	*get_env(t_mini *data, char *name)
@@ -82,12 +82,16 @@ char	*get_env(t_mini *data, char *name)
 	{
 		if (!ft_strncmp(current->nm, name,
 				ft_strlen(current->nm)))
+		{
 			flag = 1;
+		}
 		else
 			current = current->next;
 	}
 	if (flag)
+	{
 		return (current->val);
+	}
 	return (NULL);
 }
 
@@ -98,7 +102,7 @@ int	cd(t_mini *data, t_cmd *cmd)
 	path = cmd->c_args[1];
 	if (!path || !ft_strncmp(path, "~", 1))
 	{
-		 path = get_env(data, "HOME");
+		path = get_env(data, "HOME");
 	}
 	else if (!ft_strncmp(path, "-", 1))
 	{
@@ -110,7 +114,10 @@ int	cd(t_mini *data, t_cmd *cmd)
 		}
 	}
 	if (!opendir(path))
-		return (ft_error("minishell: cd: %s: No such file or directory\n", path), 127);
+	{
+		return (ft_error("minishell: cd: %s: No such \
+file or directory\n", path), 127);
+	}
 	set_env(data, "OLDPWD", getcwd(NULL, 0));
 	chdir(path);
 	set_env(data, "PWD", getcwd(NULL, 0));

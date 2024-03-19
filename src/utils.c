@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/13 12:22:23 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:25:25 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,15 @@ void	ft_error(char const *str, char *type)
 		if (str[i] == '%' && type != NULL)
 		{
 			if (str[i + 1] == 's')
+			{
 				ft_putstr_fd(type, 2);
+			}
 			i += 1;
 		}
 		else
+		{
 			ft_putchar_fd(str[i], 2);
+		}
 		i++;
 	}
 	g_status = 1;
@@ -37,9 +41,13 @@ void	ft_error(char const *str, char *type)
 int	is_whitespace(char c)
 {
 	if (c == ' ' || c == '\t' || c == '\n')
+	{
 		return (1);
+	}
 	else
+	{
 		return (0);
+	}
 }
 
 void	ft_print_splits(char **splits)
@@ -76,4 +84,3 @@ void	handle_sigint(int sig)
 		g_status = 130;
 	}
 }
-

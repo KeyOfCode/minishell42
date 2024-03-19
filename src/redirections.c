@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/15 11:43:45 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:26:01 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 int	input_redir(t_cmd *cmd, char **token)
 {
 	if (cmd->fd[READ_END] != cmd->data->saved_stdin)
+	{
 		close(cmd->fd[READ_END]);
+	}
 	ft_error("infile: %s\n", token[1]);
 	cmd->fd[READ_END] = open(token[1], O_RDONLY);
 	if (cmd->fd[READ_END] < 0)
 	{
-		return (ft_error("minishell: %s: No such file or directory\n", token[1]), 127);
+		return (ft_error("minishell: %s: No such file \
+or directory\n", token[1]), 127);
 	}
 	return (0);
 }
@@ -28,12 +31,15 @@ int	input_redir(t_cmd *cmd, char **token)
 int	output_redir(t_cmd *cmd, char **token)
 {
 	if (cmd->fd[WRITE_END] != cmd->data->saved_stdout)
+	{
 		close(cmd->fd[WRITE_END]);
+	}
 	ft_error("outfile: %s\n", token[1]);
 	cmd->fd[WRITE_END] = open(token[1], O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (cmd->fd[WRITE_END] < 0)
 	{
-		return (ft_error("minishell: %s: No such file or directory\n", token[1]), 127);
+		return (ft_error("minishell: %s: No such \
+file or directory\n", token[1]), 127);
 	}
 	return (0);
 }
@@ -45,7 +51,8 @@ int	output_redir_append(t_cmd *cmd, char **token)
 	cmd->fd[WRITE_END] = open(token[1], O_CREAT | O_APPEND | O_WRONLY, 0644);
 	if (cmd->fd[WRITE_END] < 0)
 	{
-		return (ft_error("minishell: %s: No such file or directory\n", token[1]), 127);
+		return (ft_error("minishell: %s: No such \
+file or directory\n", token[1]), 127);
 	}
 	return (0);
 }
@@ -86,7 +93,9 @@ int	input_heredoc(t_cmd *cmd, char **token)
 	input = NULL;
 	heredoc = NULL;
 	if (cmd->fd[READ_END] != -1)
+	{
 		close(cmd->fd[READ_END]);
+	}
 	extern_stdout = dup(STDOUT_FILENO);
 	dup2(cmd->data->saved_stdin, STDIN_FILENO);
 	dup2(cmd->data->saved_stdout, STDOUT_FILENO);

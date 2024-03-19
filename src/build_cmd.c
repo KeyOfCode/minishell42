@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/15 13:11:11 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:26:32 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,10 @@ int	check_redirections(t_cmd *cmd, char	**arg)
 	redir_st = 0;
 	ft_error("token: %s\n", *arg);
 	if (arg[1] == NULL)
+	{
 		return (ft_error("minishell: syntax error near \
 unexpected token `newline'\n", NULL), 1);
+	}
 	if (isredir(arg[1]) || !ft_strncmp(arg[1], "|", 1))
 	{
 		return (ft_error("minishell: syntax error near \
@@ -148,29 +150,3 @@ unexpected token `%s'\n", "|"), NULL);
 	}
 	return (data);
 }
-
-/* t_cmd	*ft_fillcmd(char *args, int *i)
-{
-	t_cmd	*newcmd;
-	int		j;
-	int		size;
-
-	size = 0;
-	while (args[size] && ft_strncmp(args, "|", 1))
-		size++;
-	j = 0;
-	newcmd = ft_calloc(sizeof(t_cmd), 1);
-	newcmd->c_args = ft_calloc(sizeof(char *), size);
-	if (!newcmd)
-		return (NULL);
-	printf("num of args: %d\n", size);
-	while (args[*i] && ft_strncmp(args[*i], "|", 1))
-	{
-		newcmd->c_args[j] = args[*i];
-		printf("newcmd->c_args[%d]: %s\n", j, newcmd->c_args[j]);
-		*i += 1;
-		j++;
-	}
-	newcmd->c_abs_path = &newcmd->c_abs_path[0];
-	return (newcmd);
-} */

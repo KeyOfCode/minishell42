@@ -6,11 +6,19 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/03/15 13:24:59 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:05:12 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	isdir(const char *path)
+{
+	struct stat	statbuf;
+
+	stat(path, &statbuf);
+	return (S_ISDIR(statbuf.st_mode));
+}
 
 void	*save_path(t_mini *data)
 {
@@ -44,13 +52,15 @@ char	*get_cmd_path(t_mini *data, t_cmd *cmd)
 	int		i;
 
 	i = -1;
-	if(!save_path(data))
+	if (!save_path(data))
 		return (NULL);
 	while (data->full_path[++i])
 	{
 		if (!ft_strncmp(cmd->c_abs_path, data->full_path[i],
-			ft_strlen(data->full_path[i])))
+				ft_strlen(data->full_path[i])))
+		{
 			try_path = ft_strdup(cmd->c_abs_path);
+		}
 		else
 			try_path = ft_strjoin(data->full_path[i], cmd->c_args[0]);
 		if (access(try_path, F_OK) == 0)
@@ -64,20 +74,15 @@ char	*get_cmd_path(t_mini *data, t_cmd *cmd)
 	return (NULL);
 }
 
-void	ft_free_matrix(char **matrix)
+char	*env_join(t_env *head)
 {
-	int	i;
+	char	*val_tmp;
+	char	*result;
 
-	i = 0;
-	if (matrix != NULL)
-	{
-		while (matrix[i] != NULL)
-		{
-			free(matrix[i]);
-			i++;
-		}
-		free(matrix);
-	}
+	val_tmp = ft_strjoin("=", head->val);
+	result = ft_strjoin(head->nm, val_tmp);
+	free(val_tmp);
+	return (result);
 }
 
 void	update_envp(t_mini *data)
@@ -102,7 +107,7 @@ void	update_envp(t_mini *data)
 	while (head != NULL)
 	{
 		if (head->equal)
-			data->envp[++i] = ft_strjoin(head->nm, ft_strjoin("=", head->val));
+			data->envp[++i] = env_join(head);
 		else
 			data->envp[++i] = ft_strdup(head->nm);
 		head = head->next;

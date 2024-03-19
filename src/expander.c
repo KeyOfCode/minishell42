@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/15 11:32:24 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:15:34 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ char	*ft_substr_expand(char	*str, t_mini *data)
 	while (str[++i])
 	{
 		if (str[i] == '\'')
+		{
 			i = ft_quotes(str, i, '\'');
+		}
 		if (ft_strchr("$~", str[i]))
 		{
 			aux = ft_substr(str, 0, i);
@@ -100,7 +102,9 @@ char	*ft_chrrmv(char *str, char c)
 	while (str[i])
 	{
 		if (str[i] != c)
+		{
 			newstr[j++] = str[i];
+		}
 		i++;
 	}
 	free(str);
@@ -116,9 +120,13 @@ void	ft_expander(t_mini *data)
 	{
 		data->full_cmd[i] = ft_substr_expand(data->full_cmd[i], data);
 		if (data->full_cmd[i][0] == '"')
+		{
 			data->full_cmd[i] = ft_chrrmv(data->full_cmd[i], '\"');
+		}
 		else if (data->full_cmd[i][0] == '\'')
+		{
 			data->full_cmd[i] = ft_chrrmv(data->full_cmd[i], '\'');
+		}
 		i++;
 	}
 }

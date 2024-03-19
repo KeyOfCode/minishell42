@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/15 13:21:33 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:05:17 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <signal.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <sys/ioctl.h>
 # include <fcntl.h>
 # include "../libft/includes/libft.h"
@@ -177,6 +178,7 @@ int		isbuiltin(t_cmd *head);
 void	handle_sigint(int sig);
 
 /* Executor */
+int		isdir(const char *path);
 int		ft_executor(t_mini *data, t_cmd *cmd);
 char	*get_cmd_path(t_mini *data, t_cmd *cmd);
 void	*save_path(t_mini *data);
