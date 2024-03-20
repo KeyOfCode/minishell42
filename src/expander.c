@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/19 16:42:23 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/20 20:38:38 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*ft_substr_expand(char	*str, t_mini *data)
 		if (ft_strchr("$", str[i]))
 		{
 			aux = ft_substr(str, 0, i);
-			full = ft_join_free(aux, ft_env_expand(&str[i], data->env_lst, &i));
+			full = ft_strjoin(aux, ft_env_expand(&str[i], data->env_lst, &i));
 			free(aux);
 			return (i++, ft_strjoin(full, ft_substr_expand(&str[i], data)));
 		}

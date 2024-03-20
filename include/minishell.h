@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/19 15:01:39 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/20 19:03:31 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@
 # include <dirent.h>
 
 # pragma region CONSTANTS
+
+# define RED		"\x1b[31m"
+# define GREEN		"\x1b[32m"
+# define CYAN		"\x1b[36m"
+# define RESET		"\x1b[0m"
+# define CLEAR		"\033[2J"
 
 # define READ_END 0
 # define WRITE_END 1
@@ -138,6 +144,7 @@ void	ft_env_lstclear(t_env *env);
 void	ft_delnode(t_env *del);
 void	set_env(t_mini *data, char *name, char *value);
 char	*get_env(t_mini *data, char *name);
+void	ft_add_oldpwd(t_mini *data);
 
 /* Builtins */
 int		pwd(void);

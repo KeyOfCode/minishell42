@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/19 14:56:35 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/20 20:12:24 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	child_process(t_mini *data, t_cmd *cmd)
 	}
 	else
 		execve(cmd->c_env_path, cmd->c_args, cmd->data->envp);
+	g_status = 127;
 	exit(127);
 }
 
@@ -95,7 +96,6 @@ int	ft_executor(t_mini *data, t_cmd *cmd)
 	int		exit_code;
 
 	exit_code = 0;
-	update_envp(data);
 	if (cmd->next)
 	{
 		if (pipe(data->fd) == -1)

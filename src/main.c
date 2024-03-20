@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/19 14:51:27 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:32:43 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_prompt(t_mini *data)
 {
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
-	data->prompt = readline("minishell $ ");
+	data->prompt = readline(GREEN"minishell $ "RESET);
 	if (!data->prompt)
 	{
 		rl_on_new_line();

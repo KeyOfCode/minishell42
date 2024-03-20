@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/03/18 17:08:03 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/20 20:29:41 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,18 +78,18 @@ void	ft_dup_envp(t_mini *data, char **envp)
 			return ;
 		node->next = NULL;
 		if (ft_env_forbidden_chars(node->nm, ft_strlen(node->nm)))
-		{
-			ft_error("export: '%s': not a valid identifier\n", node->nm);
-			free(node);
-			return ;
-		}
+			return (ft_error("export: '%s': not a valid \
+				identifier\n", node->nm), free(node));
 		if (ft_strncmp(node->nm, "OLDPWD", 6) == 0)
 		{
 			free(node->val);
 			node->val = NULL;
+			node->equal = 0;
 		}
 		ft_env_lstadd_back(data, node);
 	}
+	if (!get_env(data, "OLDPWD"))
+		ft_add_oldpwd(data);
 }
 
 char	**ft_dup_matrix(char **matrix)

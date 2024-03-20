@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/19 16:36:02 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/20 19:14:05 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	ft_parser(t_mini *data)
 	t_cmd	*cmd;
 
 	cmd = data->cmd_lst;
+	update_envp(data);
 	if (!cmd)
 		return ;
 	while (cmd)
