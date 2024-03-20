@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/19 16:36:02 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:38:47 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_builtin(t_mini *data, t_cmd *head)
 	}
 	if (!ft_strncmp(cmd, "exit", 4))
 	{
-		ft_mini_exit(data);
+		ft_mini_exit(data, head);
 	}
 }
 

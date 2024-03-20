@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/19 14:51:27 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/20 14:44:57 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_prompt(t_mini *data)
 		rl_on_new_line();
 		rl_redisplay();
 		printf("exit\n");
-		ft_mini_exit(data);
+		ft_mini_exit(data, NULL);
 	}
 	if (data->prompt[0] != '\0')
 	{

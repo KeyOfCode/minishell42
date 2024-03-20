@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/19 14:45:02 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/20 12:02:03 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	ft_mini_exit(t_mini *data)
-{
-	clear_history();
-	ft_free_matrix(data->envp);
-	ft_env_lstclear(data->env_lst);
-	exit(g_status);
-}
 
 int	echo(t_cmd	*cmd)
 {
