@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/20 19:03:31 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:04:57 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ struct	s_mini;
 /**
  * @brief	Command Nodes
  * 
- * 
+ * @param c_count		-> number of arguments
  * @param c_args[0]		-> contains the cmd as the usu writes
  *					(WITH or WITHOUT absolute path)
  * @param c_args[...]	-> contains the arguments and flags of the command
@@ -59,6 +59,7 @@ struct	s_mini;
  */
 typedef struct s_cmd
 {
+	int				c_count;
 	char			**c_args;
 	char			*c_abs_path;
 	char			*c_env_path;
@@ -113,7 +114,7 @@ typedef struct s_mini
 	int		fd[2];
 }		t_mini;
 
-extern int	g_status;
+extern unsigned int	g_status;
 
 /* Functions */
 void	ft_error(char const *str, char *type);
@@ -154,7 +155,7 @@ int		echo(t_cmd	*cmd);
 int		export(t_mini *data, t_cmd *cmd);
 int		cd(t_mini *data, t_cmd *cmd);
 void	empty_export(t_mini *data);
-void	ft_mini_exit(t_mini *data);
+void	ft_mini_exit(t_mini *data, t_cmd *head);
 int		isbuiltin(t_cmd *head);
 
 /* signals */

@@ -6,19 +6,11 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/20 20:26:34 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:04:40 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	ft_mini_exit(t_mini *data)
-{
-	clear_history();
-	ft_free_matrix(data->envp);
-	ft_env_lstclear(data->env_lst);
-	exit(g_status);
-}
 
 int	echo(t_cmd	*cmd)
 {

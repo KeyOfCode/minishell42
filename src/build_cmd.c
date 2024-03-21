@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/19 14:58:30 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:52:33 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_cmd	*ft_init_cmd(t_mini *data)
 	cmd->fd[WRITE_END] = -1;
 	cmd->data = data;
 	cmd->next = NULL;
+	cmd->c_count = 0;
 	return (cmd);
 }
 
@@ -78,15 +79,15 @@ int	*ft_fillcmd(t_cmd *newcmd, char **args, int *index)
 {
 	int		i;
 	int		j;
-	int		c;
 
-	c = count_cmdargs(args);
-	newcmd->c_args = ft_calloc(c + 1, sizeof(char *));
-	if (c == 0 || !newcmd->c_args)
+	newcmd->c_count = count_cmdargs(args);
+	newcmd->c_args = ft_calloc(newcmd->c_count + 1, sizeof(char *));
+	if (newcmd->c_count == 0 || !newcmd->c_args)
 		return (NULL);
 	i = 0;
 	j = 0;
-	while ((j < c) || (args[i] != NULL && ft_strncmp(args[i], "|", 1)))
+	while ((j < newcmd->c_count) || (args[i] != NULL
+		&& ft_strncmp(args[i], "|", 1)))
 	{
 		if (!isredir(args[i]))
 			newcmd->c_args[j++] = args[i];

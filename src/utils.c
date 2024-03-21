@@ -6,13 +6,13 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/20 20:38:21 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:03:15 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	g_status;
+unsigned int	g_status;
 
 void	ft_error(char const *str, char *type)
 {
