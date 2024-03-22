@@ -6,13 +6,13 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/20 15:09:33 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/22 11:49:48 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-unsigned int	g_status;
+int	g_status;
 
 void	ft_error(char const *str, char *type)
 {

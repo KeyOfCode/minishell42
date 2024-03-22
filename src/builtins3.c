@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 10:34:30 by disantam          #+#    #+#             */
-/*   Updated: 2024/03/20 13:03:06 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/22 11:49:31 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	get_code(t_cmd *cmd)
 			return (255);
 		}
 	}
-	code = ft_atoi(cmd->c_args[1]);
+	code = (unsigned int)ft_atoi(cmd->c_args[1]);
 	if (code > 255)
 		code = code % 256;
 	return (code);
@@ -35,7 +35,10 @@ int	get_code(t_cmd *cmd)
 
 void	ft_mini_exit(t_mini *data, t_cmd *cmd)
 {
-	if (cmd != NULL && cmd->c_count > 2)
+	int	c;
+
+	c = count_cmdargs(cmd->c_args);
+	if (cmd != NULL && c > 2)
 	{
 		ft_error("minishell: %s: too many arguments\n", cmd->c_abs_path);
 		return ;

@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/20 15:09:39 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/22 11:52:25 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ struct	s_mini;
  */
 typedef struct s_cmd
 {
-	int				c_count;
 	char			**c_args;
 	char			*c_abs_path;
 	char			*c_env_path;
@@ -108,7 +107,7 @@ typedef struct s_mini
 	int		fd[2];
 }		t_mini;
 
-extern unsigned int	g_status;
+extern int	g_status;
 
 /* Functions */
 void	ft_error(char const *str, char *type);
@@ -123,7 +122,7 @@ int		ft_quotes(char *s, int i, char q);
 void	ft_expander(t_mini *data);
 
 /* Parser */
-void	ft_parser(t_mini *data);
+int		ft_parser(t_mini *data);
 
 /* env */
 t_env	*ft_2rows_split(char *str);

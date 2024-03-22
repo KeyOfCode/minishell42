@@ -6,7 +6,7 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/19 17:38:47 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/22 11:43:08 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,26 +50,30 @@ void	ft_builtin(t_mini *data, t_cmd *head)
 	}
 }
 
-void	ft_parser(t_mini *data)
+int	ft_parser(t_mini *data)
 {
 	t_cmd	*cmd;
+	int		i;
+	int		exit_code;
 
+	i = 0;
+	exit_code = 0;
 	cmd = data->cmd_lst;
-	if (!cmd)
-		return ;
 	while (cmd)
 	{
 		if (isbuiltin(cmd))
 		{
 			ft_builtin(data, cmd);
 		}
-		g_status = ft_executor(data, cmd);
+		ft_executor(data, cmd);
 		cmd = cmd->next;
+		i++;
 	}
-	close(data->fd[READ_END]);
-	close(data->fd[WRITE_END]);
 	dup2(data->saved_stdin, STDIN_FILENO);
+	while (i-- > 0)
+		waitpid(-1, &exit_code, 0);
 	dup2(data->saved_stdout, STDOUT_FILENO);
 	free_cmdlst(&data->cmd_lst);
 	free_fullcmd(data->full_cmd);
+	return (WEXITSTATUS(exit_code));
 }

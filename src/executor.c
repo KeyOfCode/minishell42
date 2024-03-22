@@ -6,14 +6,20 @@
 /*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/20 15:09:57 by disantam         ###   ########.fr       */
+/*   Updated: 2024/03/22 11:41:28 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_redir(t_cmd *cmd)
+void	ft_redir(t_mini *data, t_cmd *cmd)
 {
+	if (cmd->next != NULL)
+	{
+		close(data->fd[READ_END]);
+		dup2(data->fd[WRITE_END], STDOUT_FILENO);
+		close(data->fd[WRITE_END]);
+	}
 	if (cmd->fd[READ_END] != -1)
 	{
 		dup2(cmd->fd[READ_END], STDIN_FILENO);
@@ -22,6 +28,8 @@ void	ft_redir(t_cmd *cmd)
 	{
 		dup2(cmd->fd[WRITE_END], STDOUT_FILENO);
 	}
+	close(cmd->fd[READ_END]);
+	close(cmd->fd[WRITE_END]);
 }
 
 void	child_builtin(t_mini *data, t_cmd *head)
@@ -49,13 +57,7 @@ void	child_builtin(t_mini *data, t_cmd *head)
 
 void	child_process(t_mini *data, t_cmd *cmd)
 {
-	if (cmd->next)
-	{
-		close(data->fd[READ_END]);
-		dup2(data->fd[WRITE_END], STDOUT_FILENO);
-		close(data->fd[WRITE_END]);
-	}
-	ft_redir(cmd);
+	ft_redir(data, cmd);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	if (isbuiltin(cmd))
@@ -75,12 +77,16 @@ void	child_process(t_mini *data, t_cmd *cmd)
 	exit(127);
 }
 
-void	parent_process(int *fd, int pid, int *exit_code)
+void	parent_process(t_mini *data, t_cmd *cmd)
 {
-	close(fd[WRITE_END]);
-	dup2(fd[READ_END], STDIN_FILENO);
-	close(fd[READ_END]);
-	waitpid(pid, exit_code, 0);
+	if (cmd->next != NULL)
+	{
+		dup2(data->fd[READ_END], STDIN_FILENO);
+	}
+	close(data->fd[READ_END]);
+	close(data->fd[WRITE_END]);
+	close(cmd->fd[READ_END]);
+	close(cmd->fd[WRITE_END]);
 }
 
 /**
@@ -92,9 +98,7 @@ void	parent_process(int *fd, int pid, int *exit_code)
 int	ft_executor(t_mini *data, t_cmd *cmd)
 {
 	pid_t	pid;
-	int		exit_code;
 
-	exit_code = 0;
 	update_envp(data);
 	if (cmd->next)
 	{
@@ -109,10 +113,6 @@ int	ft_executor(t_mini *data, t_cmd *cmd)
 		child_process(data, cmd);
 	}
 	else
-		parent_process(data->fd, pid, &exit_code);
-	close(data->fd[READ_END]);
-	close(data->fd[WRITE_END]);
-	close(cmd->fd[READ_END]);
-	close(cmd->fd[WRITE_END]);
-	return (WEXITSTATUS(exit_code));
+		parent_process(data, cmd);
+	return (0);
 }
