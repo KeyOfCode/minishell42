@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/20 20:38:38 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:27:33 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ char	*ft_env_expand(char *ogstr, t_env *envp, int *i)
 	}
 	if (ft_strchr("?", str[1]))
 	{
-		return (new = ft_itoa(g_status), *i += 1, new);
+		new = ft_itoa(g_status);
+		return ((*i) += 1, new);
 	}
 	return ("");
 }
@@ -61,9 +62,10 @@ char	*ft_substr_expand(char	*str, t_mini *data)
 	char	*aux;
 
 	i = -1;
+	full = NULL;
 	if (str[0] == '~' && ft_strlen(str) == 1)
 		return (str = ft_env_expand(str, data->env_lst, &i), str);
-	while (str[++i] && g_status != 1)
+	while (str[++i])
 	{
 		if (str[i] == '\"')
 			data->dquote = (data->dquote + 1) % 2;
@@ -77,7 +79,7 @@ char	*ft_substr_expand(char	*str, t_mini *data)
 			return (i++, ft_strjoin(full, ft_substr_expand(&str[i], data)));
 		}
 	}
-	return (data->dquote = 0, str);
+	return (free(full), data->dquote = 0, str);
 }
 
 int	ft_flag(char str, t_mini *data, int *rm_dq, int *rm_sq)

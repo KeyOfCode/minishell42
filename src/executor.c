@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/21 14:04:25 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:38:42 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	child_process(t_mini *data, t_cmd *cmd)
 	}
 	else
 		execve(cmd->c_env_path, cmd->c_args, cmd->data->envp);
-	g_status = 127;
 	exit(127);
 }
 
@@ -116,3 +115,5 @@ int	ft_executor(t_mini *data, t_cmd *cmd)
 	close(cmd->fd[WRITE_END]);
 	return (WEXITSTATUS(exit_code));
 }
+
+// /Users/darismen/.brew/bin:/bin/:/usr/local/bin

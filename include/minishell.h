@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/21 14:04:57 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:38:27 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ struct	s_mini;
 /**
  * @brief	Command Nodes
  * 
- * @param c_count		-> number of arguments
  * @param c_args[0]		-> contains the cmd as the usu writes
  *					(WITH or WITHOUT absolute path)
  * @param c_args[...]	-> contains the arguments and flags of the command
@@ -59,7 +58,6 @@ struct	s_mini;
  */
 typedef struct s_cmd
 {
-	int				c_count;
 	char			**c_args;
 	char			*c_abs_path;
 	char			*c_env_path;

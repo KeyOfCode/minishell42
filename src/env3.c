@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/03/20 20:40:31 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:46:19 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	set_env(t_mini *data, char *name, char *value)
 		else
 			current = current->next;
 	}
-	if (flag)
+	if (flag && value != NULL)
 	{
 		if (current->equal == 0)
 			current->equal = 1;

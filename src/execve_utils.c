@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/03/20 20:16:34 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:54:07 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	*save_path(t_mini *data)
 		head = head->next;
 	if (!head)
 		return (NULL);
-	if (!ft_strncmp(head->nm, "PATH", 4))
+	if (!ft_strncmp(head->nm, "PATH", 4) && head->val)
 		data->full_path = ft_split(head->val, ':');
 	i = -1;
 	while (data->full_path[++i])
@@ -55,6 +55,8 @@ char	*get_cmd_path(t_mini *data, t_cmd *cmd)
 	if (access(try_path, F_OK) == 0)
 		return (cmd->c_env_path = ft_strdup(try_path),
 			free(try_path), cmd->c_env_path);
+	if (data->full_path == NULL)
+		return (NULL);
 	while (data->full_path[++i])
 	{
 		if (!ft_strncmp(cmd->c_abs_path, data->full_path[i],
