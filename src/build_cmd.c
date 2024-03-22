@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/22 12:05:10 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/22 12:13:02 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ int	check_redirections(t_cmd *cmd, char	**arg)
 	if (arg[1] == NULL)
 	{
 		return (ft_error("minishell: syntax error near \
-unexpected token `newline'\n", NULL), 1);
+unexpected token `newline'\n", NULL), 2);
 	}
 	if (isredir(arg[1]) || !ft_strncmp(arg[1], "|", 1))
 	{
 		return (ft_error("minishell: syntax error near \
-unexpected token `%s'\n", arg[1]), 1);
+unexpected token `%s'\n", arg[1]), 2);
 	}
 	if (!ft_strncmp(*arg, "<", 2))
 		redir_st = input_redir(cmd, arg);

@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 10:34:30 by disantam          #+#    #+#             */
-/*   Updated: 2024/03/22 12:04:50 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/22 12:05:48 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	get_code(char *arg)
 			return (255);
 		}
 	}
-	code = (unsigned int)ft_atoi(cmd->c_args[1]);
+	code = (unsigned int)ft_atoi(arg);
 	if (code > 255)
 		code = code % 256;
 	return (code);

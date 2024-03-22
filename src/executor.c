@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/22 12:04:24 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/22 12:06:37 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ int	ft_executor(t_mini *data, t_cmd *cmd)
 {
 	pid_t	pid;
 
-	update_envp(data);
 	if (cmd->next)
 	{
 		if (pipe(data->fd) == -1)

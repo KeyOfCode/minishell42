@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/22 12:02:53 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/22 12:07:50 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,9 @@ int	ft_parser(t_mini *data)
 	i = 0;
 	exit_code = 0;
 	cmd = data->cmd_lst;
-	update_envp(data);
-	if (!cmd)
-		return ;
 	while (cmd)
 	{
+		update_envp(data);
 		if (isbuiltin(cmd))
 		{
 			ft_builtin(data, cmd);
@@ -78,6 +76,8 @@ int	ft_parser(t_mini *data)
 	dup2(data->saved_stdout, STDOUT_FILENO);
 	free_cmdlst(&data->cmd_lst);
 	free_fullcmd(data->full_cmd);
-	ft_free_matrix(data->full_path);
-	return (WEXITSTATUS(exit_code));
+	return (ft_free_matrix(data->full_path), WEXITSTATUS(exit_code));
 }
+
+	// if (!cmd)
+	// 	return ;
