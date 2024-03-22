@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/21 15:02:14 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/22 12:03:02 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_prompt(t_mini *data)
 	{
 		add_history(data->prompt);
 		if (ft_lexer(data) != NULL)
-			ft_parser(data);
+			g_status = ft_parser(data);
 	}
 	free(data->prompt);
 }
