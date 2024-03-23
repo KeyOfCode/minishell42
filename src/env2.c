@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/03/20 20:29:41 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/23 13:37:15 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,7 @@ void	ft_add_envp(t_mini *data, char **envp)
 		node = ft_2rows_split(envp[i]);
 		node->next = NULL;
 		if (!node)
-		{
 			return ;
-		}
 		if (ft_env_forbidden_chars(node->nm, ft_strlen(node->nm)))
 		{
 			ft_error("export: '%s': not a valid identifier\n", node->nm);

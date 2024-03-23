@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/19 14:50:48 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/23 14:05:59 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,9 @@ size_t	ft_count_splits(char *str, size_t size)
 
 char	*ft_store_string(char *str, size_t *pos)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	*out;
 
 	i = *pos;
 	while (str[i] == ' ' && str[i])
@@ -106,10 +107,9 @@ char	*ft_store_string(char *str, size_t *pos)
 	else
 		ft_spchar(str, &i, pos, 1);
 	if (i > j)
-	{
 		*pos = i;
-	}
-	return (ft_strndup(&str[j], i - j));
+	out = ft_strndup(&str[j], i - j);
+	return (out);
 }
 
 char	**ft_cmdtrim(char *s)

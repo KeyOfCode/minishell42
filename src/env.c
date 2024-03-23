@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/03/21 14:49:10 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/23 13:58:46 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,9 @@ int	ft_env_forbidden_chars(char *name, int len)
 void	ft_env_add_or_replace(t_mini *data, t_env *new)
 {
 	t_env	*current;
-	t_env	*replace;
 	int		flag;
 
 	flag = 0;
-	if (!data->env_lst)
-	{
-		data->env_lst = new;
-		return ;
-	}
 	current = data->env_lst;
 	while (current->next && !flag)
 	{
@@ -49,11 +43,22 @@ void	ft_env_add_or_replace(t_mini *data, t_env *new)
 		else
 			current = current->next;
 	}
-	replace = current;
 	if (flag)
-		new->next = replace->next->next;
-	replace->next = new;
+	{
+		current->nm = new->nm;
+		current->equal = new->equal;
+		current->val = new->val;
+		ft_delnode(new);
+	}
+	else
+		ft_env_lstadd_back(data, new);
 }
+
+	// if (!data->env_lst)
+	// {
+	// 	data->env_lst = new;
+	// 	return ;
+	// }
 
 void	ft_env_lstadd_back(t_mini *data, t_env *new)
 {

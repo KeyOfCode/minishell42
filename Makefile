@@ -9,8 +9,8 @@ SANITZ=		-fsanitize=address
 LIBFT =		libft/libft.a
 INCLUDES=	$(LIBFT)
 HEADER=		include/minishell.h
-VALGRIND=	valgrind --leak-check=yes 
-# VALGRIND=	valgrind --leak-check=full --show-leak-kinds=all
+# VALGRIND=	valgrind --leak-check=yes
+VALGRIND=	valgrind --leak-check=full --show-leak-kinds=all
 LIB=		-L /usr/local/opt/readline/lib -I /usr/local/opt/readline/include -L\
 			 ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include -lreadline
 # -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline/include
@@ -99,13 +99,14 @@ test: $(TEST_OBJ)
 
 debug: clean $(OBJECTS) 
 	@$(CC) -g $(CFLAGS) $(SANITZ) $(OBJECTS) $(INCLUDES) $(LIB) -o debug
-#	lldb ./debug
-	./debug
+	lldb ./debug
+# ./debug
 
 val: clean $(OBJECTS) 
 	@$(CC) -g $(CFLAGS) $(OBJECTS) $(INCLUDES) $(LIB) -o val
 #	lldb ./debug
-	$(VALGRIND) ./val
+	$(VALGRIND)  --child-silent-after-fork=yes --read-inline-info=yes \
+				--track-origins=yes --read-var-info=yes --log-file=valgrind.rpt ./val
 
 ############################
 

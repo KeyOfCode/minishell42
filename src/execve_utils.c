@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/03/22 13:20:45 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/22 15:05:59 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	isdir(const char *path)
 
 void	*save_path(t_mini *data)
 {
-	char	*aux;
 	t_env	*head;
 	int		i;
 
@@ -33,62 +32,38 @@ void	*save_path(t_mini *data)
 		return (NULL);
 	if (!ft_strncmp(head->nm, "PATH", 4) && head->val)
 		data->full_path = ft_split(head->val, ':');
-	i = -1;
-	while (data->full_path[++i])
+	i = 0;
+	while (data->full_path[i])
 	{
-		aux = ft_strjoin(data->full_path[i], "/");
-		free(data->full_path[i]);
-		data->full_path[i] = aux;
-		ft_printf_fd(2, "1: %s\n", data->full_path[i]);
+		data->full_path[i] = ft_join_free(data->full_path[i], "/");
+		i++;
 	}
-	free(aux);
 	return (data);
 }
 
 char	*get_cmd_path(t_mini *data, t_cmd *cmd)
 {
-	char	*try_path;
 	int		i;
 
 	i = -1;
-	try_path = NULL;
 	if (!save_path(data))
-		try_path = ft_strdup(cmd->c_abs_path);
-	if (try_path && access(try_path, F_OK) == 0)
-		return (cmd->c_env_path = ft_strdup(try_path),
-			free(try_path), cmd->c_env_path);
+		cmd->c_env_path = ft_strdup(cmd->c_abs_path);
+	if (cmd->c_env_path && access(cmd->c_env_path, F_OK) == 0)
+		return (cmd->c_env_path);
 	if (data->full_path == NULL)
 		return (NULL);
 	while (data->full_path[++i])
 	{
-		ft_printf_fd(2, "full: %s\n", data->full_path[i]);
-		ft_printf_fd(2, "try: %s\n", try_path);
 		if (!ft_strncmp(cmd->c_abs_path, data->full_path[i],
 				ft_strlen(data->full_path[i])))
-			try_path = ft_strdup(cmd->c_abs_path);
+			cmd->c_env_path = ft_strdup(cmd->c_abs_path);
 		else
-			try_path = ft_strjoin(data->full_path[i], cmd->c_abs_path);
-		free(data->full_path[i]);
-		ft_printf_fd(2, "3: %s\n", data->full_path[i]);
-		ft_printf_fd(2, "try: %s\n", try_path);
-		if (access(try_path, F_OK) == 0)
-			return (cmd->c_env_path = ft_strdup(try_path),
-				free(try_path), cmd->c_env_path);
-		try_path = NULL;
+			cmd->c_env_path = ft_strjoin(data->full_path[i], cmd->c_abs_path);
+		if (access(cmd->c_env_path, F_OK) == 0)
+			return (cmd->c_env_path);
+		free(cmd->c_env_path);
 	}
-	free(try_path);
 	return (NULL);
-}
-
-char	*env_join(t_env *head)
-{
-	char	*val_tmp;
-	char	*result;
-
-	val_tmp = ft_strjoin("=", head->val);
-	result = ft_strjoin(head->nm, val_tmp);
-	free(val_tmp);
-	return (result);
 }
 
 void	update_envp(t_mini *data)
@@ -119,8 +94,3 @@ void	update_envp(t_mini *data)
 		head = head->next;
 	}
 }
-
-		// ft_printf_fd(2, "%s", head->nm);
-		// if (head->equal)
-		// 	ft_printf_fd(2, "=\"%s\"", head->val);
-		// ft_printf_fd(2, "\n");

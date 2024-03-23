@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/03/21 14:46:19 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/23 14:01:24 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_add_oldpwd(t_mini *data)
 	}
 	node->equal = 0;
 	node->val = 0;
-	ft_env_add_or_replace(data, node);
+	ft_env_lstadd_back(data, node);
 }
 
 void	set_env(t_mini *data, char *name, char *value)
@@ -36,8 +36,7 @@ void	set_env(t_mini *data, char *name, char *value)
 	current = data->env_lst;
 	while (current && !flag)
 	{
-		if (!ft_strncmp(current->nm, name,
-				ft_strlen(current->nm)))
+		if (!ft_strncmp(current->nm, name, ft_strlen(current->nm)))
 			flag = 1;
 		else
 			current = current->next;
@@ -46,11 +45,12 @@ void	set_env(t_mini *data, char *name, char *value)
 	{
 		if (current->equal == 0)
 			current->equal = 1;
-		current->val = ft_strdup(value);
+		current->val = value;
 	}
-	if (current)
-		ft_env_add_or_replace(data, current);
 }
+
+	// if (current)
+	// 	ft_env_add_or_replace(data, current);
 
 char	*get_env(t_mini *data, char *name)
 {
@@ -69,4 +69,15 @@ char	*get_env(t_mini *data, char *name)
 	if (flag)
 		return (current->val);
 	return (NULL);
+}
+
+char	*env_join(t_env *head)
+{
+	char	*val_tmp;
+	char	*result;
+
+	val_tmp = ft_strjoin("=", head->val);
+	result = ft_strjoin(head->nm, val_tmp);
+	free(val_tmp);
+	return (result);
 }

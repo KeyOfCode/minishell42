@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/22 12:06:37 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/23 14:20:12 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	child_process(t_mini *data, t_cmd *cmd)
 	ft_redir(data, cmd);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	if (isbuiltin(cmd))
+	if (is_child_builtin(cmd))
 	{
 		child_builtin(cmd->data, cmd);
 		exit(g_status);

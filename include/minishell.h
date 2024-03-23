@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/22 12:05:14 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/23 14:26:56 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ typedef struct s_mini
 
 extern int	g_status;
 
-/* Functions */
+/* Utils */
 void	ft_error(char const *str, char *type);
 void	ft_print_splits(char **splits);
 char	*ft_join_free(char *s1, char *s2);
@@ -144,6 +144,7 @@ void	ft_delnode(t_env *del);
 void	set_env(t_mini *data, char *name, char *value);
 char	*get_env(t_mini *data, char *name);
 void	ft_add_oldpwd(t_mini *data);
+char	*env_join(t_env *head);
 
 /* Builtins */
 int		pwd(void);
@@ -154,7 +155,8 @@ int		export(t_mini *data, t_cmd *cmd);
 int		cd(t_mini *data, t_cmd *cmd);
 void	empty_export(t_mini *data);
 void	ft_mini_exit(t_mini *data, t_cmd *head);
-int		isbuiltin(t_cmd *head);
+int		is_parent_builtin(t_cmd *head);
+int		is_child_builtin(t_cmd *head);
 
 /* signals */
 void	handle_sigint(int sig);
@@ -181,5 +183,7 @@ int		isredir(char *arg);
 int		count_cmdargs(char **args);
 void	free_cmdlst(t_cmd **cmd_lst);
 void	free_fullcmd(char **args);
+
+void	leaks(void);
 
 #endif

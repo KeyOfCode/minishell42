@@ -6,21 +6,34 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/22 12:07:50 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:52:36 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	isbuiltin(t_cmd *head)
+int	is_parent_builtin(t_cmd *head)
 {
 	char	*cmd;
 
 	cmd = head->c_abs_path;
-	if (!ft_strncmp(cmd, "cd", 2) || !ft_strncmp(cmd, "export", 6)
-		|| !ft_strncmp(cmd, "unset", 5) || !ft_strncmp(cmd, "exit", 4)
+	if (!ft_strncmp(cmd, "exit", 4)
+		|| !ft_strncmp(cmd, "cd", 2) || !ft_strncmp(cmd, "unset", 5)
+		|| (!ft_strncmp(cmd, "export", 6) && head->c_args[1]))
+	{
+		return (1);
+	}
+	return (0);
+}
+
+int	is_child_builtin(t_cmd *head)
+{
+	char	*cmd;
+
+	cmd = head->c_abs_path;
+	if (!ft_strncmp(cmd, "echo", 4)
 		|| !ft_strncmp(cmd, "pwd", 3) || !ft_strncmp(cmd, "env", 3)
-		|| !ft_strncmp(cmd, "echo", 4))
+		|| (!ft_strncmp(cmd, "export", 6) && !head->c_args[1]))
 	{
 		return (1);
 	}
@@ -62,20 +75,20 @@ int	ft_parser(t_mini *data)
 	while (cmd)
 	{
 		update_envp(data);
-		if (isbuiltin(cmd))
-		{
+		if (is_parent_builtin(cmd))
 			ft_builtin(data, cmd);
-		}
-		ft_executor(data, cmd);
+		else
+			ft_executor(data, cmd);
 		cmd = cmd->next;
 		i++;
 	}
 	dup2(data->saved_stdin, STDIN_FILENO);
+	// atexit(leaks);
 	while (i-- > 0)
 		waitpid(-1, &exit_code, 0);
 	dup2(data->saved_stdout, STDOUT_FILENO);
 	free_cmdlst(&data->cmd_lst);
-	free_fullcmd(data->full_cmd);
+	ft_free_matrix(data->full_cmd);
 	return (ft_free_matrix(data->full_path), WEXITSTATUS(exit_code));
 }
 

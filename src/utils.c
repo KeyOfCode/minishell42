@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/22 12:02:08 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:58:48 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ char	*ft_join_free(char *s1, char *s2)
 	char	*aux;
 
 	aux = ft_strjoin(s1, s2);
+	// if (s2 != NULL)
+	// 	free(s2);
 	return (aux);
 }
 

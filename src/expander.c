@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/21 15:27:33 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:50:05 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,34 @@ char	*ft_env_expand(char *ogstr, t_env *envp, int *i)
 	return ("");
 }
 
-/**
- * @brief 
- * 
- * @param str 
- */
+/* char	*ft_substr_expand(char	*str, t_mini *data)
+{
+	char	*full;
+	int		i;
+	char	*aux;
+
+	i = -1;
+	full = NULL;
+	if (str[0] == '~' && ft_strlen(str) == 1)
+		return (str = ft_env_expand(str, data->env_lst, &i), str);
+	while (str[++i])
+	{
+		if (str[i] == '\"')
+			data->dquote = (data->dquote + 1) % 2;
+		if (str[i] == '\'' && data->dquote == 0)
+			i = ft_quotes(str, i, '\'');
+		if (ft_strchr("$", str[i]))
+		{
+			full = ft_join_free(ft_substr(&str[i], 0, i),
+					ft_env_expand(&str[i], data->env_lst, &i));
+			i++;
+			full = ft_join_free(full,
+					ft_substr(&str[i], i, ft_strlen(&str[i])));
+		}
+	}
+	return (aux = full, data->dquote = 0, aux);
+} */
+
 char	*ft_substr_expand(char	*str, t_mini *data)
 {
 	char	*full;
@@ -74,10 +97,11 @@ char	*ft_substr_expand(char	*str, t_mini *data)
 		if (ft_strchr("$", str[i]))
 		{
 			aux = ft_substr(str, 0, i);
-			full = ft_strjoin(aux, ft_env_expand(&str[i], data->env_lst, &i));
+			full = ft_join_free(aux, ft_env_expand(&str[i], data->env_lst, &i));
 			free(aux);
-			return (i++, ft_strjoin(full, ft_substr_expand(&str[i], data)));
+			return (i++, ft_join_free(full, ft_substr_expand(&str[i], data)));
 		}
+		free(full);
 	}
 	return (free(full), data->dquote = 0, str);
 }
@@ -111,6 +135,8 @@ char	*ft_quotes_rmv(t_mini *data, char *str)
 	i = 0;
 	rm_dq = 0;
 	rm_sq = 0;
+	if (!str)
+		return (NULL);
 	while (str[i])
 		ft_flag(str[i++], data, &rm_dq, &rm_sq);
 	newstr = ft_calloc((ft_strlen(str) - rm_dq - rm_sq + 1), sizeof(char));

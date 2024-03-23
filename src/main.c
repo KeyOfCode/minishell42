@@ -6,11 +6,16 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/22 12:03:02 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/23 14:25:25 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	leaks(void)
+{
+	system("leaks -q minishell");
+}
 
 void	*ft_lexer(t_mini *data)
 {
@@ -81,6 +86,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_mini	data;
 
+	// atexit(leaks);
 	if (argc > 1)
 	{
 		return (ft_error("Arg Error.\n", NULL), 1);
