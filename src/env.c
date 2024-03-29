@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/03/23 13:58:46 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:20:49 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	ft_env_add_or_replace(t_mini *data, t_env *new)
 
 void	ft_env_lstadd_back(t_mini *data, t_env *new)
 {
-	t_env	*last_elem;
 	t_env	*current;
 
 	if (!data->env_lst)
@@ -72,9 +71,10 @@ void	ft_env_lstadd_back(t_mini *data, t_env *new)
 	}
 	current = data->env_lst;
 	while (current->next)
+	{
 		current = current->next;
-	last_elem = current;
-	last_elem->next = new;
+	}
+	current->next = new;
 }
 
 void	ft_env_remove(t_mini *data, char *str)

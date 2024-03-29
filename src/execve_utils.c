@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/03/22 15:05:59 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:19:39 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ char	*get_cmd_path(t_mini *data, t_cmd *cmd)
 		return (cmd->c_env_path);
 	if (data->full_path == NULL)
 		return (NULL);
+	i = -1;
 	while (data->full_path[++i])
 	{
 		if (!ft_strncmp(cmd->c_abs_path, data->full_path[i],

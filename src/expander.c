@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/23 15:50:05 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:17:19 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,89 +21,93 @@
  * over the env. Because it's a pointer, I don't need to return it.
  * @return char* 
  */
-char	*ft_env_expand(char *ogstr, t_env *envp, int *i)
+char	*ft_env_expand(char *ogstr, t_mini *data, int *i)
 {
 	t_env	*head;
-	char	*new;
 	char	*str;
 
-	head = envp;
+	head = data->env_lst;
 	str = ogstr;
 	if (str[0] == '~')
 		str = "$HOME";
 	while (head)
 	{
-		if (ft_strncmp (&str[1], head->nm, ft_strlen(head->nm)) == 0)
+		if (ft_strncmp(&str[1], head->nm, ft_strlen(head->nm)) == 0)
 		{
-			new = head->val;
 			if (ogstr[0] != '~')
 				*i += ft_strlen(head->nm);
-			return (new);
+			else
+				*i += 1;
+			return (ft_strdup(head->val));
 		}
 		head = head->next;
 	}
 	if (ft_strchr("?", str[1]))
 	{
-		new = ft_itoa(g_status);
-		return ((*i) += 1, new);
+		return ((*i) += 1, ft_itoa(g_status));
 	}
 	return ("");
 }
 
-/* char	*ft_substr_expand(char	*str, t_mini *data)
-{
-	char	*full;
-	int		i;
-	char	*aux;
+/**
+ * @brief 
+ * 
+ * @param str 
+ */
+// char	*ft_substr_expand(char *str, t_mini *data)
+// {
+// 	char	*full;
+// 	int		i;
+// 	char	*aux;
 
-	i = -1;
-	full = NULL;
-	if (str[0] == '~' && ft_strlen(str) == 1)
-		return (str = ft_env_expand(str, data->env_lst, &i), str);
-	while (str[++i])
+// 	i = -1;
+// 	full = NULL;
+// 	if (str[0] == '~' && ft_strlen(str) == 1)
+// 		return (free(str), 
+// 			str = ft_strdup(ft_env_expand(str, data, &i)), str);
+// 	while (str[++i])
+// 	{
+// 		if (str[i] == '\"')
+// 			data->dquote = (data->dquote + 1) % 2;
+// 		if (str[i] == '\'' && data->dquote == 0)
+// 			i = ft_quotes(str, i, '\'');
+// 		if (ft_strchr("$", str[i]))
+// 		{
+// 			aux = ft_substr(str, 0, i);
+// 			full = ft_join_free(aux, ft_env_expand(&str[i], data, &i));
+// 			return (i++, ft_join_free(full, ft_substr_expand(&str[i], data)));
+// 		}
+// 	}
+// 	return (free(full), data->dquote = 0, str);
+// }
+
+char	*ft_substr_expand(char *str, t_mini *data)
+{
+	int		i;
+	int		j;
+	char	*full;
+
+	i = 0;
+	full = ft_strdup("\0");
+	if (str[0] == '~')
+		full = ft_join_free(full, ft_env_expand(str, data, &i), 2);
+	j = i;
+	while (str[i] != '\0')
 	{
 		if (str[i] == '\"')
 			data->dquote = (data->dquote + 1) % 2;
 		if (str[i] == '\'' && data->dquote == 0)
 			i = ft_quotes(str, i, '\'');
-		if (ft_strchr("$", str[i]))
+		if (str[i] == '$')
 		{
-			full = ft_join_free(ft_substr(&str[i], 0, i),
-					ft_env_expand(&str[i], data->env_lst, &i));
-			i++;
-			full = ft_join_free(full,
-					ft_substr(&str[i], i, ft_strlen(&str[i])));
+			full = ft_join_free(full, ft_substr(str, j, i - j), 2);
+			full = ft_join_free(full, ft_env_expand(&str[i], data, &i), 2);
+			j = i + 1;
 		}
+		i++;
 	}
-	return (aux = full, data->dquote = 0, aux);
-} */
-
-char	*ft_substr_expand(char	*str, t_mini *data)
-{
-	char	*full;
-	int		i;
-	char	*aux;
-
-	i = -1;
-	full = NULL;
-	if (str[0] == '~' && ft_strlen(str) == 1)
-		return (str = ft_env_expand(str, data->env_lst, &i), str);
-	while (str[++i])
-	{
-		if (str[i] == '\"')
-			data->dquote = (data->dquote + 1) % 2;
-		if (str[i] == '\'' && data->dquote == 0)
-			i = ft_quotes(str, i, '\'');
-		if (ft_strchr("$", str[i]))
-		{
-			aux = ft_substr(str, 0, i);
-			full = ft_join_free(aux, ft_env_expand(&str[i], data->env_lst, &i));
-			free(aux);
-			return (i++, ft_join_free(full, ft_substr_expand(&str[i], data)));
-		}
-		free(full);
-	}
-	return (free(full), data->dquote = 0, str);
+	full = ft_join_free(full, ft_substr(str, j, i - j), 2);
+	return (free(str), full);
 }
 
 int	ft_flag(char str, t_mini *data, int *rm_dq, int *rm_sq)

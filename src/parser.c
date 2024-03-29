@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/23 15:52:36 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:17:51 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,8 @@ int	ft_parser(t_mini *data)
 {
 	t_cmd	*cmd;
 	int		i;
-	int		exit_code;
 
 	i = 0;
-	exit_code = 0;
 	cmd = data->cmd_lst;
 	while (cmd)
 	{
@@ -85,12 +83,10 @@ int	ft_parser(t_mini *data)
 	dup2(data->saved_stdin, STDIN_FILENO);
 	// atexit(leaks);
 	while (i-- > 0)
-		waitpid(-1, &exit_code, 0);
+		waitpid(-1, &g_status, 0);
 	dup2(data->saved_stdout, STDOUT_FILENO);
 	free_cmdlst(&data->cmd_lst);
-	ft_free_matrix(data->full_cmd);
-	return (ft_free_matrix(data->full_path), WEXITSTATUS(exit_code));
+	free_fullcmd(data->full_cmd);
+	ft_free_matrix(data->full_path);
+	return (WEXITSTATUS(g_status));
 }
-
-	// if (!cmd)
-	// 	return ;
