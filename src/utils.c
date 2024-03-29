@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/22 12:02:08 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/29 15:12:42 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,15 @@ void	ft_print_splits(char **splits)
 	}
 }
 
-char	*ft_join_free(char *s1, char *s2)
+char	*ft_join_free(char *s1, char *s2, int f)
 {
 	char	*aux;
 
 	aux = ft_strjoin(s1, s2);
+	if (f >= 1)
+		free(s1);
+	if (f >= 2)
+		free(s2);
 	return (aux);
 }
 

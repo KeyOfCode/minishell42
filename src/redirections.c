@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/19 14:56:02 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/29 13:23:39 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,8 @@ int	input_heredoc(t_cmd *cmd, char **token)
 	input = readline("> $ ");
 	while (input && ft_strncmp(input, token[1], ft_strlen(token[1])))
 	{
-		heredoc = ft_join_free(heredoc, input);
-		heredoc = ft_join_free(heredoc, "\n");
-		free(input);
+		heredoc = ft_join_free(heredoc, input, 2);
+		heredoc = ft_join_free(heredoc, "\n", 1);
 		input = readline("> $ ");
 	}
 	free(input);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env3.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/03/21 14:46:19 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/22 16:51:53 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ void	ft_add_oldpwd(t_mini *data)
 	{
 		return ;
 	}
-	node->equal = 0;
-	node->val = 0;
 	ft_env_add_or_replace(data, node);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/03/22 13:20:45 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/23 14:15:06 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@ void	*save_path(t_mini *data)
 		aux = ft_strjoin(data->full_path[i], "/");
 		free(data->full_path[i]);
 		data->full_path[i] = aux;
-		ft_printf_fd(2, "1: %s\n", data->full_path[i]);
 	}
-	free(aux);
 	return (data);
 }
 
@@ -50,33 +48,26 @@ char	*get_cmd_path(t_mini *data, t_cmd *cmd)
 	char	*try_path;
 	int		i;
 
-	i = -1;
-	try_path = NULL;
-	if (!save_path(data))
-		try_path = ft_strdup(cmd->c_abs_path);
-	if (try_path && access(try_path, F_OK) == 0)
+	try_path = ft_strdup(cmd->c_abs_path);
+	if (!isdir(try_path) && access(try_path, F_OK) == 0)
 		return (cmd->c_env_path = ft_strdup(try_path),
 			free(try_path), cmd->c_env_path);
-	if (data->full_path == NULL)
+	free(try_path);
+	if (!save_path(data) && data->full_path == NULL)
 		return (NULL);
+	i = -1;
 	while (data->full_path[++i])
 	{
-		ft_printf_fd(2, "full: %s\n", data->full_path[i]);
-		ft_printf_fd(2, "try: %s\n", try_path);
 		if (!ft_strncmp(cmd->c_abs_path, data->full_path[i],
 				ft_strlen(data->full_path[i])))
 			try_path = ft_strdup(cmd->c_abs_path);
 		else
 			try_path = ft_strjoin(data->full_path[i], cmd->c_abs_path);
-		free(data->full_path[i]);
-		ft_printf_fd(2, "3: %s\n", data->full_path[i]);
-		ft_printf_fd(2, "try: %s\n", try_path);
 		if (access(try_path, F_OK) == 0)
 			return (cmd->c_env_path = ft_strdup(try_path),
 				free(try_path), cmd->c_env_path);
-		try_path = NULL;
+		free(try_path);
 	}
-	free(try_path);
 	return (NULL);
 }
 
@@ -119,8 +110,3 @@ void	update_envp(t_mini *data)
 		head = head->next;
 	}
 }
-
-		// ft_printf_fd(2, "%s", head->nm);
-		// if (head->equal)
-		// 	ft_printf_fd(2, "=\"%s\"", head->val);
-		// ft_printf_fd(2, "\n");

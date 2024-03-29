@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/03/21 14:49:10 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/23 14:21:52 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	ft_env_forbidden_chars(char *name, int len)
 void	ft_env_add_or_replace(t_mini *data, t_env *new)
 {
 	t_env	*current;
-	t_env	*replace;
 	int		flag;
 
 	flag = 0;
@@ -49,15 +48,15 @@ void	ft_env_add_or_replace(t_mini *data, t_env *new)
 		else
 			current = current->next;
 	}
-	replace = current;
 	if (flag)
-		new->next = replace->next->next;
-	replace->next = new;
+	{
+		new->next = current->next->next;
+	}
+	current->next = new;
 }
 
 void	ft_env_lstadd_back(t_mini *data, t_env *new)
 {
-	t_env	*last_elem;
 	t_env	*current;
 
 	if (!data->env_lst)
@@ -67,9 +66,10 @@ void	ft_env_lstadd_back(t_mini *data, t_env *new)
 	}
 	current = data->env_lst;
 	while (current->next)
+	{
 		current = current->next;
-	last_elem = current;
-	last_elem->next = new;
+	}
+	current->next = new;
 }
 
 void	ft_env_remove(t_mini *data, char *str)

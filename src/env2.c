@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/03/20 20:29:41 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/23 13:27:08 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_env	*ft_2rows_split(char *str)
 		node->equal = 1;
 		return (node);
 	}
-	node->val = 0;
+	node->val = NULL;
 	node->equal = 0;
 	return (node);
 }
@@ -79,7 +79,7 @@ void	ft_dup_envp(t_mini *data, char **envp)
 		node->next = NULL;
 		if (ft_env_forbidden_chars(node->nm, ft_strlen(node->nm)))
 			return (ft_error("export: '%s': not a valid \
-				identifier\n", node->nm), free(node));
+identifier\n", node->nm), free(node));
 		if (ft_strncmp(node->nm, "OLDPWD", 6) == 0)
 		{
 			free(node->val);
@@ -88,8 +88,6 @@ void	ft_dup_envp(t_mini *data, char **envp)
 		}
 		ft_env_lstadd_back(data, node);
 	}
-	if (!get_env(data, "OLDPWD"))
-		ft_add_oldpwd(data);
 }
 
 char	**ft_dup_matrix(char **matrix)
@@ -115,7 +113,9 @@ char	**ft_dup_matrix(char **matrix)
 
 void	ft_delnode(t_env *del)
 {
-	free(del->nm);
-	free(del->val);
+	if (del->nm != NULL)
+		free(del->nm);
+	if (del->val != NULL)
+		free(del->val);
 	free(del);
 }
