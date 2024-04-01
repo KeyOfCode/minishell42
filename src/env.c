@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/04/01 20:46:21 by darismen         ###   ########.fr       */
+/*   Updated: 2024/04/01 20:57:21 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,6 @@ int	ft_env_forbidden_chars(char *name, int len)
 	else
 		ft_env_lstadd_back(data, new);
 } */
-
-	// if (!data->env_lst)
-	// {
-	// 	data->env_lst = new;
-	// 	return ;
-	// }
 
 void	ft_env_lstadd_back(t_mini *data, t_env *new)
 {

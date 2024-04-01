@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/04/01 20:43:16 by darismen         ###   ########.fr       */
+/*   Updated: 2024/04/01 21:03:36 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ void	set_env(t_mini *data, char *name, char *value)
 			current->equal = 1;
 		if (current->val)
 			free(current->val);
-		current->val = ft_strdup(value);
+		if (value == NULL)
+			current->val = "";
+		else
+			current->val = ft_strdup(value);
 	}
 }
 
