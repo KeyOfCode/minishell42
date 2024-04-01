@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/03/29 19:31:55 by darismen         ###   ########.fr       */
+/*   Updated: 2024/04/01 14:31:17 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*get_env(t_mini *data, char *name)
 
 	flag = 0;
 	current = data->env_lst;
-	while (current && !flag)
+	while (current && flag == 0)
 	{
 		if (!ft_strncmp(current->nm, name, ft_strlen(current->nm)))
 			flag = 1;
