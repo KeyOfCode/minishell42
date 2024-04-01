@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:02:14 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/29 17:20:59 by darismen         ###   ########.fr       */
+/*   Updated: 2024/04/01 15:25:20 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ t_env	*ft_2rows_split(char *str);
 char	**ft_dup_matrix(char **matrix);
 void	ft_free_matrix(char **matrix);
 void	ft_dup_envp(t_mini *data, char **envp);
-void	ft_add_envp(t_mini *data, char **envp);
+void	ft_add_envp(t_mini *data, char *arg);
 int		ft_env_forbidden_chars(char *name, int len);
 void	ft_env_lstadd_back(t_mini *data, t_env *new);
 void	ft_env_add_or_replace(t_mini *data, t_env *new);
@@ -143,6 +143,7 @@ void	ft_env_lstclear(t_env *env);
 void	ft_delnode(t_env *del);
 void	set_env(t_mini *data, char *name, char *value);
 char	*get_env(t_mini *data, char *name);
+int		env_exist(t_mini *data, char *name);
 void	ft_add_oldpwd(t_mini *data);
 char	*env_join(t_env *head);
 

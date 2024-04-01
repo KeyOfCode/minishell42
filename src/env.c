@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/03/29 17:20:49 by darismen         ###   ########.fr       */
+/*   Updated: 2024/04/01 20:46:21 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_env_forbidden_chars(char *name, int len)
 	return (0);
 }
 
-void	ft_env_add_or_replace(t_mini *data, t_env *new)
+/* void	ft_env_add_or_replace(t_mini *data, t_env *new)
 {
 	t_env	*current;
 	int		flag;
@@ -48,11 +48,11 @@ void	ft_env_add_or_replace(t_mini *data, t_env *new)
 		current->nm = new->nm;
 		current->equal = new->equal;
 		current->val = new->val;
-		ft_delnode(new);
+		// ft_delnode(new);
 	}
 	else
 		ft_env_lstadd_back(data, new);
-}
+} */
 
 	// if (!data->env_lst)
 	// {
@@ -117,7 +117,7 @@ void	ft_env_lstclear(t_env *env)
 	while (head)
 	{
 		del_node = head;
-		head = del_node->next;
+		head = head->next;
 		ft_delnode(del_node);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/18 16:27:33 by disantam         ###   ########.fr       */
+/*   Updated: 2024/04/01 14:51:08 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ int	export(t_mini *data, t_cmd *cmd)
 	}
 	else
 	{
-		ft_add_envp(data, &cmd->c_args[1]);
+		while (cmd->c_args[++i])
+			ft_add_envp(data, cmd->c_args[i]);
 	}
 	return (0);
 }

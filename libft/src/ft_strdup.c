@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 12:02:49 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/19 14:59:29 by darismen         ###   ########.fr       */
+/*   Updated: 2024/04/01 19:27:05 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strdup(const char *s1)
 	len = 0;
 	while (s1[len] != 0)
 		len++;
-	s2 = (char *)malloc(len + 1);
+	s2 = (char *)ft_calloc(len + 1, sizeof(char));
 	if (!(s2))
 		return (NULL);
 	i = 0;
@@ -31,10 +31,10 @@ char	*ft_strdup(const char *s1)
 		s2[i] = s1[i];
 		i++;
 	}
-	s2[i] = '\0';
 	return (s2);
 }
 
+	// s2[i] = '\0';
 /* SYNOPSIS
 
      char *strdup(const char *s1);

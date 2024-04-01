@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/29 17:17:51 by darismen         ###   ########.fr       */
+/*   Updated: 2024/04/01 19:58:11 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	ft_parser(t_mini *data)
 		waitpid(-1, &g_status, 0);
 	dup2(data->saved_stdout, STDOUT_FILENO);
 	free_cmdlst(&data->cmd_lst);
-	free_fullcmd(data->full_cmd);
+	ft_free_matrix(data->full_cmd);
 	ft_free_matrix(data->full_path);
 	return (WEXITSTATUS(g_status));
 }

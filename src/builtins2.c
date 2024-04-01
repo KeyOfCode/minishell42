@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/04/01 14:33:22 by darismen         ###   ########.fr       */
+/*   Updated: 2024/04/01 20:36:45 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,42 +40,9 @@ int	echo(t_cmd	*cmd)
 	return (0);
 }
 
-/* int	cd(t_mini *data, t_cmd *cmd)
-{
-	char	*current;
-
-	if (cmd->c_args[2])
-		return (ft_error("minishell: cd: arg error\n", cmd->c_args[1]), 127);
-	if (!cmd->c_args[1] || !ft_strncmp(cmd->c_args[1], "~", 1))
-	{
-		free(cmd->c_args[1]);
-		cmd->c_args[1] = get_env(data, "HOME");
-	}
-	else if (!ft_strncmp(cmd->c_args[1], "-", 1))
-	{
-		if (!get_env(data, "OLDPWD"))
-			return (ft_error("minishell: cd: OLDPWD not set\n", NULL), 1);
-		else
-			cmd->c_args[1] = get_env(data, "OLDPWD");
-		ft_printf_fd(1, "%s\n", get_env(data, "OLDPWD"));
-	}
-	if (!opendir(cmd->c_args[1]))
-		return (ft_error("minishell: cd: %s: No such \
-file or directory\n", cmd->c_args[1]), 127);
-	set_env(data, "OLDPWD", get_env(data, "PWD"));
-	current = getcwd(NULL, 0);
-	return (chdir(cmd->c_args[1]), set_env(data, "PWD", current), 0);
-} */
-
-/* char	*get_cwd(void)
-{
-	
-} */
-
-int	cd(t_mini *data, t_cmd *cmd)
+char	*ft_path_cd(t_mini *data, t_cmd *cmd)
 {
 	char	*path;
-	DIR		*current;
 
 	path = cmd->c_args[1];
 	if (!cmd->c_args[1] || !ft_strncmp(path, "~", 1))
@@ -83,20 +50,42 @@ int	cd(t_mini *data, t_cmd *cmd)
 	else if (!ft_strncmp(path, "-", 1))
 	{
 		if (!get_env(data, "OLDPWD"))
-			return (ft_error("minishell: cd: OLDPWD not set\n", NULL), 1);
+			return (ft_error("minishell: cd: OLDPWD not set\n", NULL), NULL);
 		else
 			path = get_env(data, "OLDPWD");
-		ft_printf_fd(1, "%s\n", get_env(data, "OLDPWD"));
+		ft_printf_fd(1, "%s\n", path);
 	}
+	return (path);
+}
+
+int	access_dir(char *path)
+{
+	DIR		*current;
+
 	current = opendir(path);
 	if (!current)
 		return (ft_error("minishell: cd: %s: No such \
-file or directory\n", path), 127);
-	set_env(data, "OLDPWD", get_env(data, "PWD"));
+file or directory\n", path), 1);
 	closedir(current);
-	return (chdir(path), path = getcwd(NULL, 0),
-		set_env(data, "PWD", path), free(path), 0);
+	if (access(path, R_OK | W_OK) == -1)
+		return (ft_error("minishell: cd: %s: Permission denied\n", path), 1);
+	return (0);
 }
 
-	// if (!ft_strncmp(cmd->c_args[1], "-", 1))
-	// 	ft_printf_fd(1, "%s\n", get_env(data, "OLDPWD"));
+int	cd(t_mini *data, t_cmd *cmd)
+{
+	char	*path;
+
+	path = ft_path_cd(data, cmd);
+	if (!path)
+		return (1);
+	if (access_dir(path) != 0)
+		return (1);
+	set_env(data, "OLDPWD", get_env(data, "PWD"));
+	chdir(path);
+	path = getcwd(NULL, 0);
+	set_env(data, "PWD", path);
+	if (path)
+		free(path);
+	return (0);
+}

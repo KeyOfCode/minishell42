@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/04/01 14:31:17 by darismen         ###   ########.fr       */
+/*   Updated: 2024/04/01 20:43:16 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,34 @@ void	set_env(t_mini *data, char *name, char *value)
 		else
 			current = current->next;
 	}
-	if (flag && value != NULL)
+	if (flag)
 	{
 		if (current->equal == 0)
 			current->equal = 1;
-		current->val = value;
+		if (current->val)
+			free(current->val);
+		current->val = ft_strdup(value);
 	}
 }
 
-	// if (current)
-	// 	ft_env_add_or_replace(data, current);
+int	env_exist(t_mini *data, char *name)
+{
+	t_env	*current;
+	int		flag;
+
+	flag = 0;
+	current = data->env_lst;
+	while (current && flag == 0)
+	{
+		if (!ft_strncmp(current->nm, name, ft_strlen(current->nm)))
+			flag = 1;
+		else
+			current = current->next;
+	}
+	if (flag)
+		return (1);
+	return (0);
+}
 
 char	*get_env(t_mini *data, char *name)
 {
@@ -66,7 +84,7 @@ char	*get_env(t_mini *data, char *name)
 		else
 			current = current->next;
 	}
-	if (flag)
+	if (flag && current->val)
 		return (current->val);
 	return (NULL);
 }
