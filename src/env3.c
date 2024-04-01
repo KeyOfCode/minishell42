@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/03/29 17:20:13 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/29 19:31:55 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ void	ft_add_oldpwd(t_mini *data)
 	t_env	*node;
 
 	node = ft_2rows_split("OLDPWD");
-	node->next = NULL;
 	if (!node)
 	{
 		return ;
 	}
+	node->next = NULL;
 	node->equal = 0;
 	node->val = 0;
 	ft_env_lstadd_back(data, node);

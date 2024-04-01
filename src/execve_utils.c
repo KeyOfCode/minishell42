@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/03/29 17:19:39 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:28:49 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	isdir(const char *path)
 void	*save_path(t_mini *data)
 {
 	t_env	*head;
+	char	*aux;
 	int		i;
 
 	head = data->env_lst;
@@ -32,11 +33,12 @@ void	*save_path(t_mini *data)
 		return (NULL);
 	if (!ft_strncmp(head->nm, "PATH", 4) && head->val)
 		data->full_path = ft_split(head->val, ':');
-	i = 0;
-	while (data->full_path[i])
+	i = -1;
+	while (data->full_path[++i])
 	{
-		data->full_path[i] = ft_join_free(data->full_path[i], "/");
-		i++;
+		aux = ft_strjoin(data->full_path[i], "/");
+		free(data->full_path[i]);
+		data->full_path[i] = aux;
 	}
 	return (data);
 }

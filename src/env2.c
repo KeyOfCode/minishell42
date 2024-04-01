@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/03/29 17:20:16 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:33:00 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ identifier\n", node->nm), free(node));
 		}
 		ft_env_lstadd_back(data, node);
 	}
+	if (!get_env(data, "OLDPWD"))
+		ft_add_oldpwd(data);
 }
 
 char	**ft_dup_matrix(char **matrix)

@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/29 17:20:55 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/29 19:30:46 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,18 @@ file or directory\n", cmd->c_args[1]), 127);
 	return (chdir(cmd->c_args[1]), set_env(data, "PWD", current), 0);
 } */
 
+/* char	*get_cwd(void)
+{
+	
+} */
+
 int	cd(t_mini *data, t_cmd *cmd)
 {
 	char	*path;
 	DIR		*current;
 
 	path = cmd->c_args[1];
-	if (cmd->c_args[2])
-		return (ft_error("minishell: cd: arg error\n", path), 127);
-	if (!path || !ft_strncmp(path, "~", 1))
+	if (!cmd->c_args[1] || !ft_strncmp(path, "~", 1))
 		path = get_env(data, "HOME");
 	else if (!ft_strncmp(path, "-", 1))
 	{
@@ -91,7 +94,8 @@ int	cd(t_mini *data, t_cmd *cmd)
 file or directory\n", path), 127);
 	set_env(data, "OLDPWD", get_env(data, "PWD"));
 	closedir(current);
-	return (chdir(path), set_env(data, "PWD", getcwd(NULL, 0)), 0);
+	return (chdir(path), path = getcwd(NULL, 0),
+		set_env(data, "PWD", path), free(path), 0);
 }
 
 	// if (!ft_strncmp(cmd->c_args[1], "-", 1))

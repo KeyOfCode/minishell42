@@ -10,5 +10,7 @@ so_long_bonus.h
 test.c
 03_minishell.code-workspace
 val
+valgrind.*
 *test*
 count_args.sh
+force_push.sh

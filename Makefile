@@ -102,6 +102,9 @@ debug: clean $(OBJECTS)
 	lldb ./debug
 # ./debug
 
+leaks: $(NAME)
+	leaks --atExit -- ./$(NAME)
+
 val: clean $(OBJECTS) 
 	@$(CC) -g $(CFLAGS) $(OBJECTS) $(INCLUDES) $(LIB) -o val
 #	lldb ./debug

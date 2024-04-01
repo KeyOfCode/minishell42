@@ -6,11 +6,11 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 11:34:13 by darismen          #+#    #+#             */
-/*   Updated: 2023/12/08 20:29:58 by darismen         ###   ########.fr       */
+/*   Updated: 2024/03/29 19:27:01 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "libft.h"
 #include <stdlib.h>
 
 size_t	priv_substr_strlen(const char *s)
@@ -32,6 +32,41 @@ size_t	priv_substr_strlen(const char *s)
  * @return char* 
  */
 char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char			*sub;
+	unsigned int	i;
+
+	i = 0;
+	if (ft_strlen(s) < start || len == 0)
+	{
+		sub = (char *)ft_calloc(1, sizeof(char));
+		if (!sub)
+			return (NULL);
+		return (sub);
+	}
+	if (ft_strlen(s) - start < len)
+		len = (ft_strlen(s) - start);
+	sub = (char *)ft_calloc((len + 1), sizeof(char));
+	if (!sub)
+		return (NULL);
+	while (i < len)
+	{
+		sub[i] = s[start];
+		i++;
+		start++;
+	}
+	return (sub);
+}
+
+/**
+ * @brief Creates a substring from a string
+ * 
+ * @param s 	input string
+ * @param start	starting position
+ * @param len 	lenght of substring
+ * @return char* 
+ */
+/* char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*subs;
 	size_t	i;
@@ -58,85 +93,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	subs[i] = '\0';
 	return (subs);
-}
-/* #include <stdlib.h>
-#include <unistd.h>
+} */
 
-void	ft_print_result(char const *s)
-{
-	int		len;
-
-	len = 0;
-	while (s[len])
-		len++;
-	write(1, s, len);
-}
-
-int		main(int argc, const char *argv[])
-{
-	char	str[] = "lorem ipsum dolor sit amet";
-	char	*strsub;
-	int		arg;
-
-	if (argc == 1)
-		return (0);
-	else if ((arg = atoi(argv[1])) == 1)
-	{
-		if (!(strsub = ft_substr(str, 0, 10)))
-			ft_print_result("NULL");
-		else
-			ft_print_result(strsub);
-		if (str == strsub)
-			ft_print_result("\nA new string was not returned");
-	}
-	else if (arg == 2)
-	{
-		if (!(strsub = ft_substr(str, 7, 10)))
-			ft_print_result("NULL");
-		else
-			ft_print_result(strsub);
-		if (str == strsub)
-			ft_print_result("\nA new string was not returned");
-	}
-	else if (arg == 3)
-	{
-		if (!(strsub = ft_substr(str, 7, 0)))
-			ft_print_result("NULL");
-		else
-			ft_print_result(strsub);
-		if (str == strsub)
-			ft_print_result("\nA new string was not returned");
-	}
-	else if (arg == 4)
-	{
-		if (!(strsub = ft_substr(str, 0, 0)))
-			ft_print_result("NULL");
-		else
-			ft_print_result(strsub);
-		if (str == strsub)
-			ft_print_result("\nA new string was not returned");
-	}
-	else if (arg == 5)
-	{
-		char *bullshit;
-		if (!(strsub = ft_substr(str, 400, 20)))
-			ft_print_result("NULL");
-		else
-		{
-			bullshit = (char *)&strsub[30];
-			bullshit = "FULL BULLSHIT";
-			if (strsub)
-				ft_print_result(strsub);
-			else
-				ft_print_result("rip");
-		}
-		if (str == strsub)
-			ft_print_result("\nA new string was not returned");
-		(void)bullshit;
-	}
-	return (0);
-}
- */
 /* Reserva (con malloc(3)) y devuelve una substring de
 la string ’s’.
 La substring empieza desde el índice ’start’ y
