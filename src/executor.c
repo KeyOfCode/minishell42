@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/04/02 13:20:01 by darismen         ###   ########.fr       */
+/*   Updated: 2024/04/02 14:19:10 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,16 @@ void	child_process(t_mini *data, t_cmd *cmd)
 	if (!get_cmd_path(cmd->data, cmd))
 	{
 		if (!isdir(cmd->c_abs_path))
+		{
 			ft_error("minishell: %s: command not found\n", cmd->c_abs_path);
+			exit(127);
+		}
 		else
 			ft_error("minishell: %s: is a directory\n", cmd->c_abs_path);
 	}
 	else
 		execve(cmd->c_env_path, cmd->c_args, cmd->data->envp);
-	exit(127);
+	exit(126);
 }
 
 void	parent_process(t_mini *data, t_cmd *cmd)
