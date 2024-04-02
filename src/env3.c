@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/04/01 21:03:36 by darismen         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:21:04 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ void	set_env(t_mini *data, char *name, char *value)
 	}
 	if (flag)
 	{
-		if (current->equal == 0)
+		if (current->equal == 0 && value != NULL)
 			current->equal = 1;
 		if (current->val)
 			free(current->val);
 		if (value == NULL)
-			current->val = "";
+			current->val = ft_strdup("");
 		else
 			current->val = ft_strdup(value);
 	}

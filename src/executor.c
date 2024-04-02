@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/04/02 14:19:10 by darismen         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:01:03 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,4 @@ int	ft_executor(t_mini *data, t_cmd *cmd)
 	return (0);
 }
 
-// /Users/darismen/.brew/bin:/bin/:/usr/local/bin
+// /Users/darismen/.brew/bin:/bin/:/usr/local/bin:/usr/bin
