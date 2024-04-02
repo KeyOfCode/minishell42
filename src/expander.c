@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: disantam <disantam@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/04/01 21:25:17 by darismen         ###   ########.fr       */
+/*   Updated: 2024/04/02 11:44:19 by disantam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,23 @@ char	*ft_env_expand(char *ogstr, t_mini *data, int *i)
 	str = ogstr;
 	if (str[0] == '~')
 		str = "$HOME";
-	if (!str[1])
-		return ("$");
 	while (head)
 	{
 		if (ft_strncmp(&str[1], head->nm, ft_strlen(head->nm)) == 0)
 		{
-			if (ogstr[0] != '~')
-				*i += ft_strlen(head->nm);
-			else
+			if (ogstr[0] == '~')
 				*i += 1;
+			else
+				*i += ft_strlen(head->nm);
 			return (ft_strdup(head->val));
 		}
 		head = head->next;
 	}
-	if (ft_strchr("?", str[1]))
-		return ((*i) += 1, ft_itoa(g_status));
-	return ("");
+	if (str[1] == '?')
+		return (*i += 1, ft_itoa(g_status));
+	while (*(++str) != '\0' && *str != '$')
+		*i += 1;
+	return (ft_strdup(""));
 }
 
 /**
