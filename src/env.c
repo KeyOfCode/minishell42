@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/04/01 20:57:21 by darismen         ###   ########.fr       */
+/*   Updated: 2024/04/01 22:10:24 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@ int	ft_env_forbidden_chars(char *name, int len)
 	i = 0;
 	if (!(ft_isupper(name[i]) || ft_islower(name[i]) || (name[i] == '_')))
 		return (1);
-	while (i < len && name[++i])
+	while (i < len && name[i])
 	{
 		if (!(ft_isupper(name[i]) || ft_islower(name[i])
 				|| ft_isdigit(name[i]) || (name[i] == '_')))
 			return (1);
+		i++;
 	}
 	return (0);
 }

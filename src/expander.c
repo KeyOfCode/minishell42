@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/04/01 21:25:17 by darismen         ###   ########.fr       */
+/*   Updated: 2024/04/02 12:36:04 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ char	*ft_env_expand(char *ogstr, t_mini *data, int *i)
 	str = ogstr;
 	if (str[0] == '~')
 		str = "$HOME";
-	if (!str[1])
-		return ("$");
 	while (head)
 	{
 		if (ft_strncmp(&str[1], head->nm, ft_strlen(head->nm)) == 0)
@@ -46,40 +44,10 @@ char	*ft_env_expand(char *ogstr, t_mini *data, int *i)
 	}
 	if (ft_strchr("?", str[1]))
 		return ((*i) += 1, ft_itoa(g_status));
+	while (*(++str) != '\0' && *str != '$')
+		*i += 1;
 	return ("");
 }
-
-/**
- * @brief 
- * 
- * @param str 
- */
-// char	*ft_substr_expand(char *str, t_mini *data)
-// {
-// 	char	*full;
-// 	int		i;
-// 	char	*aux;
-
-// 	i = -1;
-// 	full = NULL;
-// 	if (str[0] == '~' && ft_strlen(str) == 1)
-// 		return (free(str), 
-// 			str = ft_strdup(ft_env_expand(str, data, &i)), str);
-// 	while (str[++i])
-// 	{
-// 		if (str[i] == '\"')
-// 			data->dquote = (data->dquote + 1) % 2;
-// 		if (str[i] == '\'' && data->dquote == 0)
-// 			i = ft_quotes(str, i, '\'');
-// 		if (ft_strchr("$", str[i]))
-// 		{
-// 			aux = ft_substr(str, 0, i);
-// 			full = ft_join_free(aux, ft_env_expand(&str[i], data, &i));
-// 			return (i++, ft_join_free(full, ft_substr_expand(&str[i], data)));
-// 		}
-// 	}
-// 	return (free(full), data->dquote = 0, str);
-// }
 
 char	*ft_substr_expand(char *str, t_mini *data)
 {
@@ -98,7 +66,7 @@ char	*ft_substr_expand(char *str, t_mini *data)
 			data->dquote = (data->dquote + 1) % 2;
 		if (str[i] == '\'' && data->dquote == 0)
 			i = ft_quotes(str, i, '\'');
-		if (str[i] == '$')
+		if (str[i] == '$' && str[i + 1])
 		{
 			full = ft_join_free(full, ft_substr(str, j, i - j), 2);
 			full = ft_join_free(full, ft_env_expand(&str[i], data, &i), 2);
@@ -168,3 +136,35 @@ void	ft_expander(t_mini *data)
 		i++;
 	}
 }
+
+/**
+ * @brief 
+ * 
+ * @param str 
+ */
+// char	*ft_substr_expand(char *str, t_mini *data)
+// {
+// 	char	*full;
+// 	int		i;
+// 	char	*aux;
+
+// 	i = -1;
+// 	full = NULL;
+// 	if (str[0] == '~' && ft_strlen(str) == 1)
+// 		return (free(str), 
+// 			str = ft_strdup(ft_env_expand(str, data, &i)), str);
+// 	while (str[++i])
+// 	{
+// 		if (str[i] == '\"')
+// 			data->dquote = (data->dquote + 1) % 2;
+// 		if (str[i] == '\'' && data->dquote == 0)
+// 			i = ft_quotes(str, i, '\'');
+// 		if (ft_strchr("$", str[i]))
+// 		{
+// 			aux = ft_substr(str, 0, i);
+// 			full = ft_join_free(aux, ft_env_expand(&str[i], data, &i));
+// 			return (i++, ft_join_free(full, ft_substr_expand(&str[i], data)));
+// 		}
+// 	}
+// 	return (free(full), data->dquote = 0, str);
+// }

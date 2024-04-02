@@ -14,3 +14,5 @@ valgrind.*
 *test*
 count_args.sh
 force_push.sh
+valgrind.rpt
+push.sh
