@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:58:18 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/29 17:17:36 by darismen         ###   ########.fr       */
+/*   Updated: 2024/04/02 14:02:43 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,6 @@ int	is_whitespace(char c)
 	}
 }
 
-void	ft_print_splits(char **splits)
-{
-	int	i;
-
-	i = 0;
-	while (splits[i])
-	{
-		ft_putstr_fd("&", 2);
-		ft_putstr_fd(splits[i], 2);
-		ft_putstr_fd("\n", 2);
-		i++;
-	}
-}
-
 char	*ft_join_free(char *s1, char *s2, int f)
 {
 	char	*aux;
@@ -88,10 +74,3 @@ void	handle_sigint(int sig)
 		g_status = 130;
 	}
 }
-
-		// rl_redisplay();
-		// rl_replace_line("", 0);
-		// printf("  \n");
-		// rl_on_new_line();
-		// rl_redisplay();
-		// g_status = 130;

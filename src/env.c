@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/04/01 22:10:24 by darismen         ###   ########.fr       */
+/*   Updated: 2024/04/02 13:57:15 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ int	ft_env_forbidden_chars(char *name, int len)
 	int	i;
 
 	i = 0;
+	(void)len;
 	if (!(ft_isupper(name[i]) || ft_islower(name[i]) || (name[i] == '_')))
 		return (1);
-	while (i < len && name[i])
+	while (name[i])
 	{
 		if (!(ft_isupper(name[i]) || ft_islower(name[i])
 				|| ft_isdigit(name[i]) || (name[i] == '_')))
@@ -28,32 +29,6 @@ int	ft_env_forbidden_chars(char *name, int len)
 	}
 	return (0);
 }
-
-/* void	ft_env_add_or_replace(t_mini *data, t_env *new)
-{
-	t_env	*current;
-	int		flag;
-
-	flag = 0;
-	current = data->env_lst;
-	while (current->next && !flag)
-	{
-		if (!ft_strncmp(current->next->nm, new->nm,
-				ft_strlen(current->next->nm)))
-			flag = 1;
-		else
-			current = current->next;
-	}
-	if (flag)
-	{
-		current->nm = new->nm;
-		current->equal = new->equal;
-		current->val = new->val;
-		// ft_delnode(new);
-	}
-	else
-		ft_env_lstadd_back(data, new);
-} */
 
 void	ft_env_lstadd_back(t_mini *data, t_env *new)
 {

@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 20:06:09 by darismen          #+#    #+#             */
-/*   Updated: 2024/03/29 17:17:57 by darismen         ###   ########.fr       */
+/*   Updated: 2024/04/02 14:05:54 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_mini	data;
 
-	// atexit(leaks);
 	if (argc > 1)
 	{
 		return (ft_error("Arg Error.\n", NULL), 1);
@@ -104,3 +103,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
+
+	// atexit(leaks);

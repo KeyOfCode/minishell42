@@ -6,7 +6,7 @@
 /*   By: darismen <darismen@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:59:38 by noelgarc          #+#    #+#             */
-/*   Updated: 2024/04/01 21:05:32 by darismen         ###   ########.fr       */
+/*   Updated: 2024/04/02 13:12:36 by darismen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_env	*ft_2rows_split(char *str)
 	while (str[++i] && str[i] != '=')
 		;
 	node->nm = ft_substr(str, 0, i);
-	if (!node->nm)
+	if (!node->nm || i == 0)
 		return (free(node), NULL);
 	if (str[i] == '=' && i < len - 1)
 	{
@@ -47,7 +47,10 @@ void	ft_add_envp(t_mini *data, char *arg)
 	i = -1;
 	node = ft_2rows_split(arg);
 	if (!node)
+	{
+		ft_error("export: %s: not a valid identifier\n", arg);
 		return ;
+	}
 	node->next = NULL;
 	if (ft_env_forbidden_chars(node->nm, ft_strlen(node->nm)))
 	{
