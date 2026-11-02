@@ -34,6 +34,7 @@ Clone the repository and compile the project:
 git clone <repository-url>
 cd 03_minishell
 make exe
+```
 
 ## Resources
 
